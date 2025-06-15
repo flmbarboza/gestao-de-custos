@@ -27,16 +27,16 @@ st.sidebar.caption("Disciplina de Gestão de Custos - FAGEN/UFU")
 
 # Roteamento
 if "Home" in pagina:
-    st.switch_page("pages/1_🏠_Home.py")
-elif "Introdução" in pagina:
+ #   st.switch_page("pages/1_🏠_Home.py")
+#elif "Introdução" in pagina:
     st.switch_page("pages/2_📚_Introducao.py")
-elif "Absorção" in pagina:
-    st.switch_page("pages/3_📊_Custeio_Absorcao.py")
-elif "Variável" in pagina:
-    st.switch_page("pages/4_📈_Custeio_Variavel.py")
-elif "Precificação" in pagina:
-    st.switch_page("pages/5_💰_Precificacao.py")
-elif "Margem" in pagina:
-    st.switch_page("pages/6_⚖️_Margem_Contribuicao.py")
+#elif "Absorção" in pagina:
+ #   st.switch_page("pages/3_📊_Custeio_Absorcao.py")
+#elif "Variável" in pagina:
+ #   st.switch_page("pages/4_📈_Custeio_Variavel.py")
+#elif "Precificação" in pagina:
+ #   st.switch_page("pages/5_💰_Precificacao.py")
+#elif "Margem" in pagina:
+#    st.switch_page("pages/6_⚖️_Margem_Contribuicao.py")
 else:
     st.switch_page("pages/7_📑_Bibliografia.py")

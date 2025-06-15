@@ -1,42 +1,61 @@
 import streamlit as st
 
+# Configuração da página
 st.set_page_config(
     page_title="Gestão de Custos - UFU",
     page_icon="📊",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
+
+# Estado de sessão para controle
+if 'pagina_atual' not in st.session_state:
+    st.session_state.pagina_atual = "Home"
 
 # Menu sidebar
-st.sidebar.title("📚 Menu da Disciplina")
-pagina = st.sidebar.radio(
-    "Selecione o conteúdo:",
-    [
-        "🏠 Home",
-        "1️⃣ Introdução à Contabilidade de Custos",
-        "2️⃣ Custeio por Absorção",
-        "3️⃣ Custeio Variável (Gerencial)",
-        "4️⃣ Precificação e Tributos",
-        "5️⃣ Margem de Contribuição",
-        "📚 Bibliografia"
-    ]
-)
+with st.sidebar:
+    st.title("📚 Menu da Disciplina")
+    
+    # Botões de navegação personalizados
+    if st.button("🏠 Home", use_container_width=True):
+        st.session_state.pagina_atual = "Home"
+    
+    if st.button("📚 Introdução à Contabilidade de Custos", use_container_width=True):
+        st.session_state.pagina_atual = "Introducao"
+    
+    if st.button("📊 Custeio por Absorção", use_container_width=True):
+        st.session_state.pagina_atual = "Absorcao"
+    
+    if st.button("📈 Custeio Variável", use_container_width=True):
+        st.session_state.pagina_atual = "Variavel"
+    
+    if st.button("💰 Precificação", use_container_width=True):
+        st.session_state.pagina_atual = "Precificacao"
+    
+    if st.button("⚖️ Margem de Contribuição", use_container_width=True):
+        st.session_state.pagina_atual = "Margem"
+    
+    if st.button("📑 Bibliografia", use_container_width=True):
+        st.session_state.pagina_atual = "Bibliografia"
+    
+    st.markdown("---")
+    st.caption("Gestão de Custos - FAGEN/UFU")
 
-# Footer
-st.sidebar.markdown("---")
-st.sidebar.caption("Disciplina de Gestão de Custos - FAGEN/UFU")
-
-# Roteamento
-if "Home" in pagina:
- #   st.switch_page("pages/1_🏠_Home.py")
-#elif "Introdução" in pagina:
-    st.switch_page("pages/2_📚_Introducao.py")
-#elif "Absorção" in pagina:
- #   st.switch_page("pages/3_📊_Custeio_Absorcao.py")
-#elif "Variável" in pagina:
- #   st.switch_page("pages/4_📈_Custeio_Variavel.py")
-#elif "Precificação" in pagina:
- #   st.switch_page("pages/5_💰_Precificacao.py")
-#elif "Margem" in pagina:
-#    st.switch_page("pages/6_⚖️_Margem_Contribuicao.py")
+# Sistema de roteamento seguro
+if st.session_state.pagina_atual == "Home":
+    from pages import 1_🏠_Home as page
+elif st.session_state.pagina_atual == "Introducao":
+    from pages import 2_📚_Introducao as page
+elif st.session_state.pagina_atual == "Absorcao":
+    from pages import 3_📊_Custeio_Absorcao as page
+elif st.session_state.pagina_atual == "Variavel":
+    from pages import 4_📈_Custeio_Variavel as page
+elif st.session_state.pagina_atual == "Precificacao":
+    from pages import 5_💰_Precificacao as page
+elif st.session_state.pagina_atual == "Margem":
+    from pages import 6_⚖️_Margem_Contribuicao as page
 else:
-    st.switch_page("pages/7_📑_Bibliografia.py")
+    from pages import 7_📑_Bibliografia as page
+
+# Renderiza a página selecionada
+page.main()

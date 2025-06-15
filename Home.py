@@ -11,7 +11,7 @@ st.sidebar.title("📚 Menu da Disciplina")
 pagina = st.sidebar.radio(
     "Selecione o conteúdo:",
     [
-        "🏠 Home",
+        "🏠 Início",
         "1️⃣ Introdução à Contabilidade de Custos",
         "2️⃣ Custeio por Absorção",
         "3️⃣ Custeio Variável (Gerencial)",
@@ -27,7 +27,7 @@ st.sidebar.caption("Disciplina de Gestão de Custos - FAGEN/UFU")
 
 # Roteamento
 if "Home" in pagina:
-    st.switch_page("pages/1_🏠_Home.py")
+    st.switch_page("pages/1_🏠_Inicio.py")
 elif "Introdução" in pagina:
     st.switch_page("pages/2_📚_Introducao.py")
 elif "Absorção" in pagina:

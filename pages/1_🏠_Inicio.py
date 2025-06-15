@@ -46,11 +46,11 @@ def main():
         )
     
     # Botão de áudio
-    if st.button("🎧 Ouvir Apresentação"):
-        texto_audio = texto_boas_vindas + "\nObjetivos: " + " ".join([
-            "Apresentar conceitos, ",
-            "Fornecer visão ampla, ",
-            "Analisar impact
+#    if st.button("🎧 Ouvir Apresentação"):
+ #       texto_audio = texto_boas_vindas + "\nObjetivos: " + " ".join([
+  #          "Apresentar conceitos, ",
+   #         "Fornecer visão ampla, ",
+    #        "Analisar impact
 
 if __name__ == "__main__":
     main()

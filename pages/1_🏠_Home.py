@@ -51,3 +51,6 @@ def main():
             "Apresentar conceitos, ",
             "Fornecer visão ampla, ",
             "Analisar impact
+
+if __name__ == "__main__":
+    main()

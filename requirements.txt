@@ -1,5 +1,9 @@
-streamlit 
-gtts 
-pandas 
-matplotlib 
-numpy
+streamlit>=1.28.0
+streamlit-option-menu>=0.3.0
+pandas>=1.5.0
+numpy>=1.24.0
+plotly>=5.15.0
+scikit-learn>=1.3.0
+gTTS>=2.3.2
+matplotlib>=3.10.3
+seaborn>=0.13.2

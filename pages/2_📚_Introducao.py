@@ -16,13 +16,14 @@ def main():
     
     st.subheader("🧠 Conceitos Fundamentais")
     col1, col2 = st.columns(2)
-        
+            
     with col1:
         st.markdown(
             """
-            <div style="background-color:#E3F2FD; padding:20px; border-radius:10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1)">
-                <h4 style="color:#1565C0;">📘 Terminologia:</h4>
-                <ul>
+            <div style="background-color:#FFD54F; padding:20px; border-radius:12px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.2)">
+                <h4 style="color:#BF360C;">📘 Terminologia:</h4>
+                <ul style="color:#212121;">
                     <li><b>Gastos</b>
                         <ul>
                             <li>Custos</li>
@@ -41,9 +42,10 @@ def main():
     with col2:
         st.markdown(
             """
-            <div style="background-color:#E8F5E9; padding:20px; border-radius:10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1)">
-                <h4 style="color:#2E7D32;">📗 Classificação de Custos:</h4>
-                <ul>
+            <div style="background-color:#4FC3F7; padding:20px; border-radius:12px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.2)">
+                <h4 style="color:#01579B;">📗 Classificação de Custos:</h4>
+                <ul style="color:#212121;">
                     <li>Diretos vs. Indiretos</li>
                     <li>Fixos vs. Variáveis</li>
                     <li>Custos vs. Despesas</li>
@@ -51,7 +53,8 @@ def main():
             </div>
             """,
             unsafe_allow_html=True
-        )        
+        )
+        
     st.subheader("💡 Por que entender custos é crucial?")
     
     st.markdown("""

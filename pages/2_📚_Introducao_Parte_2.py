@@ -14,7 +14,14 @@ def main():
         "🧠 Quiz"
     ])
     
-    with tab1:  # Conceitos Básicos
+    with tab1:  # Conceitos Básicos    
+        with st.expander("📌 Objetivos da Unidade", expanded=True):
+        st.markdown("""
+        - Compreender terminologia básica de custos
+        - Classificar custos por natureza e comportamento
+        - Analisar o comportamento de custos
+        """)
+
         st.header("Terminologia Fundamental")
        
         st.markdown("""

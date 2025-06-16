@@ -12,23 +12,63 @@ def main():
             - Analisar o comportamento de custos
             """)
 
+        
     # Inicializa a variável de sessão
     if "active_tab" not in st.session_state:
         st.session_state.active_tab = "💡 Ideação"
     
-    # Botões simulando abas (estilo horizontal)
-    colunas = st.columns(5)
+    # Lista das abas
     abas = ["💡 Ideação", "📌 Conceitos Básicos", "📊 Classificação", "📈 Comportamento", "🧠 Quiz"]
     
-    # Cada coluna tem um botão para uma aba
-    for i, aba in enumerate(abas):
-        if colunas[i].button(aba, key=f"tab_{i}"):
-            st.session_state.active_tab = aba
+    # Estilo CSS para estilizar os botões como abas e destacar a ativa
+    st.markdown("""
+    <style>
+    .tab-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        color: black;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 4px 4px 0 0;
+    }
+    .tab-button:hover {
+        background-color: #e0e0e0;
+    }
+    .tab-button.active {
+        background-color: #4CAF50;
+        color: white;
+        border-bottom: 2px solid white;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     
-    # Exibir conteúdo com base na aba selecionada
+    # Criar colunas para as abas
+    colunas = st.columns(len(abas))
+    
+    # Loop pelas colunas e abas
+    for i, (coluna, aba) in enumerate(zip(colunas, abas)):
+        with coluna:
+            # Aplicar classe CSS ativa se for a aba atual
+            btn_class = "active" if st.session_state.active_tab == aba else ""
+            btn_id = f"tab_button_{i}"
+            # Botão customizado com HTML e JS para mudar aba
+            st.markdown(f"""
+                <button class="tab-button {btn_class}" onclick="document.getElementById('{btn_id}').click();">{aba}</button>
+                <form style="display:none"><button id="{btn_id}" type="submit"></button></form>
+            """, unsafe_allow_html=True)
+            # Ao clicar no botão, atualiza a aba ativa
+            if st.form_submit_button(f"select_{i}"):
+                st.session_state.active_tab = aba
+    
+    # Conteúdo condicional com base na aba selecionada
+    st.write("---")
     if st.session_state.active_tab == "💡 Ideação":
         st.markdown("## 💡 Ideação")
-        st.write("Conteúdo da aba de ideação aqui...")
+        st.write("Conteúdo da aba de ideiação aqui...")
     
     elif st.session_state.active_tab == "📌 Conceitos Básicos":
         st.markdown("## 📌 Conceitos Básicos")
@@ -46,19 +86,21 @@ def main():
         st.markdown("## 🧠 Quiz")
         st.write("Conteúdo do quiz aqui...")
     
-    # Botão Avançar / Voltar (opcional)
+    # Botões Avançar / Voltar
     col1, col2 = st.columns([1, 5])
     with col1:
         if st.button("⬅️ Voltar"):
-            indice_atual = abas.index(st.session_state.active_tab)
-            if indice_atual > 0:
-                st.session_state.active_tab = abas[indice_atual - 1]
+            idx_atual = abas.index(st.session_state.active_tab)
+            if idx_atual > 0:
+                st.session_state.active_tab = abas[idx_atual - 1]
     
     with col2:
         if st.button("➡️ Avançar"):
-            indice_atual = abas.index(st.session_state.active_tab)
-            if indice_atual < len(abas) - 1:
-                st.session_state.active_tab = abas[indice_atual + 1]# Criando abas para o submenu
+            idx_atual = abas.index(st.session_state.active_tab)
+            if idx_atual < len(abas) - 1:
+                st.session_state.active_tab = abas[idx_atual + 1]
+                
+    # Criando abas para o submenu
     tab0, tab1, tab2, tab3, tab4 = st.tabs([
         "💡 Ideação", "📌 Conceitos Básicos", 
         "📊 Classificação", 

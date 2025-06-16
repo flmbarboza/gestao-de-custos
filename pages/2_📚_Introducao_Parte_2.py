@@ -18,7 +18,7 @@ def main():
         "💡 Ideação", "📌 Conceitos Básicos", 
         "📊 Classificação", 
         "📈 Comportamento", 
-        "🧠 Quiz"
+        "🧠 Quiz (em breve)"
     ])
     
     with tab0:  # Conceitos Básicos    
@@ -719,25 +719,135 @@ def main():
                     st.success("✅ Correto! É um custo indireto pois beneficia toda a produção.")
                 else:
                     st.error("❌ Revise a classificação de custos indiretos")
+                
+        # Comportamento dos Custos
+        c1, c2 = st.columns([1, 2])
+        with c1:
+            st.header("📊 Análise de Impacto de Custos")
+            st.markdown("""
+            ```math
+            Custo\ Total = Custo\ Fixo + (Custo\ Variável\ Unitário × Quantidade)
+            ```
+            """)
+        
+        # Controles interativos
+        with c2:
+            st.subheader("Parâmetros de Entrada")
+            cf = st.slider("Custo Fixo Total (R$):", 1000, 50000, 10000, 500, 
+                          help="Custos que não variam com o volume de produção")
+            cv = st.slider("Custo Variável Unitário (R$):", 1, 100, 15, 1,
+                          help="Custo adicional por unidade produzida")
+            q = st.slider("Quantidade Produzida:", 0, 1000, 200, 10,
+                         help="Volume total de unidades produzidas")
+        
+        # Cálculos
+        ct = cf + (cv * q)
+        custo_medio = ct / q if q > 0 else 0
+        
+        # Métricas
+        st.divider()
+        col_met1, col_met2, col_met3, col_met4 = st.columns(4)
+        with col_met1:
+            st.metric("Custo Total Estimado", f"R$ {ct:,.2f}", 
+                     help="Soma de custos fixos e variáveis totais")
+        with col_met2:
+            st.metric("Custo Médio por Unidade", f"R$ {custo_medio:,.2f}" if q > 0 else "N/A",
+                     help="Custo total dividido pela quantidade produzida")
+        with col_met3:
+            percent_var = (cv * q) / ct * 100
+            st.metric("Participação dos Custos Variáveis", f"{percent_var:.1f}%",
+                     help="Quanto do custo total é variável")
+        with col_met4:
+            st.metric("Ponto de Equilíbrio Financeiro", f"{int(cf/cv) if cv > 0 else '∞'} unidades",
+                     help="Quantidade necessária para cobrir todos os custos")
+        
+        # Análise de sensibilidade
+        st.divider()
+        st.subheader("🔍 Análise de Sensibilidade")
+        
+        # Simulação de diferentes quantidades
+        q_range = np.linspace(0, q*2, 50)
+        ct_range = cf + (cv * q_range)
+        cm_range = ct_range / np.where(q_range > 0, q_range, 1)
+        
+        t1, t2 = st.tabs(["Gráfico de Custos", "Tabela de Dados"])
+        
+        with t1:
+            fig = px.line(x=q_range, y=ct_range, 
+                         labels={'x': 'Quantidade Produzida', 'y': 'Custo Total (R$)'},
+                         title="Relação entre Quantidade e Custo Total")
+            fig.add_vline(x=q, line_dash="dash", line_color="red",
+                         annotation_text=f"Quantidade Atual: {q}", 
+                         annotation_position="top left")
+            fig.update_layout(hovermode="x unified")
+            st.plotly_chart(fig, use_container_width=True)
+        
+        with t2:
+            df = pd.DataFrame({
+                'Quantidade': q_range.astype(int),
+                'Custo Total': ct_range,
+                'Custo Médio': cm_range
+            })
+            st.dataframe(df.style.format({
+                'Custo Total': 'R$ {:,.2f}',
+                'Custo Médio': 'R$ {:,.2f}'
+            }), use_container_width=True)
+        
+        # Análise de cenários
+        st.divider()
+        st.subheader("🌐 Análise de Cenários")
+        
+        scenarios = {
+            "Otimista (CV -20%)": cv * 0.8,
+            "Atual": cv,
+            "Pessimista (CV +20%)": cv * 1.2
+        }
+        
+        scenario_data = []
+        for name, cv_scenario in scenarios.items():
+            ct_scenario = cf + (cv_scenario * q)
+            scenario_data.append({
+                "Cenário": name,
+                "Custo Variável Unitário": cv_scenario,
+                "Custo Total": ct_scenario,
+                "Diferença": ct_scenario - ct
+            })
+        
+        df_scenarios = pd.DataFrame(scenario_data)
+        col_an1, col_an2 = st.columns([1, 2])
+        
+        with col_an1:
+            st.markdown("**Impacto de Variações no Custo Variável**")
+            st.dataframe(df_scenarios.style.format({
+                "Custo Variável Unitário": "R$ {:.2f}",
+                "Custo Total": "R$ {:,.2f}",
+                "Diferença": "R$ {:,.2f}"
+            }), hide_index=True, use_container_width=True)
+        
+        with col_an2:
+            fig2 = px.bar(df_scenarios, x='Cenário', y='Custo Total',
+                         color='Cenário',
+                         title="Comparação de Cenários",
+                         text=[f"R$ {x:,.2f}" for x in df_scenarios['Custo Total']])
+            fig2.update_layout(showlegend=False)
+            st.plotly_chart(fig2, use_container_width=True)
+        
+        # Explicação dos conceitos
+        with st.expander("📚 Explicação dos Conceitos"):
+            st.markdown("""
+            **Análise de Impacto de Custos**:
+            - **Custo Fixo**: Despesas que não mudam com o volume de produção (aluguel, salários)
+            - **Custo Variável**: Custos diretamente ligados à produção (matéria-prima, embalagem)
+            - **Ponto de Equilíbrio**: Quantidade necessária para cobrir todos os custos (fixos + variáveis)
+            
+            **Análise de Sensibilidade** mostra como mudanças nos parâmetros afetam os resultados.
+            """)
+
         # 🔜 Botão para próxima página
-        st.markdown("---")
+        st.markdown(" ")
         if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio por Absorção"):
             st.switch_page("pages/3_📊_Custeio_por_Absorcao.py")
-        
-        st.header("Análise do Comportamento")
-        st.markdown("""
-        ```math
-        Custo\ Total = Custo\ Fixo + (Custo\ Variável\ Unitário × Quantidade)
-        ```
-        """)
-        
-        cf = st.slider("Custo Fixo Total (R$):", 1000, 50000, 10000)
-        cv = st.slider("Custo Variável Unitário (R$):", 1, 100, 15)
-        q = st.slider("Quantidade Produzida:", 0, 1000, 200)
-        
-        ct = cf + (cv * q)
-        st.metric("Custo Total Estimado", f"R$ {ct:,.2f}")
-    
+
     with tab4:  # Quiz
         st.header("Teste Seu Conhecimento")
         

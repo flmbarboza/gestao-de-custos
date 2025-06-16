@@ -431,7 +431,104 @@ def main():
     st.divider()
     
     st.subheader("📈 **Visão simplificada da DRE:**")
+    st.markdown("""
+    A **Demonstração do Resultado do Exercício (DRE)** mostra o caminho do dinheiro na empresa:  
+    Das **Receitas**, subtraímos os **Custos** e as **Despesas**, chegando ao **Lucro ou Prejuízo**.
     
+    Vamos visualizar como isso funciona:
+    """)
+    
+    # 🔷 Layout visual da DRE
+    st.markdown("---")
+    st.markdown("### 🔷 **Estrutura da DRE:**")
+    
+    # Receita
+    st.markdown("""
+    <div style="background-color:#81C784; padding:15px; border-radius:10px;">
+        <h4 style="color:#1B5E20;">🚀 Receita Bruta</h4>
+        <p style="color:#212121;">Tudo que a empresa recebe pelas vendas de seus produtos ou serviços.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # (-) Custos
+    st.markdown("""
+    <div style="background-color:#FFB74D; padding:15px; border-radius:10px;">
+        <h4 style="color:#E65100;">⚙️ (-) Custos dos Produtos ou Serviços</h4>
+        <p style="color:#212121;">São os gastos diretamente relacionados à produção ou entrega do serviço.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <h3 style="text-align:center;">= Lucro Bruto</h3>
+    """, unsafe_allow_html=True)
+    
+    # (-) Despesas
+    st.markdown("""
+    <div style="background-color:#64B5F6; padding:15px; border-radius:10px;">
+        <h4 style="color:#0D47A1;">🧾 (-) Despesas Operacionais</h4>
+        <p style="color:#212121;">Gastos administrativos, comerciais, marketing, vendas, etc.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <h3 style="text-align:center;">= Resultado Operacional</h3>
+    """, unsafe_allow_html=True)
+    
+    # Resultado
+    st.markdown("""
+    <div style="background-color:#FFD54F; padding:15px; border-radius:10px;">
+        <h4 style="color:#F57F17;">💰 Lucro ou Prejuízo</h4>
+        <p style="color:#212121;">Resultado final após considerar receitas, custos e despesas.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # 🔥 Desafio prático — Montar a DRE
+    
+    st.markdown("## 🧠 **Desafio: Monte sua própria DRE!**")
+    
+    with st.expander("🚀 Clique aqui para testar sua compreensão"):
+        st.markdown("Associe corretamente cada item à sua posição na DRE:")
+    
+        itens_dre = {
+            "💰 Venda de produtos ou serviços": "Receita",
+            "🛠️ Compra de matéria-prima": "Custo",
+            "🔌 Energia elétrica da fábrica": "Custo",
+            "🏢 Aluguel do escritório": "Despesa",
+            "🧠 Salário do administrativo": "Despesa",
+            "🚛 Frete pago para entregar mercadorias": "Custo",
+            "🛒 Comissão de vendedores": "Despesa",
+        }
+    
+        acertos = 0
+        for item, resposta_correta in itens_dre.items():
+            resposta = st.radio(
+                f"{item}",
+                ["Receita", "Custo", "Despesa"],
+                index=None,
+                key=item
+            )
+            if resposta:
+                if resposta == resposta_correta:
+                    st.success(f"✅ Correto!")
+                    acertos += 1
+                else:
+                    st.error(f"❌ Incorreto. A resposta certa é: **{resposta_correta}**")
+    
+        if acertos == len(itens_dre):
+            st.balloons()
+            st.success("🎉 Excelente! Você classificou tudo corretamente!")
+        elif acertos > 0:
+            st.info(f"👍 Você acertou {acertos} de {len(itens_dre)}.")
+        else:
+            st.warning("🚀 Vamos começar! Classifique os itens acima.")
+    
+    # 🔗 Conclusão
+    st.markdown("""
+    > 💡 Perceba como a estrutura da DRE ajuda a entender **onde estão os maiores gastos e como se forma o lucro da empresa.**  
+    > Isso vale para empresas privadas, públicas, ONGs e qualquer organização!
+    """)    
     st.markdown("""
     """)
     

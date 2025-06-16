@@ -255,12 +255,189 @@ def main():
     
     if st.button("Clique para mais desafios"):
         st.info("👉 Em breve você poderá acessar quizzes mais completos nesta plataforma!")
+        
+    st.title("⚖️ Diferença entre Custos e Despesas")
     
-
+    st.subheader("🔍 Como os custos e as despesas impactam o resultado da empresa?")
+    
+    st.markdown("""
+    > Entender a diferença entre **custos** e **despesas** é essencial para uma boa gestão financeira. Cada um tem um papel específico na formação do resultado da empresa.
+    
+    """)
+    
+    st.divider()
+    
+    st.subheader("📊 **Relação dos Processos com Custos e Despesas**")
+    
+    # Criando o diagrama
+    grafico = graphviz.Digraph()
+    
+    grafico.attr('node', shape='box', style='rounded, filled', fillcolor='#f0f9f9')
+    
+    # Processos
+    grafico.node('Prod', '🔧 Processo Produtivo')
+    grafico.node('RH', '👥 Recursos Humanos')
+    grafico.node('Mkt', '📢 Marketing')
+    grafico.node('Fin', '💰 Finanças')
+    grafico.node('Adm', '📑 Administrativo')
+    grafico.node('Outros', '➕ Outros')
+    
+    # Receita e resultado
+    grafico.node('Rec', '💵 Receita\n(-) Custo das Mercadorias Vendidas\n= Lucro Bruto\n(-) Despesas Operacionais\n= Lucro Operacional', shape='rectangle', fillcolor='#d0eafc')
+    
+    # Conexões
+    grafico.edge('Prod', 'Rec', label='➡️ Custo')
+    grafico.edge('RH', 'Rec', label='➡️ Despesa')
+    grafico.edge('Mkt', 'Rec', label='➡️ Despesa')
+    grafico.edge('Fin', 'Rec', label='➡️ Despesa')
+    grafico.edge('Adm', 'Rec', label='➡️ Despesa')
+    grafico.edge('Outros', 'Rec', label='➡️ Despesa')
+    
+    st.graphviz_chart(grafico)
+    
+    st.divider()
+    
+    st.subheader("💡 **Conceituando:**")
+    
+    st.markdown("""
+    ### ✔️ **Custos**
+    - São todos os gastos diretamente relacionados com o processo produtivo ou com a entrega do serviço.
+    - Quando mais a produção ou venda cresce, mais os custos tendem a aumentar proporcionalmente.
+    - ➕ **Exemplos:** matéria-prima, salários da produção, depreciação de máquinas, compra de mercadorias para revenda.
+    
+    ### ✔️ **Despesas**
+    - São gastos necessários para manter a estrutura administrativa, comercial e de apoio, mas **não estão diretamente ligados à produção**.
+    - ➕ **Exemplos:** salários da administração, despesas de marketing, aluguel da sede, energia da área administrativa, honorários da contabilidade.
+    
+    """)
+    
+    st.divider()
+    
+    st.subheader("🧠 **Impacto na Demonstração do Resultado:**")
+    
+    st.markdown("""
+    - 🏭 **Custos** afetam o **Lucro Bruto**:
+      > Receita - **Custo das Mercadorias Vendidas** = **Lucro Bruto**
+    
+    - 🏢 **Despesas** afetam o **Lucro Operacional**:
+      > Lucro Bruto - **Despesas Operacionais** = **Lucro Operacional**
+    """)
+    
+    st.divider()
+    
+    st.subheader("🚀 **Desafio Interativo!**")
+    
+    pergunta = st.radio(
+        "Imagine que uma empresa contratou uma agência de marketing para fazer campanhas nas redes sociais. Esse gasto é:",
+        ("Custo", "Despesa")
+    )
+    
+    if pergunta:
+        if pergunta == "Despesa":
+            st.success("✅ Correto! Marketing é uma despesa, pois não está diretamente ligado à produção.")
+        else:
+            st.error("❌ Não é isso. Marketing não é custo, pois não faz parte diretamente do processo produtivo.")
+    
+    st.markdown("---")
+    
+    st.subheader("🎯 **Mais Desafios?**")
+    
+    if st.button("Quero mais perguntas!"):
+        st.info("Em breve teremos quizzes completos aqui na plataforma!")
     
     st.info("""
     Se você entende essa diferença, já está à frente de muitos gestores no mercado.
     """)
+    
+    st.title("⚖️ Custos x Despesas e seus impactos na DRE")
+    
+    st.subheader("🔍 Como custos e despesas se refletem no resultado da empresa?")
+    
+    st.markdown("""
+    > Antes de tudo, precisamos entender que **custos** e **despesas** não são apenas conceitos contábeis — eles impactam diretamente os resultados financeiros da empresa, especialmente na **Demonstração do Resultado (DRE)**.
+    """)
+    
+    st.divider()
+    
+    st.subheader("📊 **Relação dos Processos com Custos, Despesas e a DRE**")
+    
+    # Criando o diagrama
+    grafico = graphviz.Digraph()
+    
+    grafico.attr('node', shape='box', style='rounded, filled', fillcolor='#f0f9f9')
+    
+    # Processos
+    grafico.node('Prod', '🔧 Processo Produtivo\n(Custos)')
+    grafico.node('RH', '👥 Recursos Humanos\n(Despesas)')
+    grafico.node('Mkt', '📢 Marketing\n(Despesas)')
+    grafico.node('Fin', '💰 Finanças\n(Despesas)')
+    grafico.node('Adm', '📑 Administrativo\n(Despesas)')
+    grafico.node('Outros', '➕ Outros\n(Despesas)')
+    
+    # Receita e DRE
+    grafico.node('Rec', '''💵 Receita
+    (-) Custo das Mercadorias Vendidas
+    = Lucro Bruto
+    (-) Despesas Operacionais
+    = Lucro Operacional''', shape='rectangle', fillcolor='#d0eafc')
+    
+    # Conexões
+    grafico.edge('Prod', 'Rec', label='➡️ Custo (CMV)')
+    grafico.edge('RH', 'Rec', label='➡️ Despesa')
+    grafico.edge('Mkt', 'Rec', label='➡️ Despesa')
+    grafico.edge('Fin', 'Rec', label='➡️ Despesa')
+    grafico.edge('Adm', 'Rec', label='➡️ Despesa')
+    grafico.edge('Outros', 'Rec', label='➡️ Despesa')
+    
+    st.graphviz_chart(grafico)
+    
+    st.divider()
+    
+    st.subheader("💡 **Conceituando:**")
+    
+    st.markdown("""
+    ### ✔️ **Custos**
+    - 🔧 São os gastos **diretamente ligados** à produção de bens ou serviços, ou à compra de mercadorias para revenda.
+    - ➕ **Exemplos:** matéria-prima, salários da produção, energia da fábrica, depreciação de máquinas, custo de mercadorias para revenda.
+    - 🔍 **Na DRE:** aparecem no grupo **"Custo das Mercadorias Vendidas (CMV)"**, **reduzindo a Receita para gerar o Lucro Bruto.**
+    
+    ---
+    
+    ### ✔️ **Despesas**
+    - 🏢 São os gastos necessários para **manter a estrutura administrativa, comercial e de suporte**, mas **não estão diretamente ligados à produção.**
+    - ➕ **Exemplos:** salários da administração, marketing, despesas financeiras, aluguel da sede, serviços contábeis, despesas com TI.
+    - 🔍 **Na DRE:** aparecem no grupo **"Despesas Operacionais"**, sendo deduzidas do **Lucro Bruto** para se chegar ao **Lucro Operacional.**
+    """)
+    
+    st.divider()
+    
+    st.subheader("📈 **Visão simplificada da DRE:**")
+    
+    st.markdown("""
+    """)
+    
+    st.divider()
+    
+    st.subheader("🚀 **Desafio Interativo!**")
+    
+    pergunta = st.radio(
+        "📢 A empresa paga aluguel da sua sede administrativa. Esse gasto é considerado:",
+        ("Custo", "Despesa")
+    )
+    
+    if pergunta:
+        if pergunta == "Despesa":
+            st.success("✅ Correto! É uma despesa, pois não está diretamente ligado à produção, mas sim ao suporte da operação.")
+        else:
+            st.error("❌ Incorreto. O aluguel da sede administrativa não faz parte do custo de produção.")
+    
+    st.markdown("---")
+    
+    st.subheader("🎯 **Mais desafios ou simulações?**")
+    
+    if st.button("Quero simular uma DRE!"):
+        st.info("🔧 Em breve vamos incluir uma planilha simuladora da DRE, mostrando como custos e despesas impactam o resultado.")
+
     # Quiz interativo
     with st.expander("🧩 Teste Seu Conhecimento"):
         resposta = st.radio(

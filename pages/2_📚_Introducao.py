@@ -422,7 +422,7 @@ def main():
     
     pergunta = st.radio(
         "📢 A empresa paga aluguel da sua sede administrativa. Esse gasto é considerado:",
-        ("Custo", "Despesa")
+        ("Custo", "Despesa"), index=None
     )
     
     if pergunta:

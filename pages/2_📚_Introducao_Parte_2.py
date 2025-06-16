@@ -1,6 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle, Ellipse
+import networkx as nx
 from utils import leitor_de_texto
 
 def main():
@@ -49,51 +49,30 @@ def main():
                 unsafe_allow_html=True
             )
 
-        plt.figure(figsize=(10, 8))
-        ax = plt.gca()
+
+        G = nx.DiGraph()        
+        # Adiciona nós
+        G.add_node("Balanço Patrimonial")
+        G.add_nodes_from(["Custos", "Investimentos", "Gastos"])
+        G.add_nodes_from(["Consumo", "Produtos", "Inventivos", "Concurso"])
         
-        # Elementos principais
-        ax.add_patch(Ellipse((0.5, 0.9), 0.3, 0.1, fill=True, color='lightblue'))
-        plt.text(0.5, 0.9, 'Balanço Patrimonial', ha='center', va='center')
+        # Adiciona arestas
+        G.add_edges_from([
+            ("Balanço Patrimonial", "Custos"),
+            ("Balanço Patrimonial", "Investimentos"),
+            ("Balanço Patrimonial", "Gastos"),
+            ("Custos", "Consumo"),
+            ("Custos", "Produtos"),
+            ("Investimentos", "Inventivos"),
+            ("Investimentos", "Concurso")
+        ])
         
-        # Linhas principais
-        plt.plot([0.5, 0.3], [0.85, 0.7], 'k-')  # Esquerda
-        plt.plot([0.5, 0.5], [0.85, 0.7], 'k-')  # Centro
-        plt.plot([0.5, 0.7], [0.85, 0.7], 'k-')  # Direita
-        
-        # Caixas de nível 1
-        ax.add_patch(Rectangle((0.2, 0.6), 0.2, 0.1, fill=True, color='lightgrey'))
-        plt.text(0.3, 0.65, 'Custos', ha='center', va='center')
-        
-        ax.add_patch(Rectangle((0.4, 0.6), 0.2, 0.1, fill=True, color='lightgrey'))
-        plt.text(0.5, 0.65, 'Investimentos', ha='center', va='center')
-        
-        ax.add_patch(Rectangle((0.6, 0.6), 0.2, 0.1, fill=True, color='lightgrey'))
-        plt.text(0.7, 0.65, 'Gastos', ha='center', va='center')
-        
-        # Linhas para nível 2
-        plt.plot([0.3, 0.2], [0.6, 0.45], 'k-')
-        plt.plot([0.3, 0.3], [0.6, 0.45], 'k-')
-        plt.plot([0.5, 0.4], [0.6, 0.45], 'k-')
-        plt.plot([0.5, 0.6], [0.6, 0.45], 'k-')
-        
-        # Caixas de nível 2
-        ax.add_patch(Rectangle((0.1, 0.35), 0.2, 0.1, fill=True, color='lightgrey'))
-        plt.text(0.2, 0.4, 'Consumo associado\nao produto/serviço', ha='center', va='center', fontsize=8)
-        
-        ax.add_patch(Rectangle((0.25, 0.35), 0.2, 0.1, fill=True, color='lightgrey'))
-        plt.text(0.35, 0.4, 'Produtos ou\nServiços elaborados', ha='center', va='center', fontsize=8)
-        
-        ax.add_patch(Rectangle((0.35, 0.35), 0.2, 0.1, fill=True, color='lightgrey'))
-        plt.text(0.45, 0.4, 'Inventivos', ha='center', va='center', fontsize=8)
-        
-        ax.add_patch(Rectangle((0.55, 0.35), 0.2, 0.1, fill=True, color='lightgrey'))
-        plt.text(0.65, 0.4, 'Concurso associado\nao período', ha='center', va='center', fontsize=8)
-        
-        plt.axis('off')
-        plt.tight_layout()
+        # Desenha o grafo
+        pos = nx.nx_agraph.graphviz_layout(G, prog='dot') if nx.has_graphviz else nx.spring_layout(G)
+        nx.draw(G, pos, with_labels=True, node_size=3000, node_color="lightblue", font_size=8)
+        plt.savefig('balanco_patrimonial.png')
         plt.show()
-        
+
         st.markdown("""
         - **Custo:** Gasto relativo à produção de bens/serviços
         - **Despesa:** Gasto com administração/vendas

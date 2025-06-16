@@ -1,6 +1,8 @@
 import streamlit as st
 import streamlit as st
 import streamlit.components.v1 as components
+import streamlit as st
+import graphviz
 
 def main():
     st.title("📚 Introdução à Contabilidade Gerencial de Custos")
@@ -164,7 +166,96 @@ def main():
     
     # 📚 Resumo visual
     st.subheader("🗺️ Mapa Mental de Custos")
-    st.image("https://i.imgur.com/9oKfG6m.png", caption="Mapa Mental: Custos, Despesas e Investimentos")
+    st.subheader("🔍 Entendendo os conceitos fundamentais de **Gastos, Custos, Despesas, Investimentos e Perdas**")
+
+    st.markdown("""
+    > Na gestão de custos, é fundamental compreender como os diferentes tipos de gastos impactam a saúde financeira de qualquer organização — seja ela uma indústria, comércio, serviço ou setor público.
+    
+    """)
+    
+    st.divider()
+    
+    st.subheader("📊 **Mapa Conceitual dos Gastos**")
+    
+    # Criando o diagrama
+    grafico = graphviz.Digraph()
+    
+    grafico.attr('node', shape='box', style='rounded, filled', fillcolor='#e8f4f8')
+    
+    grafico.node('G', 'Gastos')
+    grafico.node('I', 'Investimentos\n(Gastos que ainda serão usados para gerar receita)')
+    grafico.node('C', 'Custo\n(Gastos que são usados diretamente na operação)')
+    grafico.node('D', 'Despesa\n(Gastos que foram usados para gerar receita)')
+    grafico.node('P', 'Perda\n(Gastos que não geraram receita)')
+    
+    # Ligações principais
+    grafico.edge('G', 'I', label='ainda serão usados')
+    grafico.edge('G', 'C', label='uso na operação')
+    grafico.edge('C', 'D', label='foram usados para gerar receita')
+    grafico.edge('C', 'P', label='não geraram receita')
+    
+    # Adicionando impacto no resultado
+    grafico.node('R', 'Receita e Resultado\n(impacto financeiro)')
+    grafico.edge('D', 'R', style='dashed')
+    grafico.edge('P', 'R', style='dashed')
+    grafico.edge('C', 'R', style='dashed')
+    
+    st.graphviz_chart(grafico)
+    
+    st.divider()
+    
+    st.subheader("💡 **Refletindo sobre os Conceitos**")
+    
+    st.markdown("""
+    ### 🏭 **No Setor Industrial:**
+    - **Custo:** Matéria-prima, mão de obra da produção, depreciação de máquinas.
+    - **Despesa:** Energia da área administrativa, salário do contador, marketing.
+    - **Investimento:** Compra de uma nova máquina.
+    - **Perda:** Roubo de estoque, incêndio sem seguro.
+    
+    ### 🏪 **No Comércio:**
+    - **Custo:** Compra dos produtos para revenda.
+    - **Despesa:** Salário dos vendedores, aluguel da loja.
+    - **Investimento:** Ampliação da loja.
+    - **Perda:** Produtos quebrados ou vencidos.
+    
+    ### 💼 **No Setor de Serviços:**
+    - **Custo:** Salário dos consultores, ferramentas de software usadas no atendimento.
+    - **Despesa:** Marketing, aluguel do escritório.
+    - **Investimento:** Compra de computadores novos.
+    - **Perda:** Cancelamento não pago de um contrato.
+    
+    ### 🏛️ **Na Administração Pública:**
+    - **Custo:** Materiais usados na prestação de serviços públicos (ex.: material escolar em escolas públicas).
+    - **Despesa:** Energia elétrica da prefeitura, salários da área administrativa.
+    - **Investimento:** Construção de uma nova escola.
+    - **Perda:** Danificação de veículos públicos sem cobertura.
+    
+    """)
+    
+    st.divider()
+    
+    st.subheader("🚀 **Desafio Rápido!**")
+    
+    pergunta = st.radio(
+        "📌 Imagine que sua empresa comprou um notebook para ser usado pela equipe de vendas. Isso é:",
+        ("Investimento", "Custo", "Despesa", "Perda")
+    )
+    
+    if pergunta:
+        if pergunta == "Investimento":
+            st.success("✅ Correto! Inicialmente é um investimento, pois o bem ainda não foi consumido.")
+        else:
+            st.error("❌ Não é bem isso. Quando compramos um notebook, ele ainda não foi usado, portanto é um investimento.")
+    
+    st.markdown("---")
+    
+    st.subheader("🧠 **Quer testar mais seu conhecimento?**")
+    
+    if st.button("Clique para mais desafios"):
+        st.info("👉 Em breve você poderá acessar quizzes mais completos nesta plataforma!")
+    
+
     
     st.info("""
     Se você entende essa diferença, já está à frente de muitos gestores no mercado.

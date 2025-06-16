@@ -8,3 +8,4 @@ gTTS>=2.3.2
 matplotlib>=3.10.3
 seaborn>=0.13.2
 graphviz>=0.21
+networkx>=3.5

@@ -568,8 +568,8 @@ def main():
                 st.error("❌ Revise a classificação de custos indiretos")
     # 🔜 Botão para próxima página
     st.markdown("---")
-    if st.button("👉 Avançar para: Planejamento de Custos"):
-        st.switch_page("pages/3_📊_Custeio_Absorcao.py")
+    if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio por Absorção"):
+        st.switch_page("pages/3_📊_Custeio_por_Absorcao.py")
 
 if __name__ == "__main__":
     main()

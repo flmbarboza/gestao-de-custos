@@ -5,7 +5,7 @@ from utils import leitor_de_texto
 
 def main():
     st.title("📚 Introdução à Contabilidade de Custos")
-    with st.expander("🎯 Objetivos da Unidade", expanded=True):
+    with st.expander("🎯 Objetivos da Unidade", expanded=False):
             st.markdown("""
             - Compreender terminologia básica de custos
             - Classificar custos por natureza e comportamento

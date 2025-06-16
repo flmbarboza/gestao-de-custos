@@ -19,7 +19,7 @@ def main():
     
     # Lista das abas
     abas = ["💡 Ideação", "📌 Conceitos Básicos", "📊 Classificação", "📈 Comportamento", "🧠 Quiz"]
-    
+        
     # Estilo CSS para estilizar os botões como abas e destacar a ativa
     st.markdown("""
     <style>
@@ -50,19 +50,14 @@ def main():
     colunas = st.columns(len(abas))
     
     # Loop pelas colunas e abas
-    for i, (coluna, aba) in enumerate(zip(colunas, abas)):
-        with coluna:
-            # Aplicar classe CSS ativa se for a aba atual
-            btn_class = "active" if st.session_state.active_tab == aba else ""
-            btn_id = f"tab_button_{i}"
-            # Botão customizado com HTML e JS para mudar aba
-            st.markdown(f"""
-                <button class="tab-button {btn_class}" onclick="document.getElementById('{btn_id}').click();">{aba}</button>
-                <form style="display:none"><button id="{btn_id}" type="submit"></button></form>
-            """, unsafe_allow_html=True)
-            # Ao clicar no botão, atualiza a aba ativa
-            if st.form_submit_button(f"select_{i}"):
-                st.session_state.active_tab = aba
+    for i, aba in enumerate(abas):
+        with colunas[i]:
+            # Formulário para cada aba
+            with st.form(key=f"form_{i}"):
+                btn_class = "active" if st.session_state.active_tab == aba else ""
+                st.markdown(f'<button class="tab-button {btn_class}">{aba}</button>', unsafe_allow_html=True)
+                if st.form_submit_button():
+                    st.session_state.active_tab = aba
     
     # Conteúdo condicional com base na aba selecionada
     st.write("---")
@@ -98,8 +93,7 @@ def main():
         if st.button("➡️ Avançar"):
             idx_atual = abas.index(st.session_state.active_tab)
             if idx_atual < len(abas) - 1:
-                st.session_state.active_tab = abas[idx_atual + 1]
-                
+                st.session_state.active_tab = abas[idx_atual + 1]                
     # Criando abas para o submenu
     tab0, tab1, tab2, tab3, tab4 = st.tabs([
         "💡 Ideação", "📌 Conceitos Básicos", 

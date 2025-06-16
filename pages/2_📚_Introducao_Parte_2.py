@@ -13,13 +13,27 @@ def main():
             """)
 
     # Criando abas para o submenu
-    tab1, tab2, tab3, tab4 = st.tabs([
-        "📌 Conceitos Básicos", 
+    tab0, tab1, tab2, tab3, tab4 = st.tabs([
+        "💡 Ideação", "📌 Conceitos Básicos", 
         "📊 Classificação", 
         "📈 Comportamento", 
         "🧠 Quiz"
     ])
     
+    with tab0:  # Conceitos Básicos    
+        st.header("Qual é o problema?")
+        st.markdown("""
+            Imagine dirigir uma empresa — seja uma indústria, um comércio, um negócio digital, um restaurante, uma clínica ou até uma repartição pública.  
+            **Saber seus custos não é uma opção. É uma questão de sobrevivência.**
+    
+        Sem isso, você:
+        
+        - Preço errado seus produtos ou serviços.
+        - Desperdiça recursos.
+        - Perde competitividade.
+        - E, pior, corre risco de quebrar... mesmo vendendo muito.
+        """)
+        
     with tab1:  # Conceitos Básicos    
         st.header("Terminologia Fundamental")
        

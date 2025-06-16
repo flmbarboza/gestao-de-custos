@@ -329,7 +329,7 @@ def main():
     
     pergunta = st.radio(
         "Imagine que uma empresa contratou uma agência de marketing para fazer campanhas nas redes sociais. Esse gasto é:",
-        ("Custo", "Despesa")
+        ("Custo", "Despesa"), index=None
     )
     
     if pergunta:

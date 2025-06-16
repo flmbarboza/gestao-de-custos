@@ -24,7 +24,7 @@ def main():
         E é aí que entra o universo dos **custos**, que são muito mais do que números: são a chave para qualquer negócio ser viável, competitivo e lucrativo.
         """)
 
-    col1 = st.columns(1)
+    col1 = st.columns(1)[0]
             
     with col1:
         st.markdown(

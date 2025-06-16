@@ -2,7 +2,6 @@ import streamlit as st
 from utils import leitor_de_texto
 
 def main():
-    st.header("Início")
     st.title("🏦 Gestão de Custos - FAGEN/UFU")
     
     # Banner com imagem

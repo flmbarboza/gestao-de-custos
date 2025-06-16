@@ -14,6 +14,15 @@ def main():
     
     with tab1:  # Conceitos Básicos
         st.header("Terminologia Fundamental")
+       
+        st.markdown("""
+        Imagine que você vai abrir uma hamburgueria, um brechó online ou até um estúdio de criação digital. Antes de pensar no lucro, no preço que você vai cobrar ou no quanto vai ganhar, tem uma pergunta crucial:  
+        
+        > **“Quanto custa para eu fazer, oferecer ou entregar isso?”**  
+        
+        E é aí que entra o universo dos **custos**, que são muito mais do que números: são a chave para qualquer negócio ser viável, competitivo e lucrativo.
+        """)
+        
         st.markdown("""
         - **Custo:** Gasto relativo à produção de bens/serviços
         - **Despesa:** Gasto com administração/vendas

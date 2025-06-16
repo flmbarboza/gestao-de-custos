@@ -441,7 +441,7 @@ def main():
             st.image("https://cdn-icons-png.flaticon.com/512/3144/3144456.png", width=100)
         
         # Abas para diferentes classificações
-        tb1, tb2, tb3 = st.tabs(["🔷 Natureza (Direto/Indireto)", "📊 Comportamento (Fixo/Variável)", "🏷️ Aplicação (Custo/Despesa)"])
+        tb1, tb2 = st.tabs(["🔷 Natureza (Direto/Indireto)", "📊 Comportamento (Fixo/Variável)"])
         
         with tb1:
             st.subheader("Diretos vs. Indiretos")
@@ -534,50 +534,7 @@ def main():
             - 🚚 **Custo Variável Típico:** Matéria-prima, frete por unidade vendida
             - 💡 **Custo Misto:** Energia (parte fixa + parte variável pelo uso)
             """)
-    
-        with tb3:
-            st.subheader("Custos vs. Despesas")
-            
-            col_cd1, col_cd2 = st.columns(2)
-            
-            with col_cd1:
-                st.markdown("""
-                **Custos:**
-                - Relacionados à produção
-                - Capitalizados no estoque
-                - Exemplos:
-                  - Matéria-prima
-                  - Salários da produção
-                  - Manutenção de máquinas
-                """)
-                st.image("https://cdn-icons-png.flaticon.com/512/3652/3652191.png", width=150)
-            
-            with col_cd2:
-                st.markdown("""
-                **Despesas:**
-                - Relacionadas à administração/vendas
-                - Deduzidas do resultado
-                - Exemplos:
-                  - Salários administrativos
-                  - Propaganda
-                  - Material de escritório
-                """)
-                st.image("https://cdn-icons-png.flaticon.com/512/3448/3448348.png", width=150)
-            
-            # Quiz interativo
-            st.markdown("#### 🧠 Teste Seu Conhecimento")
-            
-            quiz = st.radio(
-                "Como classificar o salário do supervisor de produção?",
-                ["Custo Direto", "Custo Indireto", "Despesa"],
-                index=None
-            )
-            
-            if quiz == "Custo Indireto":
-                st.success("✅ Correto! É um custo indireto de fabricação.")
-            elif quiz is not None:
-                st.error("❌ Tente novamente! Pense na relação com a produção.")
-    
+     
     with tab3:  # Comportamento
         st.title("⚖️ Diferença entre Custos e Despesas")
         st.subheader("🔍 Como os custos e as despesas impactam o resultado da empresa?")

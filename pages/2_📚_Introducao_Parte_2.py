@@ -5,6 +5,12 @@ from utils import leitor_de_texto
 
 def main():
     st.title("📚 Introdução à Contabilidade de Custos")
+    with st.expander("📌 Objetivos da Unidade", expanded=True):
+            st.markdown("""
+            - Compreender terminologia básica de custos
+            - Classificar custos por natureza e comportamento
+            - Analisar o comportamento de custos
+            """)
 
     # Criando abas para o submenu
     tab1, tab2, tab3, tab4 = st.tabs([
@@ -15,13 +21,6 @@ def main():
     ])
     
     with tab1:  # Conceitos Básicos    
-        with st.expander("📌 Objetivos da Unidade", expanded=True):
-        st.markdown("""
-        - Compreender terminologia básica de custos
-        - Classificar custos por natureza e comportamento
-        - Analisar o comportamento de custos
-        """)
-
         st.header("Terminologia Fundamental")
        
         st.markdown("""

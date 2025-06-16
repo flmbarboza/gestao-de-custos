@@ -69,8 +69,16 @@ def main():
         
         # Desenha o grafo
         pos = nx.nx_agraph.graphviz_layout(G, prog='dot') if nx.has_graphviz else nx.spring_layout(G)
+
+        # Verifica se o graphviz está disponível
+        try:
+            import pygraphviz
+            pos = nx.nx_agraph.graphviz_layout(G, prog='dot')
+        except ImportError:
+            pos = nx.spring_layout(G)
+        
         nx.draw(G, pos, with_labels=True, node_size=3000, node_color="lightblue", font_size=8)
-        plt.savefig('balanco_patrimonial.png')
+        plt.savefig('balanco_patrimonial_networkx.png')
         plt.show()
 
         st.markdown("""

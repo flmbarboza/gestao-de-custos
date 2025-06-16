@@ -1,6 +1,9 @@
 import streamlit as st
 from utils import leitor_de_texto
 
+st.set_page_config(page_title="Gestão de Custos - Início", page_icon="🏠")
+st.title("🏠 Início")
+
 def main():
     st.title("🏦 Gestão de Custos - FAGEN/UFU")
     

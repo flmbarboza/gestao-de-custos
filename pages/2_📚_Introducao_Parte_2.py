@@ -10,46 +10,7 @@ def main():
             - Compreender terminologia básica de custos
             - Classificar custos por natureza e comportamento
             - Analisar o comportamento de custos
-            """)
-   
-    # Inicializa a variável de sessão com o índice da aba ativa
-    if "tab_index" not in st.session_state:
-        st.session_state.tab_index = 0
-    
-    # Lista com as abas (ordem importa)
-    abas = ["💡 Ideação", "📌 Conceitos Básicos", "📊 Classificação", "📈 Comportamento", "🧠 Quiz"]
-    
-    # Botões Voltar e Avançar
-    col1, col2 = st.columns([1, 1])
-    
-    with col1:
-        if st.button("⬅️ Voltar") and st.session_state.tab_index > 0:
-            st.session_state.tab_index -= 1
-    
-    with col2:
-        if st.button("➡️ Avançar") and st.session_state.tab_index < len(abas) - 1:
-            st.session_state.tab_index += 1
-    
-    # Exibe título da aba atual
-    st.markdown(f"## {abas[st.session_state.tab_index]}")
-    st.write("---")
-    
-    # Conteúdo condicional com base no índice da aba
-    if st.session_state.tab_index == 0:
-        st.write("Conteúdo da aba de **Ideação** aqui...")
-    
-    elif st.session_state.tab_index == 1:
-        st.write("Conteúdo da aba de **Conceitos Básicos** aqui...")
-    
-    elif st.session_state.tab_index == 2:
-        st.write("Conteúdo da aba de **Classificação** aqui...")
-    
-    elif st.session_state.tab_index == 3:
-        st.write("Conteúdo da aba de **Comportamento** aqui...")
-    
-    elif st.session_state.tab_index == 4:
-        st.write("Conteúdo do **Quiz** aqui...")
-        
+            """)    
     
     # Criando abas para o submenu
     tab0, tab1, tab2, tab3, tab4 = st.tabs([

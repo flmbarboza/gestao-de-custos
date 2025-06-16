@@ -2,7 +2,7 @@ import streamlit as st
 from utils import leitor_de_texto
 
 def main():
-    st.set_page_config(
+    st.header(
     page_title="Início",
     page_icon="🏦"
     )

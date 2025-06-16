@@ -41,6 +41,12 @@ def main():
                 "Percentual": [custo_percent, impostos, lucro]
             }
             st.bar_chart(data, x="Componente", y="Percentual")
+   
+    st.divider()
+    
+    if st.button("👉 Avançar para o próximo tópico: Entender a Margem de Contribuição"):
+        st.switch_page("pages/6_⚖️_Margem_Contribuicao.py")
+
 
 if __name__ == "__main__":
     main()

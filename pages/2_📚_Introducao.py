@@ -73,7 +73,7 @@ def main():
     
         respostas = {}
         for pergunta, correta in perguntas.items():
-            respostas[pergunta] = st.radio(pergunta, ["Verdadeiro", "Falso"], key=pergunta)
+            respostas[pergunta] = st.radio(pergunta, ["Verdadeiro", "Falso"], index=None, key=pergunta)
     
         if st.button("🔍 Verificar respostas"):
             acertos = 0

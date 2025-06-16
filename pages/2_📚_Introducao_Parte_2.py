@@ -1,5 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle, Ellipse
 from utils import leitor_de_texto
 
 def main():
@@ -24,32 +25,30 @@ def main():
         E é aí que entra o universo dos **custos**, que são muito mais do que números: são a chave para qualquer negócio ser viável, competitivo e lucrativo.
         """)
 
-    col1 = st.columns(1)[0]
+        col1 = st.columns(1)[0]
             
-    with col1:
-        st.markdown(
-            """
-            <div style="background-color:#FFD54F; padding:20px; border-radius:12px;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.2)">
-                <h4 style="color:#BF360C;">📘 Terminologia:</h4>
-                <ul style="color:#212121;">
-                    <li><b>Gastos</b>
-                        <ul>
-                            <li>Custos</li>
-                            <li>Despesas</li>
-                            <li>Investimentos</li>
-                            <li>Perda</li>
-                        </ul>
-                    </li>
-                    <li>Desembolso</li>
-                </ul>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+        with col1:
+            st.markdown(
+                """
+                <div style="background-color:#FFD54F; padding:20px; border-radius:12px;
+                box-shadow: 2px 2px 8px rgba(0,0,0,0.2)">
+                    <h4 style="color:#BF360C;">📘 Terminologia:</h4>
+                    <ul style="color:#212121;">
+                        <li><b>Gastos</b>
+                            <ul>
+                                <li>Custos</li>
+                                <li>Despesas</li>
+                                <li>Investimentos</li>
+                                <li>Perda</li>
+                            </ul>
+                        </li>
+                        <li>Desembolso</li>
+                    </ul>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
-        from matplotlib.patches import Rectangle, Ellipse
-        
         plt.figure(figsize=(10, 8))
         ax = plt.gca()
         

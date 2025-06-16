@@ -417,8 +417,7 @@ def main():
         with col1:
             st.markdown("""
             **Por Natureza:**
-            - Matéria-prima
-            - Mão de obra
+            - Custos Diretos
             - Custos indiretos
             """)
         
@@ -429,6 +428,155 @@ def main():
             - Variáveis (variam proporcionalmente)
             - Mistos (parte fixa + parte variável)
             """)
+
+        # Introdução interativa
+        with st.expander("🔍 Por que classificar custos?", expanded=True):
+            st.markdown("""
+            **A classificação adequada dos custos permite:**
+            - Tomada de decisão mais precisa
+            - Cálculo correto do custo dos produtos
+            - Identificação de oportunidades de redução
+            - Melhor planejamento orçamentário
+            """)
+            st.image("https://cdn-icons-png.flaticon.com/512/3144/3144456.png", width=100)
+        
+        # Abas para diferentes classificações
+        tab1, tab2, tab3 = st.tabs(["🔷 Natureza (Direto/Indireto)", "📊 Comportamento (Fixo/Variável)", "🏷️ Aplicação (Custo/Despesa)"])
+        
+        with tab1:
+            st.subheader("Diretos vs. Indiretos")
+            col1, col2 = st.columns([1, 2])
+            
+            with col1:
+                st.markdown("""
+                **Custos Diretos:**
+                - Identificáveis diretamente no produto
+                - Exemplos:
+                  - Matéria-prima específica
+                  - Embalagem do produto
+                  - Mão de obra dedicada
+                
+                **Custos Indiretos:**
+                - Não podem ser atribuídos diretamente
+                - Exemplos:
+                  - Energia da fábrica
+                  - Aluguel do prédio
+                  - Limpeza geral
+                """)
+                
+                produto_selecionado = st.selectbox(
+                    "Selecione um produto para análise:",
+                    ["Smartphone", "Notebook", "Tablet"],
+                    key="produto_select"
+                )
+                
+            with col2:
+                # Exemplo interativo por produto
+                data = {
+                    "Tipo": ["Direto", "Direto", "Indireto", "Indireto"],
+                    "Item": ["Tela LCD", "Processador", "Energia", "Depreciação"],
+                    "Valor": [120, 85, 30, 15],
+                    "Produto": [produto_selecionado]*4
+                }
+                
+                fig = px.sunburst(
+                    data,
+                    path=['Tipo', 'Item'],
+                    values='Valor',
+                    color='Tipo',
+                    color_discrete_map={'Direto':'#4CAF50','Indireto':'#FF9800'},
+                    title=f"Composição de Custos - {produto_selecionado}"
+                )
+                st.plotly_chart(fig, use_container_width=True)
+                
+                st.caption("🔎 Clique no gráfico para explorar a composição detalhada")
+    
+        with tab2:
+            st.subheader("Fixos vs. Variáveis")
+            
+            # Simulador interativo
+            st.markdown("#### 📈 Simulador de Comportamento de Custos")
+            
+            col_fv1, col_fv2 = st.columns(2)
+            with col_fv1:
+                custo_fixo = st.slider("Custo Fixo Mensal (R$)", 1000, 50000, 15000)
+                custo_variavel_unit = st.slider("Custo Variável Unitário (R$)", 5, 200, 50)
+            
+            with col_fv2:
+                producao_min = st.slider("Produção Mínima (un)", 0, 500, 0)
+                producao_max = st.slider("Produção Máxima (un)", 500, 5000, 2000)
+            
+            # Gerar dados para o gráfico
+            qtd_producao = list(range(producao_min, producao_max+1, 50))
+            custo_total = [custo_fixo + custo_variavel_unit*q for q in qtd_producao]
+            
+            df = pd.DataFrame({
+                "Quantidade": qtd_producao,
+                "Custo Total": custo_total,
+                "Custo Fixo": custo_fixo,
+                "Custo Variável": [custo_variavel_unit*q for q in qtd_producao]
+            })
+            
+            fig = px.line(
+                df,
+                x="Quantidade",
+                y=["Custo Total", "Custo Fixo", "Custo Variável"],
+                labels={"value": "Custo (R$)", "variable": "Tipo de Custo"},
+                title="Comportamento dos Custos em Relação ao Volume de Produção"
+            )
+            
+            st.plotly_chart(fig, use_container_width=True)
+            
+            # Exemplos práticos
+            st.markdown("""
+            **Exemplos Reais:**
+            - 🏭 **Custo Fixo Típico:** Aluguel da fábrica, salários administrativos
+            - 🚚 **Custo Variável Típico:** Matéria-prima, frete por unidade vendida
+            - 💡 **Custo Misto:** Energia (parte fixa + parte variável pelo uso)
+            """)
+    
+        with tab3:
+            st.subheader("Custos vs. Despesas")
+            
+            col_cd1, col_cd2 = st.columns(2)
+            
+            with col_cd1:
+                st.markdown("""
+                **Custos:**
+                - Relacionados à produção
+                - Capitalizados no estoque
+                - Exemplos:
+                  - Matéria-prima
+                  - Salários da produção
+                  - Manutenção de máquinas
+                """)
+                st.image("https://cdn-icons-png.flaticon.com/512/3652/3652191.png", width=150)
+            
+            with col_cd2:
+                st.markdown("""
+                **Despesas:**
+                - Relacionadas à administração/vendas
+                - Deduzidas do resultado
+                - Exemplos:
+                  - Salários administrativos
+                  - Propaganda
+                  - Material de escritório
+                """)
+                st.image("https://cdn-icons-png.flaticon.com/512/3448/3448348.png", width=150)
+            
+            # Quiz interativo
+            st.markdown("#### 🧠 Teste Seu Conhecimento")
+            
+            quiz = st.radio(
+                "Como classificar o salário do supervisor de produção?",
+                ["Custo Direto", "Custo Indireto", "Despesa"],
+                index=None
+            )
+            
+            if quiz == "Custo Indireto":
+                st.success("✅ Correto! É um custo indireto de fabricação.")
+            elif quiz is not None:
+                st.error("❌ Tente novamente! Pense na relação com a produção.")
     
     with tab3:  # Comportamento
         st.title("⚖️ Diferença entre Custos e Despesas")
@@ -482,9 +630,7 @@ def main():
         ### ✔️ **Despesas**
         - São gastos necessários para manter a estrutura administrativa, comercial e de apoio, mas **não estão diretamente ligados à produção**.
         - ➕ **Exemplos:** salários da administração, despesas de marketing, aluguel da sede, energia da área administrativa, honorários da contabilidade.
-        
         """)
-
     
         st.divider()
         

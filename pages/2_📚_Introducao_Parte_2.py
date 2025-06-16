@@ -1,5 +1,5 @@
 import streamlit as st
-from graphviz import Digraph
+import matplotlib.pyplot as plt
 from utils import leitor_de_texto
 
 def main():
@@ -48,45 +48,54 @@ def main():
             unsafe_allow_html=True
         )
 
-        # Criação do diagrama
-        dot = Digraph(comment='Balanço Patrimonial', format='png')
-        dot.attr(rankdir='TB', size='8,5')
+        from matplotlib.patches import Rectangle, Ellipse
         
-        # Configurações gerais
-        dot.attr('node', shape='box', style='filled', fillcolor='lightgrey', fontname='Helvetica')
-        dot.attr('edge', fontname='Helvetica')
+        plt.figure(figsize=(10, 8))
+        ax = plt.gca()
         
-        # Nó principal
-        dot.node('BP', 'Balanço Patrimonial', shape='ellipse', fillcolor='lightblue')
+        # Elementos principais
+        ax.add_patch(Ellipse((0.5, 0.9), 0.3, 0.1, fill=True, color='lightblue'))
+        plt.text(0.5, 0.9, 'Balanço Patrimonial', ha='center', va='center')
         
-        # Nós de nível 1
-        dot.node('Custos', 'Custos')
-        dot.node('Invest', 'Investimentos')
-        dot.node('Gastos', 'Gastos')
+        # Linhas principais
+        plt.plot([0.5, 0.3], [0.85, 0.7], 'k-')  # Esquerda
+        plt.plot([0.5, 0.5], [0.85, 0.7], 'k-')  # Centro
+        plt.plot([0.5, 0.7], [0.85, 0.7], 'k-')  # Direita
         
-        # Conexões do nível 1
-        dot.edge('BP', 'Custos')
-        dot.edge('BP', 'Invest')
-        dot.edge('BP', 'Gastos')
+        # Caixas de nível 1
+        ax.add_patch(Rectangle((0.2, 0.6), 0.2, 0.1, fill=True, color='lightgrey'))
+        plt.text(0.3, 0.65, 'Custos', ha='center', va='center')
         
-        # Nós de nível 2 - Custos
-        dot.node('Consumo', 'Consumo associado à elaboração\ndo produto ou serviço')
-        dot.node('Produtos', 'Produtos ou Serviços\nelaborados')
+        ax.add_patch(Rectangle((0.4, 0.6), 0.2, 0.1, fill=True, color='lightgrey'))
+        plt.text(0.5, 0.65, 'Investimentos', ha='center', va='center')
         
-        # Conexões Custos
-        dot.edge('Custos', 'Consumo')
-        dot.edge('Custos', 'Produtos')
+        ax.add_patch(Rectangle((0.6, 0.6), 0.2, 0.1, fill=True, color='lightgrey'))
+        plt.text(0.7, 0.65, 'Gastos', ha='center', va='center')
         
-        # Nós de nível 2 - Investimentos
-        dot.node('Inventivos', 'Inventivos')
-        dot.node('Concurso', 'Concurso associado ao período')
+        # Linhas para nível 2
+        plt.plot([0.3, 0.2], [0.6, 0.45], 'k-')
+        plt.plot([0.3, 0.3], [0.6, 0.45], 'k-')
+        plt.plot([0.5, 0.4], [0.6, 0.45], 'k-')
+        plt.plot([0.5, 0.6], [0.6, 0.45], 'k-')
         
-        # Conexões Investimentos
-        dot.edge('Invest', 'Inventivos')
-        dot.edge('Invest', 'Concurso')
+        # Caixas de nível 2
+        ax.add_patch(Rectangle((0.1, 0.35), 0.2, 0.1, fill=True, color='lightgrey'))
+        plt.text(0.2, 0.4, 'Consumo associado\nao produto/serviço', ha='center', va='center', fontsize=8)
         
-        # Renderizar o gráfico
-        dot.render('balanco_patrimonial', view=True)
+        ax.add_patch(Rectangle((0.25, 0.35), 0.2, 0.1, fill=True, color='lightgrey'))
+        plt.text(0.35, 0.4, 'Produtos ou\nServiços elaborados', ha='center', va='center', fontsize=8)
+        
+        ax.add_patch(Rectangle((0.35, 0.35), 0.2, 0.1, fill=True, color='lightgrey'))
+        plt.text(0.45, 0.4, 'Inventivos', ha='center', va='center', fontsize=8)
+        
+        ax.add_patch(Rectangle((0.55, 0.35), 0.2, 0.1, fill=True, color='lightgrey'))
+        plt.text(0.65, 0.4, 'Concurso associado\nao período', ha='center', va='center', fontsize=8)
+        
+        plt.axis('off')
+        plt.tight_layout()
+        plt.savefig('balanco_patrimonial.png')
+        plt.show()
+        
         st.markdown("""
         - **Custo:** Gasto relativo à produção de bens/serviços
         - **Despesa:** Gasto com administração/vendas

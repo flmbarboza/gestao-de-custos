@@ -52,30 +52,39 @@ def main():
         # Função para gerar o diagrama com graphviz
         def generate_financial_diagram():
             dot = Digraph(comment='Diagrama Financeiro', format='png')
-            dot.attr(rankdir='LR')  # Orientação de esquerda para direita
+            dot.attr(rankdir='LR', nodesep='0.5', ranksep='1.0')  # Orientação de esquerda para direita e espaçamento entre nós
+            dot.attr('node', shape='box', fontsize='12')
         
-            # Nós do diagrama
-            dot.node('balanco_patrimonial', 'Balanço Patrimonial', shape='box')
-            dot.node('custos', 'Custos', shape='box')
-            dot.node('produtos_servicos', 'Produtos ou Serviços elaborados', shape='box')
-            dot.node('investimentos', 'Investimentos', shape='box')
-            dot.node('despesas', 'Despesas', shape='box')
-            dot.node('demonstracao_resultado', 'Demonstração de\nResultado do\nPeríodo', shape='box')
-            dot.node('gastos', 'Gastos', shape='box')
+            # Cluster para o Balanço Patrimonial
+            with dot.subgraph(name='cluster_balanço') as c:
+                c.attr(label='Balanço Patrimonial', style='dashed')
+                c.node('balanco_patrimonial', 'Balanço Patrimonial')
+                c.node('custos', 'Custos')
+                c.node('produtos_servicos', 'Produtos ou Serviços elaborados')
+                c.node('investimentos', 'Investimentos')
+        
+            # Cluster para a Demonstração de Resultado do Período
+            with dot.subgraph(name='cluster_resultado') as c:
+                c.attr(label='Demonstração de\nResultado do\nPeríodo', style='dashed')
+                c.node('demonstracao_resultado', 'Demonstração de\nResultado do\nPeríodo')
+                c.node('despesas', 'Despesas')
+        
+            # Nó independente para Gastos
+            dot.node('gastos', 'Gastos')
         
             # Arestas (setas) entre os nós
-            dot.edge('balanco_patrimonial', 'custos', label='', arrowhead='vee')
-            dot.edge('custos', 'produtos_servicos', label='', arrowhead='vee')
-            dot.edge('produtos_servicos', 'investimentos', label='', arrowhead='vee')
-            dot.edge('investimentos', 'gastos', label='', arrowhead='vee')
-            dot.edge('demonstracao_resultado', 'despesas', label='', arrowhead='vee')
-            dot.edge('despesas', 'gastos', label='', arrowhead='vee')
+            dot.edge('balanco_patrimonial', 'custos', label='', arrowhead='vee', arrowsize='1.5')
+            dot.edge('custos', 'produtos_servicos', label='', arrowhead='vee', arrowsize='1.5')
+            dot.edge('produtos_servicos', 'investimentos', label='', arrowhead='vee', arrowsize='1.5')
+            dot.edge('investimentos', 'gastos', label='', arrowhead='vee', arrowsize='1.5')
+            dot.edge('demonstracao_resultado', 'despesas', label='', arrowhead='vee', arrowsize='1.5')
+            dot.edge('despesas', 'gastos', label='', arrowhead='vee', arrowsize='1.5')
         
-            # Adicionando notas explicativas
-            dot.node('nota_consumo_produto', 'Consumo associado\nà elaboração do\nproduto ou serviço', shape='plaintext')
-            dot.node('nota_consumo_periodo', 'Consumo\nassociado\nao período', shape='plaintext')
-            dot.edge('custos', 'nota_consumo_produto', style='dashed')
-            dot.edge('despesas', 'nota_consumo_periodo', style='dashed')
+            # Notas explicativas
+            dot.node('nota_consumo_produto', 'Consumo associado\nà elaboração do\nproduto ou serviço', shape='plaintext', fontsize='10')
+            dot.node('nota_consumo_periodo', 'Consumo\nassociado\nao período', shape='plaintext', fontsize='10')
+            dot.edge('custos', 'nota_consumo_produto', style='dashed', arrowhead='none')
+            dot.edge('despesas', 'nota_consumo_periodo', style='dashed', arrowhead='none')
         
             return dot
         

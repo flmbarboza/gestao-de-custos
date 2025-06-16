@@ -21,11 +21,11 @@ def main():
     ])
     # Inicializa a variável de sessão
     if "active_tab" not in st.session_state:
-        st.session_state.active_tab = tab0
+        st.session_state.active_tab = "💡 Ideação"
     
     # Botão para mudar de aba
     if st.button("Avançar"):
-        st.session_state.active_tab = tab1
+        st.session_state.active_tab = "📌 Conceitos Básicos"
     
     with tab0:  # Conceitos Básicos    
         st.markdown("""
@@ -98,8 +98,6 @@ def main():
             
             Porque custo **não é um problema de contabilidade**.  
             É uma **ferramenta de gestão inteligente**.
-
-        ### 👉 [Clique aqui para ir para a próxima aba: Terminologia](?tab=Terminologia)
         """)
         
     with tab1:  # Conceitos Básicos    

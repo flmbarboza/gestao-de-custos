@@ -1,4 +1,5 @@
 import streamlit as st
+import graphviz
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, FancyBboxPatch
 from utils import leitor_de_texto
@@ -250,6 +251,46 @@ def main():
                 st.info(f"🎯 Você acertou {acertos} de {len(perguntas)}.")
         
         st.divider()
+
+        # 📚 Resumo visual
+        st.subheader("🗺️ Mapa Mental de Custos")
+        st.subheader("🔍 Entendendo os conceitos fundamentais de **Gastos, Custos, Despesas, Investimentos e Perdas**")
+    
+        st.markdown("""
+        > Na gestão de custos, é fundamental compreender como os diferentes tipos de gastos impactam a saúde financeira de qualquer organização — seja ela uma indústria, comércio, serviço ou setor público.
+        
+        """)
+        
+        st.divider()
+        
+        st.subheader("📊 **Mapa Conceitual dos Gastos**")
+        
+        # Criando o diagrama
+        grafico = graphviz.Digraph()
+        
+        grafico.attr('node', shape='box', style='rounded, filled', fillcolor='#e8f4f8')
+        
+        grafico.node('G', 'Gastos')
+        grafico.node('I', 'Investimentos\n(Gastos que ainda serão usados para gerar receita)')
+        grafico.node('C', 'Custo\n(Gastos que são usados diretamente na operação)')
+        grafico.node('D', 'Despesa\n(Gastos que foram usados para gerar receita)')
+        grafico.node('P', 'Perda\n(Gastos que não geraram receita)')
+        
+        # Ligações principais
+        grafico.edge('G', 'I', label='ainda serão usados')
+        grafico.edge('G', 'C', label='uso na operação')
+        grafico.edge('C', 'D', label='foram usados para gerar receita')
+        grafico.edge('C', 'P', label='não geraram receita')
+        
+        # Adicionando impacto no resultado
+        grafico.node('R', 'Receita e Resultado\n(impacto financeiro)')
+        grafico.edge('D', 'R', style='dashed')
+        grafico.edge('P', 'R', style='dashed')
+        grafico.edge('C', 'R', style='dashed')
+        
+        st.graphviz_chart(grafico)
+        
+        st.divider()
         
         # 🏗️ Cenários por setor
         st.subheader("🏢 E na prática? Como isso aparece em diferentes setores?")
@@ -261,36 +302,95 @@ def main():
         
         if setor == "Indústria":
             st.markdown("""
-        **Indústria:**  
         - 🏭 **Custos:** Matéria-prima, mão de obra da fábrica, energia da produção, manutenção das máquinas.  
         - 💸 **Despesas:** Marketing, vendas, administrativo, RH, aluguel do escritório.  
         - 💼 **Investimentos:** Compra de máquinas, galpões, tecnologia de produção.  
         """)
         elif setor == "Comércio":
             st.markdown("""
-        **Comércio:**  
         - 🏪 **Custos:** Compra de mercadorias para revenda, transporte dos produtos, armazenamento.  
         - 💸 **Despesas:** Vendedores, propaganda, aluguel da loja, sistemas de gestão.  
         - 💼 **Investimentos:** Reformas, expansão de lojas, aquisição de equipamentos.  
         """)
         elif setor == "Serviços":
             st.markdown("""
-        **Serviços:**  
         - 👩‍⚕️ **Custos:** Salário dos profissionais diretamente envolvidos na entrega (médicos, professores, consultores), materiais usados na prestação do serviço.  
         - 💸 **Despesas:** Publicidade, atendimento, suporte, administração, aluguel do escritório.  
         - 💼 **Investimentos:** Softwares, equipamentos especializados, estrutura física.  
         """)
         else:
             st.markdown("""
-        **Administração Pública:**  
         - 🏛️ **Custos:** Recursos diretamente aplicados em serviços públicos (salários de médicos de hospitais públicos, professores de escolas públicas, manutenção dos espaços de atendimento).  
         - 💸 **Despesas:** Atividades administrativas, suporte, gestão, auditoria, comunicação.  
         - 💼 **Investimentos:** Obras públicas, compra de veículos, construção de hospitais, sistemas tecnológicos.  
-        """)        
+        """)
+
         if st.button("Ouvir explicação", key="audio1"):
             texto = "Terminologia: Custo é o gasto relativo à produção, Despesa é o gasto com administração"
             leitor_de_texto(texto)
-    
+
+        st.divider()
+        
+        # 🚀 Desafio Prático
+        st.subheader("🚀 Mini Desafio: Classifique corretamente")
+        
+        with st.expander("🧠 Clique para participar"):
+            st.markdown("**Dado o seguinte item, como você classificaria?**")
+            item = st.selectbox(
+                "Item:",
+                ["Compra de um veículo para transporte na empresa",
+                 "Conta de energia elétrica da fábrica",
+                 "Salário do gerente administrativo",
+                 "Compra de mercadorias para revenda",
+                 "Desenvolvimento de um novo software interno"]
+            )
+        
+            classificacao = st.radio(
+                "Classificação:",
+                ["Custo", "Despesa", "Investimento"]
+            )
+        
+            if st.button("✅ Verificar classificação"):
+                respostas_certas = {
+                    "Compra de um veículo para transporte na empresa": "Investimento",
+                    "Conta de energia elétrica da fábrica": "Custo",
+                    "Salário do gerente administrativo": "Despesa",
+                    "Compra de mercadorias para revenda": "Custo",
+                    "Desenvolvimento de um novo software interno": "Investimento"
+                }
+        
+                correta = respostas_certas[item]
+                if classificacao == correta:
+                    st.success(f"🎉 Correto! {item} é classificado como **{correta}**.")
+                else:
+                    st.error(f"❌ Ops! {item} é na verdade **{correta}**.")
+        
+        st.divider()
+        
+        st.subheader("🚀 **Desafio Rápido!**")
+        
+        pergunta = st.radio(
+            "📌 Imagine que sua empresa comprou um notebook para ser usado pela equipe de vendas. Isso é:",
+            ("Investimento", "Custo", "Despesa", "Perda"),
+                index=None
+        )
+        
+        if pergunta:
+            if pergunta == "Investimento":
+                st.success("✅ Correto! Inicialmente é um investimento, pois o bem ainda não foi consumido.")
+            else:
+                st.error("❌ Não é bem isso. Quando compramos um notebook, ele ainda não foi usado, portanto é um investimento.")
+        
+        st.markdown("---")
+        
+        st.subheader("🧠 **Quer testar mais seu conhecimento?**")
+        
+        if st.button("Clique para mais desafios"):
+            st.info("👉 Em breve você poderá acessar quizzes mais completos nesta plataforma!")
+        st.markdown(" ")
+        
+        st.markdown("Vá para o topo dessa página e clique em **📊 Classificação** para continuar!")
+        
     with tab2:  # Classificação
         st.header("Classificação de Custos")
         
@@ -327,7 +427,6 @@ def main():
             - Mistos (parte fixa + parte variável)
             """)
         
-        st.image("https://i.imgur.com/JQH90yl.png", width=400)
     
     with tab3:  # Comportamento
         st.header("Análise do Comportamento")

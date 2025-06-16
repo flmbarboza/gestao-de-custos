@@ -1,4 +1,5 @@
 import streamlit as st
+from graphviz import Digraph
 from utils import leitor_de_texto
 
 def main():
@@ -22,7 +23,70 @@ def main():
         
         E é aí que entra o universo dos **custos**, que são muito mais do que números: são a chave para qualquer negócio ser viável, competitivo e lucrativo.
         """)
+
+    col1 = st.columns(1)
+            
+    with col1:
+        st.markdown(
+            """
+            <div style="background-color:#FFD54F; padding:20px; border-radius:12px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.2)">
+                <h4 style="color:#BF360C;">📘 Terminologia:</h4>
+                <ul style="color:#212121;">
+                    <li><b>Gastos</b>
+                        <ul>
+                            <li>Custos</li>
+                            <li>Despesas</li>
+                            <li>Investimentos</li>
+                            <li>Perda</li>
+                        </ul>
+                    </li>
+                    <li>Desembolso</li>
+                </ul>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        # Criação do diagrama
+        dot = Digraph(comment='Balanço Patrimonial', format='png')
+        dot.attr(rankdir='TB', size='8,5')
         
+        # Configurações gerais
+        dot.attr('node', shape='box', style='filled', fillcolor='lightgrey', fontname='Helvetica')
+        dot.attr('edge', fontname='Helvetica')
+        
+        # Nó principal
+        dot.node('BP', 'Balanço Patrimonial', shape='ellipse', fillcolor='lightblue')
+        
+        # Nós de nível 1
+        dot.node('Custos', 'Custos')
+        dot.node('Invest', 'Investimentos')
+        dot.node('Gastos', 'Gastos')
+        
+        # Conexões do nível 1
+        dot.edge('BP', 'Custos')
+        dot.edge('BP', 'Invest')
+        dot.edge('BP', 'Gastos')
+        
+        # Nós de nível 2 - Custos
+        dot.node('Consumo', 'Consumo associado à elaboração\ndo produto ou serviço')
+        dot.node('Produtos', 'Produtos ou Serviços\nelaborados')
+        
+        # Conexões Custos
+        dot.edge('Custos', 'Consumo')
+        dot.edge('Custos', 'Produtos')
+        
+        # Nós de nível 2 - Investimentos
+        dot.node('Inventivos', 'Inventivos')
+        dot.node('Concurso', 'Concurso associado ao período')
+        
+        # Conexões Investimentos
+        dot.edge('Invest', 'Inventivos')
+        dot.edge('Invest', 'Concurso')
+        
+        # Renderizar o gráfico
+        dot.render('balanco_patrimonial', view=True)
         st.markdown("""
         - **Custo:** Gasto relativo à produção de bens/serviços
         - **Despesa:** Gasto com administração/vendas

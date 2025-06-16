@@ -1,4 +1,5 @@
 import streamlit as st
+import numpy as np
 import graphviz
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, FancyBboxPatch

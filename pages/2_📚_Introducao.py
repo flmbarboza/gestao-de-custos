@@ -21,10 +21,10 @@ def main():
         st.markdown("""
         **Terminologia:**
         - Gastos
-            > Custos
-            > Despesas
-            > Investimentos
-            > Perda
+            - Custos 
+            - Despesas
+            - Investimentos
+            - Perda
         - Desembolso
         """)
     
@@ -239,7 +239,8 @@ def main():
     
     pergunta = st.radio(
         "📌 Imagine que sua empresa comprou um notebook para ser usado pela equipe de vendas. Isso é:",
-        ("Investimento", "Custo", "Despesa", "Perda")
+        ("Investimento", "Custo", "Despesa", "Perda"),
+            index=None
     )
     
     if pergunta:

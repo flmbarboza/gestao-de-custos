@@ -1,6 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
-import networkx as nx
+from graphviz import Digraph
 from utils import leitor_de_texto
 
 def main():
@@ -49,37 +49,55 @@ def main():
                 unsafe_allow_html=True
             )
 
-
-        G = nx.DiGraph()        
-        # Adiciona nós
-        G.add_node("Balanço Patrimonial")
-        G.add_nodes_from(["Custos", "Investimentos", "Gastos"])
-        G.add_nodes_from(["Consumo", "Produtos", "Inventivos", "Concurso"])
+        # Função para gerar o diagrama com graphviz
+        def generate_financial_diagram():
+            dot = Digraph(comment='Diagrama Financeiro', format='png')
+            dot.attr(rankdir='LR')  # Orientação de esquerda para direita
         
-        # Adiciona arestas
-        G.add_edges_from([
-            ("Balanço Patrimonial", "Custos"),
-            ("Balanço Patrimonial", "Investimentos"),
-            ("Balanço Patrimonial", "Gastos"),
-            ("Custos", "Consumo"),
-            ("Custos", "Produtos"),
-            ("Investimentos", "Inventivos"),
-            ("Investimentos", "Concurso")
-        ])
+            # Nós do diagrama
+            dot.node('balanco_patrimonial', 'Balanço Patrimonial', shape='box')
+            dot.node('custos', 'Custos', shape='box')
+            dot.node('produtos_servicos', 'Produtos ou Serviços elaborados', shape='box')
+            dot.node('investimentos', 'Investimentos', shape='box')
+            dot.node('despesas', 'Despesas', shape='box')
+            dot.node('demonstracao_resultado', 'Demonstração de\nResultado do\nPeríodo', shape='box')
+            dot.node('gastos', 'Gastos', shape='box')
         
-        # Desenha o grafo
-        pos = nx.nx_agraph.graphviz_layout(G, prog='dot') if nx.has_graphviz else nx.spring_layout(G)
-
-        # Verifica se o graphviz está disponível
-        try:
-            import pygraphviz
-            pos = nx.nx_agraph.graphviz_layout(G, prog='dot')
-        except ImportError:
-            pos = nx.spring_layout(G)
+            # Arestas (setas) entre os nós
+            dot.edge('balanco_patrimonial', 'custos', label='', arrowhead='vee')
+            dot.edge('custos', 'produtos_servicos', label='', arrowhead='vee')
+            dot.edge('produtos_servicos', 'investimentos', label='', arrowhead='vee')
+            dot.edge('investimentos', 'gastos', label='', arrowhead='vee')
+            dot.edge('demonstracao_resultado', 'despesas', label='', arrowhead='vee')
+            dot.edge('despesas', 'gastos', label='', arrowhead='vee')
         
-        nx.draw(G, pos, with_labels=True, node_size=3000, node_color="lightblue", font_size=8)
-        plt.savefig('balanco_patrimonial_networkx.png')
-        plt.show()
+            # Adicionando notas explicativas
+            dot.node('nota_consumo_produto', 'Consumo associado\nà elaboração do\nproduto ou serviço', shape='plaintext')
+            dot.node('nota_consumo_periodo', 'Consumo\nassociado\nao período', shape='plaintext')
+            dot.edge('custos', 'nota_consumo_produto', style='dashed')
+            dot.edge('despesas', 'nota_consumo_periodo', style='dashed')
+        
+            return dot
+        
+        # Configurando o Streamlit
+        st.title("Diagrama Financeiro")
+        
+        # Gerando o diagrama
+        financial_diagram = generate_financial_diagram()
+        
+        # Exibindo o diagrama no Streamlit
+        st.graphviz_chart(financial_diagram)
+        
+        # Adicionando uma breve descrição
+        st.markdown(
+            """
+            **Descrição:**
+            Este diagrama ilustra o fluxo de custos, despesas e investimentos em um contexto financeiro. 
+            - O **Balanço Patrimonial** está relacionado aos custos associados à elaboração de produtos ou serviços.
+            - A **Demonstração do Resultado do Período** aborda as despesas consumidas no período.
+            - As setas indicam a direção dos fluxos, e as notas explicativas detalham os consumos associados.
+            """
+        )
 
         st.markdown("""
         - **Custo:** Gasto relativo à produção de bens/serviços

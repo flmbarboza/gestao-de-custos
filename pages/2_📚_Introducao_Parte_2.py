@@ -19,9 +19,15 @@ def main():
         "📈 Comportamento", 
         "🧠 Quiz"
     ])
+    # Inicializa a variável de sessão
+    if "active_tab" not in st.session_state:
+        st.session_state.active_tab = tab0
+    
+    # Botão para mudar de aba
+    if st.button("Avançar"):
+        st.session_state.active_tab = tab1
     
     with tab0:  # Conceitos Básicos    
-        st.header("Qual é o problema?")
         st.markdown("""
             # 💥 Qual é o problema?
             

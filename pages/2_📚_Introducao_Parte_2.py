@@ -93,7 +93,6 @@ def main():
         
         plt.axis('off')
         plt.tight_layout()
-        plt.savefig('balanco_patrimonial.png')
         plt.show()
         
         st.markdown("""

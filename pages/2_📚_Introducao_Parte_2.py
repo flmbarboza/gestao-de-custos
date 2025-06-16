@@ -23,19 +23,81 @@ def main():
     with tab0:  # Conceitos Básicos    
         st.header("Qual é o problema?")
         st.markdown("""
-            Imagine dirigir uma empresa — seja uma indústria, um comércio, um negócio digital, um restaurante, uma clínica ou até uma repartição pública.  
-            **Saber seus custos não é uma opção. É uma questão de sobrevivência.**
-    
-        Sem isso, você:
-        
-        - Preço errado seus produtos ou serviços.
-        - Desperdiça recursos.
-        - Perde competitividade.
-        - E, pior, corre risco de quebrar... mesmo vendendo muito.
+            # 💥 Qual é o problema?
+            
+            Imagine que você está no comando.  
+            Pode ser de uma indústria. De um e-commerce. De um salão de beleza, uma startup de tecnologia, um restaurante, uma clínica ou até mesmo de uma repartição pública.
+            
+            Tudo parece andar: clientes chegando, produto sendo entregue, dinheiro entrando...
+            
+            Mas, de repente, a realidade bate:  
+            📉 **O lucro não aparece.**  
+            📊 **Os números não fecham.**  
+            💸 **Os recursos evaporam.**
+            
+            E aí vem a pergunta que assombra muitos gestores:  
+            **“Estamos vendendo bem… mas por que estamos no vermelho?”**
+            
+            ---
+            
+            ## 🎯 A resposta muitas vezes está em uma palavra: **custos**.
+            
+            Saber seus custos **não é opcional**.  
+            É questão de **sobrevivência**.  
+            É o que separa negócios sustentáveis daqueles que apagam as luzes antes de completar o segundo ano.
+            
+            Sem gestão de custos, você:
+            
+            - ✅ Preço seus produtos ou serviços **de forma errada**.  
+            - ✅ **Investe mal**, alocando recursos onde não há retorno.  
+            - ✅ **Desperdiça** dinheiro, tempo e energia.  
+            - ✅ **Perde competitividade** e mercado.  
+            - ✅ **Pode quebrar** — mesmo com vendas em alta!
+            
+            ---
+            
+            ## 🚨 Um alerta baseado em dados:
+            
+            > Segundo o [Sebrae](https://datasebrae.com.br/sobrevivencia-das-empresas-no-brasil/), **mais de 60% das empresas brasileiras fecham em até cinco anos**, e um dos principais motivos é a **falta de controle e análise de custos**.
+            
+            Isso acontece porque muitos confundem **faturamento com lucro**.  
+            Outros nem sabem quanto realmente custa **produzir, vender ou entregar seu serviço**.
+            
+            > 🔍 **Comentário acadêmico:** Pesquisas como a de [Artuzo et al. (2018)](https://doi.org/10.7819/rbgn.v20i2.3192) demonstram que até em setores altamente estruturados, como o agronegócio de milho e soja, a **ausência de práticas adequadas de gestão de custos leva produtores a enfrentar sérios desafios de rentabilidade, competitividade e sustentabilidade.**  
+            > O estudo revela que muitos tomam decisões com base na experiência ou na intuição, mas **sem dados precisos sobre seus custos, ficam vulneráveis às oscilações de mercado, ao aumento dos insumos e às pressões por preços.**  
+            > Se isso ocorre em negócios com grande escala e tradição, imagine nas empresas de serviços, comércio, startups ou organizações públicas.
+            
+            ---
+            
+            ## 🧭 Custo não é só número. É estratégia.
+            
+            Gerenciar custos é:
+            
+            - 🔍 Entender **onde e como o dinheiro é consumido**.  
+            - 🎯 Decidir com inteligência — **produzir mais? terceirizar? mudar preço? demitir? investir?**  
+            - 🏆 Alcançar **lucro com sustentabilidade**.  
+            - 📈 Tornar sua organização **mais eficiente, competitiva e resiliente**.
+            
+            ---
+            
+            ## 🚀 Pronto para dominar esse tema?
+            
+            Neste módulo, você vai aprender a:
+            
+            - ✔️ Compreender a **natureza, classificação e comportamento dos custos**.  
+            - ✔️ Tomar **decisões embasadas** para melhorar resultados.  
+            - ✔️ Conectar custos com **preço, lucro, investimento e sobrevivência**.
+            
+            Vamos juntos transformar números em **decisões estratégicas**.
+            
+            Porque custo **não é um problema de contabilidade**.  
+            É uma **ferramenta de gestão inteligente**.
+
+        ### 👉 [Clique aqui para ir para a próxima aba: Terminologia](?tab=Terminologia)
         """)
         
     with tab1:  # Conceitos Básicos    
-        st.header("Terminologia Fundamental")
+        st.header("Terminologia")
        
         st.markdown("""
         Imagine que você vai abrir uma hamburgueria, um brechó online ou até um estúdio de criação digital. Antes de pensar no lucro, no preço que você vai cobrar ou no quanto vai ganhar, tem uma pergunta crucial:  

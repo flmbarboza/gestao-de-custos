@@ -7,8 +7,6 @@ st.set_page_config(
     layout="centered"  # Layout mais clean para a página inicial
 )
 
-st.sidebar.title("🚀 Navegação")
-
 # Mensagem de boas-vindas (aparece apenas na root URL)
 if not st.session_state.get('redirecionado'):
     st.session_state.redirecionado = True

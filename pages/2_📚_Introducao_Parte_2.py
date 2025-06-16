@@ -12,20 +12,59 @@ def main():
             - Analisar o comportamento de custos
             """)
 
-    # Criando abas para o submenu
+    # Inicializa a variável de sessão
+    if "active_tab" not in st.session_state:
+        st.session_state.active_tab = "💡 Ideação"
+    
+    # Botões simulando abas (estilo horizontal)
+    colunas = st.columns(5)
+    abas = ["💡 Ideação", "📌 Conceitos Básicos", "📊 Classificação", "📈 Comportamento", "🧠 Quiz"]
+    
+    # Cada coluna tem um botão para uma aba
+    for i, aba in enumerate(abas):
+        if colunas[i].button(aba, key=f"tab_{i}"):
+            st.session_state.active_tab = aba
+    
+    # Exibir conteúdo com base na aba selecionada
+    if st.session_state.active_tab == "💡 Ideação":
+        st.markdown("## 💡 Ideação")
+        st.write("Conteúdo da aba de ideação aqui...")
+    
+    elif st.session_state.active_tab == "📌 Conceitos Básicos":
+        st.markdown("## 📌 Conceitos Básicos")
+        st.write("Conteúdo da aba de conceitos básicos aqui...")
+    
+    elif st.session_state.active_tab == "📊 Classificação":
+        st.markdown("## 📊 Classificação")
+        st.write("Conteúdo da aba de classificação aqui...")
+    
+    elif st.session_state.active_tab == "📈 Comportamento":
+        st.markdown("## 📈 Comportamento")
+        st.write("Conteúdo da aba de comportamento aqui...")
+    
+    elif st.session_state.active_tab == "🧠 Quiz":
+        st.markdown("## 🧠 Quiz")
+        st.write("Conteúdo do quiz aqui...")
+    
+    # Botão Avançar / Voltar (opcional)
+    col1, col2 = st.columns([1, 5])
+    with col1:
+        if st.button("⬅️ Voltar"):
+            indice_atual = abas.index(st.session_state.active_tab)
+            if indice_atual > 0:
+                st.session_state.active_tab = abas[indice_atual - 1]
+    
+    with col2:
+        if st.button("➡️ Avançar"):
+            indice_atual = abas.index(st.session_state.active_tab)
+            if indice_atual < len(abas) - 1:
+                st.session_state.active_tab = abas[indice_atual + 1]# Criando abas para o submenu
     tab0, tab1, tab2, tab3, tab4 = st.tabs([
         "💡 Ideação", "📌 Conceitos Básicos", 
         "📊 Classificação", 
         "📈 Comportamento", 
         "🧠 Quiz"
     ])
-    # Inicializa a variável de sessão
-    if "active_tab" not in st.session_state:
-        st.session_state.active_tab = "💡 Ideação"
-    
-    # Botão para mudar de aba
-    if st.button("Avançar"):
-        st.session_state.active_tab = "📌 Conceitos Básicos"
     
     with tab0:  # Conceitos Básicos    
         st.markdown("""

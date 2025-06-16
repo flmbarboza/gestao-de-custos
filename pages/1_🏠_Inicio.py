@@ -2,6 +2,10 @@ import streamlit as st
 from utils import leitor_de_texto
 
 def main():
+    st.set_page_config(
+    page_title="Início",
+    page_icon="🏦"
+    )
     st.title("🏦 Gestão de Custos - FAGEN/UFU")
     
     # Banner com imagem

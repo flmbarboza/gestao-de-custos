@@ -441,9 +441,9 @@ def main():
             st.image("https://cdn-icons-png.flaticon.com/512/3144/3144456.png", width=100)
         
         # Abas para diferentes classificações
-        tab1, tab2, tab3 = st.tabs(["🔷 Natureza (Direto/Indireto)", "📊 Comportamento (Fixo/Variável)", "🏷️ Aplicação (Custo/Despesa)"])
+        tb1, tb2, tb3 = st.tabs(["🔷 Natureza (Direto/Indireto)", "📊 Comportamento (Fixo/Variável)", "🏷️ Aplicação (Custo/Despesa)"])
         
-        with tab1:
+        with tb1:
             st.subheader("Diretos vs. Indiretos")
             col1, col2 = st.columns([1, 2])
             
@@ -491,7 +491,7 @@ def main():
                 
                 st.caption("🔎 Clique no gráfico para explorar a composição detalhada")
     
-        with tab2:
+        with tb2:
             st.subheader("Fixos vs. Variáveis")
             
             # Simulador interativo
@@ -535,7 +535,7 @@ def main():
             - 💡 **Custo Misto:** Energia (parte fixa + parte variável pelo uso)
             """)
     
-        with tab3:
+        with tb3:
             st.subheader("Custos vs. Despesas")
             
             col_cd1, col_cd2 = st.columns(2)

@@ -1,6 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
-from graphviz import Digraph
+from matplotlib.patches import Rectangle, FancyBboxPatch
 from utils import leitor_de_texto
 
 def main():
@@ -49,64 +49,75 @@ def main():
                 unsafe_allow_html=True
             )
 
-        # Função para gerar o diagrama com graphviz
-        def generate_financial_diagram():
-            dot = Digraph(comment='Diagrama Financeiro', format='png')
-            dot.attr(rankdir='LR', nodesep='0.5', ranksep='1.0')  # Orientação de esquerda para direita e espaçamento entre nós
-            dot.attr('node', shape='box', fontsize='12')
+        plt.figure(figsize=(12, 10))
+        ax = plt.gca()
+        ax.axis('off')  # Desligar eixos
         
-            # Cluster para o Balanço Patrimonial
-            with dot.subgraph(name='cluster_balanço') as c:
-                c.attr(label='Balanço Patrimonial', style='dashed')
-                c.node('balanco_patrimonial', 'Balanço Patrimonial')
-                c.node('custos', 'Custos')
-                c.node('produtos_servicos', 'Produtos ou Serviços elaborados')
-                c.node('investimentos', 'Investimentos')
+        # Título principal
+        plt.text(0.5, 0.95, 'Classificações dos Desembolsos', 
+                 ha='center', va='center', fontsize=16, weight='bold')
         
-            # Cluster para a Demonstração de Resultado do Período
-            with dot.subgraph(name='cluster_resultado') as c:
-                c.attr(label='Demonstração de\nResultado do\nPeríodo', style='dashed')
-                c.node('demonstracao_resultado', 'Demonstração de\nResultado do\nPeríodo')
-                c.node('despesas', 'Despesas')
+        # Cores para categorias
+        colors = ['#FFD54F', '#4FC3F7', '#AED581', '#7986CB', '#F06292']
         
-            # Nó independente para Gastos
-            dot.node('gastos', 'Gastos')
+        # Categorias principais (agrupando os itens fornecidos)
+        categorias = {
+            'Deduções': ['Impostos', 'Fretes', 'Devoluções'],
+            'Custos': {
+                'Diretos': ['Matéria-prima', 'Insumos'],
+                'Indiretos': ['Energia elétrica', 'Manutenção']
+            },
+            'Despesas': ['Administrativas', 'Comerciais', 'Financeiras'],
+            'Investimentos': ['Ativos Financeiros', 'Ativos Operacionais'],
+            'Outros': ['Institutos', 'Disposições']
+        }
         
-            # Arestas (setas) entre os nós
-            dot.edge('balanco_patrimonial', 'custos', label='', arrowhead='vee', arrowsize='1.5')
-            dot.edge('custos', 'produtos_servicos', label='', arrowhead='vee', arrowsize='1.5')
-            dot.edge('produtos_servicos', 'investimentos', label='', arrowhead='vee', arrowsize='1.5')
-            dot.edge('investimentos', 'gastos', label='', arrowhead='vee', arrowsize='1.5')
-            dot.edge('demonstracao_resultado', 'despesas', label='', arrowhead='vee', arrowsize='1.5')
-            dot.edge('despesas', 'gastos', label='', arrowhead='vee', arrowsize='1.5')
+        # Posicionamento das categorias
+        positions = [(0.2, 0.7), (0.5, 0.7), (0.8, 0.7), (0.35, 0.4), (0.65, 0.4)]
         
-            # Notas explicativas
-            dot.node('nota_consumo_produto', 'Consumo associado\nà elaboração do\nproduto ou serviço', shape='plaintext', fontsize='10')
-            dot.node('nota_consumo_periodo', 'Consumo\nassociado\nao período', shape='plaintext', fontsize='10')
-            dot.edge('custos', 'nota_consumo_produto', style='dashed', arrowhead='none')
-            dot.edge('despesas', 'nota_consumo_periodo', style='dashed', arrowhead='none')
+        for (x, y), (cat_name, items), color in zip(positions, categorias.items(), colors):
+            # Caixa principal da categoria
+            main_box = FancyBboxPatch((x-0.15, y-0.05), 0.3, 0.1, 
+                                     boxstyle="round,pad=0.03", 
+                                     fc=color, ec='black', alpha=0.8)
+            ax.add_patch(main_box)
+            plt.text(x, y, cat_name, ha='center', va='center', fontsize=12, weight='bold')
+            
+            # Subitens
+            if isinstance(items, dict):  # Para Custos que tem subcategorias
+                for i, (subcat, subitems) in enumerate(items.items()):
+                    # Linha de conexão
+                    plt.plot([x, x-0.1+i*0.1], [y-0.05, y-0.15], 'k-', lw=0.5)
+                    
+                    # Caixa da subcategoria
+                    sub_box = FancyBboxPatch((x-0.12+i*0.1, y-0.2), 0.15, 0.08,
+                                           boxstyle="round,pad=0.02",
+                                           fc=color, ec='black', alpha=0.6)
+                    ax.add_patch(sub_box)
+                    plt.text(x-0.05+i*0.1, y-0.16, subcat, ha='center', va='center', fontsize=9)
+                    
+                    # Itens da subcategoria
+                    for j, item in enumerate(subitems):
+                        plt.text(x-0.05+i*0.1, y-0.25-j*0.05, item, 
+                                ha='center', va='center', fontsize=8)
+            else:
+                # Para categorias sem subníveis
+                for i, item in enumerate(items):
+                    plt.plot([x, x], [y-0.05, y-0.15-i*0.05], 'k-', lw=0.5)
+                    plt.text(x, y-0.2-i*0.05, item, ha='center', va='center', fontsize=9)
         
-            return dot
+        # Adicionar legenda explicativa
+        legenda = """Legenda:
+        • Deduções: Gastos para realizar a venda
+        • Custos: Gastos na produção de bens/serviços
+        • Despesas: Gastos com manutenção da empresa
+        • Investimentos: Expectativa de benefícios futuros"""
+        plt.text(0.05, 0.1, legenda, ha='left', va='top', fontsize=9, 
+                 bbox=dict(facecolor='white', alpha=0.8, edgecolor='gray'))
         
-        # Configurando o Streamlit
-        st.title("Diagrama Financeiro")
-        
-        # Gerando o diagrama
-        financial_diagram = generate_financial_diagram()
-        
-        # Exibindo o diagrama no Streamlit
-        st.graphviz_chart(financial_diagram)
-        
-        # Adicionando uma breve descrição
-        st.markdown(
-            """
-            **Descrição:**
-            Este diagrama ilustra o fluxo de custos, despesas e investimentos em um contexto financeiro. 
-            - O **Balanço Patrimonial** está relacionado aos custos associados à elaboração de produtos ou serviços.
-            - A **Demonstração do Resultado do Período** aborda as despesas consumidas no período.
-            - As setas indicam a direção dos fluxos, e as notas explicativas detalham os consumos associados.
-            """
-        )
+        plt.tight_layout()
+        plt.savefig('classificacao_desembolsos.png', dpi=300, bbox_inches='tight')
+        plt.show()
 
         st.markdown("""
         - **Custo:** Gasto relativo à produção de bens/serviços

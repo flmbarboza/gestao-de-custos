@@ -37,6 +37,12 @@ def main():
         
         st.bar_chart(resultados.set_index("Conceito"))
         st.table(resultados)
+    
+    st.divider()
+    
+    if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio Variável"):
+        st.switch_page("pages/4_📈_Custeio_Variavel.py")
+
 
 if __name__ == "__main__":
     main()

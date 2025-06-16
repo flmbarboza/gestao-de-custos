@@ -65,5 +65,11 @@ def main():
         
         st.metric("Ponto de Equilíbrio", f"{qe:.0f} unidades")
 
+   
+    st.divider()
+    
+    if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Precificação a partir do custo"):
+        st.switch_page("pages/5_💰_Precificacao.py")
+
 if __name__ == "__main__":
     main()

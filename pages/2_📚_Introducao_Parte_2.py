@@ -47,7 +47,7 @@ def main():
             
             Sem gestão de custos, você:
             
-            - ✅ Preço seus produtos ou serviços **de forma errada**.  
+            - ✅ Precifica seus produtos ou serviços **de forma errada**.  
             - ✅ **Investe mal**, alocando recursos onde não há retorno.  
             - ✅ **Desperdiça** dinheiro, tempo e energia.  
             - ✅ **Perde competitividade** e mercado.  
@@ -57,7 +57,7 @@ def main():
             
             ## 🚨 Um alerta baseado em dados:
             
-            > Segundo o [Sebrae](https://datasebrae.com.br/sobrevivencia-das-empresas-no-brasil/), **mais de 60% das empresas brasileiras fecham em até cinco anos**, e um dos principais motivos é a **falta de controle e análise de custos**.
+            > Segundo o [BigDataCorp](https://blog.bigdatacorp.com.br/brasil-abriu-mais-de-60-milhoes-de-empresas-aponta-pesquisa/), **quase 80% das empresas brasileiras fecham em até 4 anos**, e um dos principais motivos é a **falta de controle e análise de custos**.
             
             Isso acontece porque muitos confundem **faturamento com lucro**.  
             Outros nem sabem quanto realmente custa **produzir, vender ou entregar seu serviço**.
@@ -81,16 +81,18 @@ def main():
             
             ## 🚀 Pronto para dominar esse tema?
             
-            Neste módulo, você vai aprender a:
+            Neste módulo, você vai aprender:
             
-            - ✔️ Compreender a **natureza, classificação e comportamento dos custos**.  
-            - ✔️ Tomar **decisões embasadas** para melhorar resultados.  
-            - ✔️ Conectar custos com **preço, lucro, investimento e sobrevivência**.
+            - ✔️ 🔍 Em detalhes, a terminologia completa que envolve a gestão de custos.
+            - ✔️ 📋 Classificar os custos por natureza (origem) e comportamento (volume).
+            - ✔️ 📈 Analisar como os custos se comportam em diferentes níveis de atividade.
             
             Vamos juntos transformar números em **decisões estratégicas**.
             
             Porque custo **não é um problema de contabilidade**.  
             É uma **ferramenta de gestão inteligente**.
+
+            Vá para o topo dessa página e clique em **📌 Conceitos Básicos** para continuar!
         """)
         
     with tab1:  # Conceitos Básicos    

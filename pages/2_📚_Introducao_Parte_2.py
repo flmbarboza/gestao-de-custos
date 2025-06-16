@@ -332,10 +332,10 @@ def main():
         st.divider()
         
         # 🚀 Desafio Prático
-        st.subheader("🚀 Mini Desafio: Classifique corretamente")
+        st.subheader("🚀 Mini Desafio: Identifique corretamente")
         
         with st.expander("🧠 Clique para participar"):
-            st.markdown("**Dado o seguinte item, como você classificaria?**")
+            st.markdown("**Dado o seguinte item, como você denominaria?**")
             item = st.selectbox(
                 "Item:",
                 ["Compra de um veículo para transporte na empresa",
@@ -346,11 +346,11 @@ def main():
             )
         
             classificacao = st.radio(
-                "Classificação:",
+                "Denominação:",
                 ["Custo", "Despesa", "Investimento"]
             )
         
-            if st.button("✅ Verificar classificação"):
+            if st.button("✅ Verificar a denominação"):
                 respostas_certas = {
                     "Compra de um veículo para transporte na empresa": "Investimento",
                     "Conta de energia elétrica da fábrica": "Custo",
@@ -361,7 +361,7 @@ def main():
         
                 correta = respostas_certas[item]
                 if classificacao == correta:
-                    st.success(f"🎉 Correto! {item} é classificado como **{correta}**.")
+                    st.success(f"🎉 Correto! {item} é denominado como **{correta}**.")
                 else:
                     st.error(f"❌ Ops! {item} é na verdade **{correta}**.")
         
@@ -426,9 +426,62 @@ def main():
             - Variáveis (variam proporcionalmente)
             - Mistos (parte fixa + parte variável)
             """)
-        
     
     with tab3:  # Comportamento
+        st.title("⚖️ Diferença entre Custos e Despesas")
+        st.subheader("🔍 Como os custos e as despesas impactam o resultado da empresa?")
+        
+        st.markdown("""
+        > Entender a diferença entre **custos** e **despesas** é essencial para uma boa gestão financeira. Cada um tem um papel específico na formação do resultado da empresa.
+        
+        """)
+        
+        st.divider()
+        
+        st.subheader("📊 **Relação dos Processos com Custos e Despesas**")
+        
+        # Criando o diagrama
+        grafico = graphviz.Digraph()
+        
+        grafico.attr('node', shape='box', style='rounded, filled', fillcolor='#f0f9f9')
+        
+        # Processos
+        grafico.node('Prod', '🔧 Processo Produtivo')
+        grafico.node('RH', '👥 Recursos Humanos')
+        grafico.node('Mkt', '📢 Marketing')
+        grafico.node('Fin', '💰 Finanças')
+        grafico.node('Adm', '📑 Administrativo')
+        grafico.node('Outros', '➕ Outros')
+        
+        # Receita e resultado
+        grafico.node('Rec', '💵 Receita\n(-) Custo das Mercadorias Vendidas\n= Lucro Bruto\n(-) Despesas Operacionais\n= Lucro Operacional', shape='rectangle', fillcolor='#d0eafc')
+        
+        # Conexões
+        grafico.edge('Prod', 'Rec', label='➡️ Custo')
+        grafico.edge('RH', 'Rec', label='➡️ Despesa')
+        grafico.edge('Mkt', 'Rec', label='➡️ Despesa')
+        grafico.edge('Fin', 'Rec', label='➡️ Despesa')
+        grafico.edge('Adm', 'Rec', label='➡️ Despesa')
+        grafico.edge('Outros', 'Rec', label='➡️ Despesa')
+        
+        st.graphviz_chart(grafico)
+        
+        st.divider()
+        
+        st.subheader("💡 **Conceituando:**")
+        
+        st.markdown("""
+        ### ✔️ **Custos**
+        - São todos os gastos diretamente relacionados com o processo produtivo ou com a entrega do serviço.
+        - Quando mais a produção ou venda cresce, mais os custos tendem a aumentar proporcionalmente.
+        - ➕ **Exemplos:** matéria-prima, salários da produção, depreciação de máquinas, compra de mercadorias para revenda.
+        
+        ### ✔️ **Despesas**
+        - São gastos necessários para manter a estrutura administrativa, comercial e de apoio, mas **não estão diretamente ligados à produção**.
+        - ➕ **Exemplos:** salários da administração, despesas de marketing, aluguel da sede, energia da área administrativa, honorários da contabilidade.
+        
+        """)
+
         st.header("Análise do Comportamento")
         st.markdown("""
         ```math

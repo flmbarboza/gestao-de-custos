@@ -12,35 +12,82 @@ def main():
     ```
     """)
     
+    # Inicializa a lista de produtos na session_state se não existir
+    if 'produtos' not in st.session_state:
+        st.session_state.produtos = [{"nome": "", "preco": 0.0, "cvu": 0.0, "qtd": 0}]
+    
     # Simulador de múltiplos produtos
     st.subheader("📱 Simulador Multi-Produto")
     
-    produtos = st.session_state.get("produtos", [{"nome": "", "preco": 0, "cvu": 0, "qtd": 0}])
-    
-    for i, prod in enumerate(produtos):
+    # Cria os campos para cada produto
+    for i, prod in enumerate(st.session_state.produtos):
         with st.container(border=True):
             cols = st.columns(4)
             with cols[0]:
-                produtos[i]["nome"] = st.text_input(f"Nome Produto {i+1}", prod["nome"])
+                st.session_state.produtos[i]["nome"] = st.text_input(
+                    f"Nome Produto {i+1}", 
+                    value=st.session_state.produtos[i]["nome"],
+                    key=f"nome_{i}"
+                )
             with cols[1]:
-                produtos[i]["preco"] = st.number_input(f"Preço {i+1}", 0.0, 1000.0, prod["preco"])
+                st.session_state.produtos[i]["preco"] = st.number_input(
+                    f"Preço {i+1} (R$)", 
+                    min_value=0.0, 
+                    max_value=10000.0, 
+                    value=float(st.session_state.produtos[i]["preco"]),
+                    step=0.01,
+                    key=f"preco_{i}"
+                )
             with cols[2]:
-                produtos[i]["cvu"] = st.number_input(f"CVu {i+1}", 0.0, prod["preco"], prod["cvu"])
+                st.session_state.produtos[i]["cvu"] = st.number_input(
+                    f"Custo Variável {i+1} (R$)", 
+                    min_value=0.0, 
+                    max_value=float(st.session_state.produtos[i]["preco"]),
+                    value=float(st.session_state.produtos[i]["cvu"]),
+                    step=0.01,
+                    key=f"cvu_{i}"
+                )
             with cols[3]:
-                produtos[i]["qtd"] = st.number_input(f"Qtd {i+1}", 0, 1000, prod["qtd"])
+                st.session_state.produtos[i]["qtd"] = st.number_input(
+                    f"Quantidade {i+1}", 
+                    min_value=0, 
+                    max_value=10000, 
+                    value=int(st.session_state.produtos[i]["qtd"]),
+                    key=f"qtd_{i}"
+                )
     
-    if st.button("➕ Adicionar Produto"):
-        produtos.append({"nome": "", "preco": 0, "cvu": 0, "qtd": 0})
-        st.session_state.produtos = produtos
-        st.rerun()
+    # Botões de ação
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("➕ Adicionar Produto"):
+            st.session_state.produtos.append({"nome": "", "preco": 0.0, "cvu": 0.0, "qtd": 0})
+            st.rerun()
     
-    if st.button("Calcular MC"):
-        df = pd.DataFrame(produtos)
-        df["MCu"] = df["preco"] - df["cvu"]
-        df["MC Total"] = df["MCu"] * df["qtd"]
-        st.dataframe(df)
+    with col2:
+        if st.button("🧹 Limpar Tudo"):
+            st.session_state.produtos = [{"nome": "", "preco": 0.0, "cvu": 0.0, "qtd": 0}]
+            st.rerun()
+    
+    if st.button("📊 Calcular Margem de Contribuição", type="primary"):
+        try:
+            df = pd.DataFrame(st.session_state.produtos)
+            df["MCu"] = df["preco"] - df["cvu"]
+            df["MC Total"] = df["MCu"] * df["qtd"]
+            
+            st.subheader("Resultados")
+            st.dataframe(df.style.format({
+                "preco": "R$ {:.2f}",
+                "cvu": "R$ {:.2f}",
+                "MCu": "R$ {:.2f}",
+                "MC Total": "R$ {:.2f}"
+            }))
+            
+            st.metric("Margem de Contribuição Total", 
+                     f"R$ {df['MC Total'].sum():.2f}",
+                     delta=f"{df['MC Total'].sum()/df['preco'].sum()*100:.1f}% sobre receita total")
         
-        st.metric("Margem de Contribuição Total", f"R$ {df['MC Total'].sum():.2f}")
+        except Exception as e:
+            st.error(f"Erro nos cálculos: {str(e)}")
 
 if __name__ == "__main__":
     main()

@@ -4,9 +4,6 @@ from utils import leitor_de_texto
 def main():
     st.title("🏦 Gestão de Custos - FAGEN/UFU")
     
-    # Banner com imagem
-    st.image("https://i.imgur.com/JQH90yl.png", width=700)
-    
     # Texto de boas-vindas
     texto_boas_vindas = """
     Bem-vindo à plataforma interativa da disciplina Gestão de Custos. Aqui você aprenderá:

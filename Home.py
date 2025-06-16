@@ -19,7 +19,7 @@ if not st.session_state.get('redirecionado'):
     por meio de fundamentos associados a tema, no âmbito do curso superior em Administração.
     
     ### Como começar?
-    1. Clique em **🏠 Home** no menu lateral
+    1. Clique em **🏠 Início** no menu lateral
     2. Siga o fluxo de estudos
     3. Explore as ferramentas interativas
     

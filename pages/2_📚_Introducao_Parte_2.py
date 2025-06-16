@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import graphviz
 import matplotlib.pyplot as plt
+import plotly.express as px
 from matplotlib.patches import Rectangle, FancyBboxPatch
 from utils import leitor_de_texto
 

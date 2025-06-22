@@ -972,9 +972,7 @@ def main():
                      help="Quantidade necessária para cobrir todos os custos")
             elif p == cv:
                 st.markdown("""
-                Ponto de Equilíbrio = ERRO! 
-                
-                (Preço de Venda = Custo Unitário)
+                Ponto de Equilíbrio = ERRO!<br>(Preço de Venda = Custo Unitário)
                 """)
             else:
                 st.markdown("""

@@ -917,7 +917,7 @@ def main():
         st.header("📊 Análise de Impacto de Custos")
         st.markdown("""
             ```math
-            Custo\ Total = Custo\ Fixo + (Custo\ Vari\'avel\ Unit\'ario × Quantidade)
+            Custo\ Total = Custo\ Fixo + (Custo\ Variável\ Unitário × Quantidade)
             ```
         """)
 

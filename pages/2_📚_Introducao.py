@@ -206,8 +206,7 @@ def main():
         #plt.savefig('classificacao_desembolsos.png', dpi=300, bbox_inches='tight')
         plt.show()
 
-        st.markdown("""
-        
+        st.markdown(""" \n
             *De acordo como Alves et al. (2018) "O gasto resulta em “desembolso”, no entanto, vale destacar que ambos possuem conceitos distintos, ou seja, nem todo o desembolso é um gasto."
         
             Imagine dirigir uma empresa — seja uma indústria, um comércio, um negócio digital, um restaurante, uma clínica ou até uma repartição pública.  

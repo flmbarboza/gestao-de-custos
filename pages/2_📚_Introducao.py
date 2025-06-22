@@ -350,7 +350,7 @@ def main():
         if st.button("Ouvir explicação", key="audio1"):
             texto = "Terminologia: Custo é o gasto relativo à produção, Despesa é o gasto com administração"
             leitor_de_texto(texto)
-
+            st.markdown("""TAREFA: FORMAR GRUPOS E REDIGIR UM TEXTO PARA INCLUIR EM ÁUDIO""")
         st.divider()
         
         # 🚀 Desafio Prático

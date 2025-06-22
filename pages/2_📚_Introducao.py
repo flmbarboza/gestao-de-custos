@@ -922,7 +922,7 @@ def main():
 
             
             ```math
-            Ponto\ de\ Equilíbrio = (Custo\ Total + Despesas)
+            Ponto\ de\ Equilíbrio = (Custo\ Total + Despesas) / (PV - CVU)
             ```
         """)
 
@@ -948,8 +948,9 @@ def main():
         
         # Cálculos
         ct = cf + (cv * q)
+        peq = (cf+d)/(p-cv)
         custo_medio = ct / q if q > 0 else 0
-        peq = (cf+d)/(p-cv) if p = cv else 0
+        
         # Métricas
         st.divider()
         col_met1, col_met2 = st.columns(2)
@@ -966,9 +967,18 @@ def main():
             st.metric("Participação dos Custos Variáveis", f"{percent_var:.1f}%",
                      help="Quanto do custo total é variável")
         with col_met4:
-            st.metric("Ponto de Equilíbrio", f"{int(peq) if cv > 0 else '∞'} unidades",
+            if p > cv:
+                st.metric("Ponto de Equilíbrio", f"{int(peq)} unidades",
                      help="Quantidade necessária para cobrir todos os custos")
-        
+            elif p == cv:
+                st.markdown("""
+                "Ponto de Equilíbrio = ERRO! (Preço de Venda = Custo Unitário)
+                """)
+            else:
+                st.markdown("""
+                "CUIDADO! (Preço de Venda abaixo do Custo Unitário)
+                """)
+            
         # Análise de sensibilidade
         st.divider()
         st.subheader("🔍 Análise de Sensibilidade")

@@ -101,13 +101,15 @@ def main():
         
     with tab1:  # Conceitos Básicos    
         st.header("Terminologia")
-       
+
         st.markdown("""
         Imagine que você vai abrir uma hamburgueria, um brechó online ou até um estúdio de criação digital. Antes de pensar no lucro, no preço que você vai cobrar ou no quanto vai ganhar, tem uma pergunta crucial:  
         
         > **“Quanto custa para eu fazer, oferecer ou entregar isso?”**  
         
-        E é aí que entra o universo dos **custos**, que são muito mais do que números: são a chave para qualquer negócio ser viável, competitivo e lucrativo.
+        E é aí que entra o universo dos **custos**, que são muito mais do que números: são a chave para qualquer negócio ser viável, competitivo e lucrativo. 
+
+        Entretanto, nem tudo que se gasta é chamado de custo. Assim, vamos conhecer os termos corretos.
         """)
 
         col1 = st.columns(1)[0]
@@ -127,7 +129,7 @@ def main():
                                 <li>Perda</li>
                             </ul>
                         </li>
-                        <li>Desembolso</li>
+                        <li><b>Desembolso* </b></li>
                     </ul>
                 </div>
                 """,
@@ -201,10 +203,13 @@ def main():
                  bbox=dict(facecolor='white', alpha=0.8, edgecolor='gray'))
         
         plt.tight_layout()
-        plt.savefig('classificacao_desembolsos.png', dpi=300, bbox_inches='tight')
+        #plt.savefig('classificacao_desembolsos.png', dpi=300, bbox_inches='tight')
         plt.show()
 
         st.markdown("""
+        
+            *De acordo como Alves et al. (2018) "O gasto resulta em “desembolso”, no entanto, vale destacar que ambos possuem conceitos distintos, ou seja, nem todo o desembolso é um gasto."
+        
             Imagine dirigir uma empresa — seja uma indústria, um comércio, um negócio digital, um restaurante, uma clínica ou até uma repartição pública.  
             **Saber seus custos não é uma opção. É uma questão de sobrevivência.**
             
@@ -216,12 +221,18 @@ def main():
             - E, pior, corre risco de quebrar... mesmo vendendo muito.
             
             👉 Vamos começar entendendo, de forma prática e direta, **o que são custos, despesas e investimentos.**
+
+            Ah! Só pra constar... Alves et al. (2018) é um livro e sua referência completa é: ALVES, Aline et al. **Análise de custo**. Porto Alegre: SAGAH, 2018.
+        
             """)
             
         # ✅ Integração do vídeo
         st.video("https://youtu.be/9GUog7H4Bgk")
         
-        st.markdown(""" Precisa ler mais sobre isso? Tem um texto do [Blog Razonet](https://razonet.com.br/blog/post/diferentes-tipos-de-gastos-custo-despesa-investimento-e-perda) que pode ser útil.
+        st.markdown("""             
+            Mais detalhes você pode ver [outro vídeo que mostra a diferença entre esses termos. **Clique aqui para acessar**](https://youtu.be/wvAMk9qGhoE?si=JzH89zq0ND1ij3Wt)
+
+            Precisa ler mais sobre isso? Tem um texto do [Blog Razonet](https://razonet.com.br/blog/post/diferentes-tipos-de-gastos-custo-despesa-investimento-e-perda) que pode ser útil.
             """)
             
         st.divider()
@@ -257,7 +268,7 @@ def main():
 
         # 📚 Resumo visual
         st.subheader("🗺️ Mapa Mental de Custos")
-        st.subheader("🔍 Entendendo os conceitos fundamentais de **Gastos, Custos, Despesas, Investimentos e Perdas**")
+        st.subheader("🔍 Entendendo os conceitos fundamentais de **Gastos (Custos, Despesas, Investimentos e Perdas)**")
     
         st.markdown("""
         > Na gestão de custos, é fundamental compreender como os diferentes tipos de gastos impactam a saúde financeira de qualquer organização — seja ela uma indústria, comércio, serviço ou setor público.
@@ -276,20 +287,24 @@ def main():
         grafico.node('G', 'Gastos')
         grafico.node('I', 'Investimentos\n(Gastos que ainda serão usados para gerar receita)')
         grafico.node('C', 'Custo\n(Gastos que são usados diretamente na operação)')
-        grafico.node('D', 'Despesa\n(Gastos que foram usados para gerar receita)')
-        grafico.node('P', 'Perda\n(Gastos que não geraram receita)')
+        grafico.node('D', 'Despesa\n(Gastos não associados a atividade fim)')
+        grafico.node('P', 'Perda\n(Gastos inesperados ou extraordinários.)')
         
         # Ligações principais
         grafico.edge('G', 'I', label='ainda serão usados')
         grafico.edge('G', 'C', label='uso na operação')
-        grafico.edge('C', 'D', label='foram usados para gerar receita')
-        grafico.edge('C', 'P', label='não geraram receita')
+        grafico.edge('G', 'D', label='foram usados para gerar receita')
+        grafico.edge('G', 'P', label='não geraram receita')
         
         # Adicionando impacto no resultado
-        grafico.node('R', 'Receita e Resultado\n(impacto financeiro)')
+        grafico.node('B', 'Balanço Patrimonial\n(Bens, direitos e obrigações)')
+        grafico.edge('I', 'B', style='dashed')
+        grafico.edge('C', 'B', style='dashed')
+        
+        # Adicionando impacto no resultado
+        grafico.node('R', 'Dem. Resultado do Exdercício\n(impacto financeiro)')
         grafico.edge('D', 'R', style='dashed')
         grafico.edge('P', 'R', style='dashed')
-        grafico.edge('C', 'R', style='dashed')
         
         st.graphviz_chart(grafico)
         
@@ -300,7 +315,7 @@ def main():
         
         setor = st.selectbox(
             "Escolha o setor para explorar:",
-            ["Indústria", "Comércio", "Serviços", "Administração Pública"]
+            ["Indústria", "Comércio", "Serviços", "Administração Pública"], index=None
         )
         
         if setor == "Indústria":
@@ -345,12 +360,12 @@ def main():
                  "Conta de energia elétrica da fábrica",
                  "Salário do gerente administrativo",
                  "Compra de mercadorias para revenda",
-                 "Desenvolvimento de um novo software interno"]
+                 "Desenvolvimento de um novo software interno"], index=None
             )
         
             classificacao = st.radio(
                 "Denominação:",
-                ["Custo", "Despesa", "Investimento"]
+                ["Custo", "Despesa", "Investimento"], index=None
             )
         
             if st.button("✅ Verificar a denominação"):

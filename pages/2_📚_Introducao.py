@@ -913,16 +913,17 @@ def main():
                 else:
                     st.error("❌ Revise a classificação de custos indiretos")
                 
+        
+        st.header("📊 Análise de Impacto de Custos")
+        st.markdown("""
+        ```math
+        Custo\ Total = Custo\ Fixo + (Custo\ Vari\'{a}vel\ Unit\'{a}rio × Quantidade)
+        ```
+        """)
+
         # Comportamento dos Custos
         c1, c2 = st.columns([1, 2])
         with c1:
-            st.header("📊 Análise de Impacto de Custos")
-            st.markdown("""
-            ```math
-            Custo\ Total = Custo\ Fixo + (Custo\ Variável\ Unitário × Quantidade)
-            ```
-            """)
-        
         # Controles interativos
         with c2:
             st.subheader("Parâmetros de Entrada")

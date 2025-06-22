@@ -941,7 +941,7 @@ def main():
                           help="Custo adicional por unidade produzida")
             q = st.slider("Quantidade Produzida:", 0, 1000, 200, 10,
                          help="Volume total de unidades produzidas")
-            d = st.slider("Despesas (R$):", 1, 100, 15, 1,
+            d = st.slider("Despesas (R$):", 1000, 50000, 10000, 500, 
                          help="Total de Despesas")
             p = st.slider("Preço de venda:", 1, 100, 20, 1,
                          help="Preço unitário do produto")

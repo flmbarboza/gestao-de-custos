@@ -973,6 +973,7 @@ def main():
             elif p == cv:
                 st.markdown("""
                 Ponto de Equilíbrio = ERRO! 
+                
                 (Preço de Venda = Custo Unitário)
                 """)
             else:

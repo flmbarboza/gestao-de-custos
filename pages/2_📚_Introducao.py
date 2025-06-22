@@ -943,13 +943,15 @@ def main():
         
         # Métricas
         st.divider()
-        col_met1, col_met2, col_met3, col_met4 = st.columns(4)
+        col_met1, col_met2 = st.columns(2)
         with col_met1:
             st.metric("Custo Total Estimado", f"R$ {ct:,.2f}", 
                      help="Soma de custos fixos e variáveis totais")
         with col_met2:
             st.metric("Custo Médio por Unidade", f"R$ {custo_medio:,.2f}" if q > 0 else "N/A",
                      help="Custo total dividido pela quantidade produzida")
+        
+        col_met3, col_met4 = st.columns(2)
         with col_met3:
             percent_var = (cv * q) / ct * 100
             st.metric("Participação dos Custos Variáveis", f"{percent_var:.1f}%",

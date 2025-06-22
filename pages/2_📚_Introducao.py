@@ -916,15 +916,18 @@ def main():
         
         st.header("📊 Análise de Impacto de Custos")
         st.markdown("""
-        ```math
-        Custo\ Total = Custo\ Fixo + (Custo\ Vari\'{a}vel\ Unit\'{a}rio × Quantidade)
-        ```
+            ```math
+            Custo\ Total = Custo\ Fixo + (Custo\ Vari\'{a}vel\ Unit\'{a}rio × Quantidade)
+            ```
         """)
 
         # Comportamento dos Custos
         c1, c2 = st.columns([1, 2])
         with c1:
         # Controles interativos
+            st.markdown("""
+            """)
+        
         with c2:
             st.subheader("Parâmetros de Entrada")
             cf = st.slider("Custo Fixo Total (R$):", 1000, 50000, 10000, 500, 

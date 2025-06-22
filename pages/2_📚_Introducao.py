@@ -464,7 +464,7 @@ def main():
         
         with tb1:
             st.subheader("Diretos vs. Indiretos")
-            col1, _, col2 = st.columns([1,0.25, 2])
+            col1, _, col2 = st.columns([1.5, 0.5, 1.5])
             
             with col1:
                 st.markdown("""

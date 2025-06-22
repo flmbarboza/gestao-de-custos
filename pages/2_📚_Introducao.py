@@ -1139,7 +1139,7 @@ def main():
                 st.session_state.respostas_usuario[i] = resposta
         
             # Botão para verificar respostas
-            if st.button("🔍 Verificar respostas"):
+            if st.button("🔍 Verificar respostas", key="verificar_respostas"):
                 st.session_state.pontuacao = 0
                 for i, p in enumerate(perguntas):
                     resposta_usuario = st.session_state.respostas_usuario.get(i)
@@ -1148,7 +1148,7 @@ def main():
                         st.success(f"✅ Correto! ({p['tema']})")
                     else:
                         st.error(f"❌ Incorreto. Resposta correta: {p['correta']} — {p['opcoes'][ord(p['correta']) - ord('A')]}. Justificativa: Veja o conteúdo relacionado a '{p['tema']}'.")
-        
+            
                 st.info(f"🎯 Você acertou **{st.session_state.pontuacao} de {len(perguntas)}**.")
         
         # --- FEEDBACK MOTIVACIONAL ---
@@ -1183,7 +1183,8 @@ def main():
                     st.markdown("Você acertou todas as perguntas!")
         
         # --- BOTÃO PARA REINICIAR ---
-        if st.button("🔁 Reiniciar Quiz", on_click=reiniciar_quiz):
+        if st.button("🔁 Reiniciar Quiz", key="reiniciar_quiz", on_click=reiniciar_quiz):
             st.experimental_rerun()
+            
 if __name__ == "__main__":
     main()

@@ -343,9 +343,9 @@ def main():
         - 💸 **Despesas:** Atividades administrativas, suporte, gestão, auditoria, comunicação.  
         - 💼 **Investimentos:** Obras públicas, compra de veículos, construção de hospitais, sistemas tecnológicos.  
         """)
-       else:
+        else:
             st.markdown("""
-        """)
+            """)
 
         if st.button("Ouvir explicação", key="audio1"):
             texto = "Terminologia: Custo é o gasto relativo à produção, Despesa é o gasto com administração"

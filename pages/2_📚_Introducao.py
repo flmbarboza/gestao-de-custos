@@ -955,7 +955,7 @@ def main():
             st.metric("Participação dos Custos Variáveis", f"{percent_var:.1f}%",
                      help="Quanto do custo total é variável")
         with col_met4:
-            st.metric("Ponto de Equilíbrio Financeiro", f"{int(cf/cv) if cv > 0 else '∞'} unidades",
+            st.metric("Ponto de Equilíbrio Financeiro", f"{int((ct-cf)/cv) if cv > 0 else '∞'} unidades",
                      help="Quantidade necessária para cobrir todos os custos")
         
         # Análise de sensibilidade

@@ -337,11 +337,14 @@ def main():
         - 💸 **Despesas:** Publicidade, atendimento, suporte, administração, aluguel do escritório.  
         - 💼 **Investimentos:** Softwares, equipamentos especializados, estrutura física.  
         """)
-        else:
+        elif setor == "Administração Pública":
             st.markdown("""
         - 🏛️ **Custos:** Recursos diretamente aplicados em serviços públicos (salários de médicos de hospitais públicos, professores de escolas públicas, manutenção dos espaços de atendimento).  
         - 💸 **Despesas:** Atividades administrativas, suporte, gestão, auditoria, comunicação.  
         - 💼 **Investimentos:** Obras públicas, compra de veículos, construção de hospitais, sistemas tecnológicos.  
+        """)
+       else:
+            st.markdown("""
         """)
 
         if st.button("Ouvir explicação", key="audio1"):

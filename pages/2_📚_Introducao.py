@@ -927,7 +927,7 @@ def main():
         """)
 
         # Comportamento dos Custos
-        c1, c2 = st.columns([1, 2])
+        c1, c2 = st.columns([1, 3])
         with c1:
         # Controles interativos
             st.markdown("""
@@ -1032,31 +1032,28 @@ def main():
             })
         
         df_scenarios = pd.DataFrame(scenario_data)
-        col_an1, col_an2 = st.columns([1, 2])
-        
-        with col_an1:
-            st.markdown("**Impacto de Variações no Custo Variável**")
-            st.dataframe(df_scenarios.style.format({
-                "Custo Variável Unitário": "R$ {:.2f}",
-                "Custo Total": "R$ {:,.2f}",
-                "Diferença": "R$ {:,.2f}"
-            }), hide_index=True, use_container_width=True)
-        
-        with col_an2:
-            fig2 = px.bar(df_scenarios, x='Cenário', y='Custo Total',
-                         color='Cenário',
-                         title="Comparação de Cenários",
-                         text=[f"R$ {x:,.2f}" for x in df_scenarios['Custo Total']])
-            fig2.update_layout(showlegend=False)
-            st.plotly_chart(fig2, use_container_width=True)
-        
+                
+        fig2 = px.bar(df_scenarios, x='Cenário', y='Custo Total',
+                     color='Cenário',
+                     title="Comparação de Cenários",
+                     text=[f"R$ {x:,.2f}" for x in df_scenarios['Custo Total']])
+        fig2.update_layout(showlegend=False)
+        st.plotly_chart(fig2, use_container_width=True)
+
+        st.markdown("**Impacto de Variações no Custo Variável**")
+        st.dataframe(df_scenarios.style.format({
+            "Custo Variável Unitário": "R$ {:.2f}",
+            "Custo Total": "R$ {:,.2f}",
+            "Diferença": "R$ {:,.2f}"
+        }), hide_index=True, use_container_width=True)
+
         # Explicação dos conceitos
         with st.expander("📚 Explicação dos Conceitos"):
             st.markdown("""
             **Análise de Impacto de Custos**:
             - **Custo Fixo**: Despesas que não mudam com o volume de produção (aluguel, salários)
             - **Custo Variável**: Custos diretamente ligados à produção (matéria-prima, embalagem)
-            - **Ponto de Equilíbrio**: Quantidade necessária para cobrir todos os custos (fixos + variáveis)
+            - **Ponto de Equilíbrio**: Quantidade de vendas necessária para cobrir todos os custos (fixos + variáveis) e despesas
             
             **Análise de Sensibilidade** mostra como mudanças nos parâmetros afetam os resultados.
             """)

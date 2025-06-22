@@ -948,7 +948,6 @@ def main():
         
         # Cálculos
         ct = cf + (cv * q)
-        peq = (cf+d)/(p-cv)
         custo_medio = ct / q if q > 0 else 0
         
         # Métricas
@@ -968,6 +967,7 @@ def main():
                      help="Quanto do custo total é variável")
         with col_met4:
             if p > cv:
+                peq = (cf+d)/(p-cv)
                 st.metric("Ponto de Equilíbrio", f"{int(peq)} unidades",
                      help="Quantidade necessária para cobrir todos os custos")
             elif p == cv:

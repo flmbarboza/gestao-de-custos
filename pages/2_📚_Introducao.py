@@ -943,7 +943,7 @@ def main():
                          help="Volume total de unidades produzidas")
             d = st.slider("Despesas (R$):", 1, 100, 15, 1,
                          help="Total de Despesas")
-            p = st.slider("Preço de venda:", 1, 100, 15, 1,
+            p = st.slider("Preço de venda:", 1, 100, 20, 1,
                          help="Preço unitário do produto")
         
         # Cálculos
@@ -976,7 +976,7 @@ def main():
                 """)
             else:
                 st.markdown("""
-                "CUIDADO! (Preço de Venda abaixo do Custo Unitário)
+                CUIDADO! (Preço de Venda abaixo do Custo Unitário)
                 """)
             
         # Análise de sensibilidade

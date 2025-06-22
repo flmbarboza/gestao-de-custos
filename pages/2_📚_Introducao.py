@@ -525,13 +525,14 @@ def main():
                 
                 st.plotly_chart(fig, use_container_width=True)
                 st.caption("🔎 Clique no gráfico para explorar a composição detalhada")# Exemplo interativo por produto
-                            data = {
-                                "Tipo": ["Direto", "Direto", "Indireto", "Indireto"],
-                                "Item": ["Tela LCD", "Processador", "Energia", "Depreciação"],
-                                "Valor": [120, 85, 30, 15],
-                                "Produto": [produto_selecionado]*4
-                            }
-                            
+                
+                data = {
+                    "Tipo": ["Direto", "Direto", "Indireto", "Indireto"],
+                    "Item": ["Tela LCD", "Processador", "Energia", "Depreciação"],
+                    "Valor": [120, 85, 30, 15],
+                    "Produto": [produto_selecionado]*4
+                }
+                
                 fig = px.sunburst(
                     data,
                     path=['Tipo', 'Item'],

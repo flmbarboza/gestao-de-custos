@@ -935,7 +935,7 @@ def main():
         
         with c2:
             st.subheader("Parâmetros de Entrada")
-            cf = st.slider("Custo Fixo Total (R$):", 1000, 50000, 10000, 500, 
+            cf = st.slider("Custos Fixos (R$):", 1000, 50000, 10000, 500, 
                           help="Custos que não variam com o volume de produção")
             cv = st.slider("Custo Variável Unitário (R$):", 1, 100, 15, 1,
                           help="Custo adicional por unidade produzida")

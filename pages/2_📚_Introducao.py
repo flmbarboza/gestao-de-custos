@@ -1072,7 +1072,8 @@ def main():
             st.switch_page("pages/3_📊_Custeio_por_Absorcao.py")
 
     with tab4:  # Quiz
-        st.header("Quizz - Teste Seu Conhecimento")
+        st.header("🧠 Quiz Interativo: Terminologia e Comportamento de Custos")
+        st.subheader("🎯 Teste seus conhecimentos")
         
         # Inicialização da sessão para controle
         if "pontuacao" not in st.session_state:
@@ -1087,15 +1088,11 @@ def main():
             st.session_state.pontuacao = 0
             st.session_state.respostas_usuario.clear()
             st.session_state.quiz_reiniciar = True
-        
-        # Título
-        st.title("🧠 Quiz Interativo: Terminologia e Comportamento de Custos")
-        
-        # --- QUIZ MULTIPLO ESCOLHA ---
-        st.subheader("🎯 Teste seus conhecimentos")
-        
-        with st.expander("🔍 Clique aqui para responder ao quiz"):
-            perguntas = [
+                
+        # --- QUIZ MULTIPLO ESCOLHA - PARTE 1 ---
+        st.subheader("🎯 Parte 1: Conceitos Básicos")
+        with st.expander("🔍 Clique aqui para responder ao primeiro bloco", expanded=False):
+            perguntas_parte1 = [
                 {
                     "pergunta": "Qual das alternativas representa um investimento?",
                     "opcoes": ["A) Depreciação de equipamentos", "B) Salário dos vendedores", "C) Aquisição de uma nova máquina", "D) Conta de luz da sede", "E) Gasto com propaganda"],
@@ -1128,63 +1125,99 @@ def main():
                 }
             ]
         
-            # Exibindo perguntas
-            for i, p in enumerate(perguntas):
-                resposta = st.radio(
-                    p["pergunta"],
-                    p["opcoes"],
-                    key=f"pergunta_{i}_{st.session_state.quiz_reiniciar}",
-                index=None
-                )
+            for i, p in enumerate(perguntas_parte1):
+                resposta = st.radio(p["pergunta"], p["opcoes"], key=f"parte1_p{i}")
                 st.session_state.respostas_usuario[i] = resposta
         
-            # Botão para verificar respostas
-            if st.button("🔍 Verificar respostas", key="verificar_respostas"):
-                st.session_state.pontuacao = 0
-                for i, p in enumerate(perguntas):
-                    resposta_usuario = st.session_state.respostas_usuario.get(i)
-                    if resposta_usuario and resposta_usuario[0] == p["correta"]:
-                        st.session_state.pontuacao += 1
-                        st.success(f"✅ Correto! ({p['tema']})")
-                    else:
-                        st.error(f"❌ Incorreto. Resposta correta: {p['correta']} — {p['opcoes'][ord(p['correta']) - ord('A')]}. Justificativa: Veja o conteúdo relacionado a '{p['tema']}'.")
-            
-                st.info(f"🎯 Você acertou **{st.session_state.pontuacao} de {len(perguntas)}**.")
+        # --- QUIZ MULTIPLO ESCOLHA - PARTE 2 ---
+        st.subheader("🎯 Parte 2: Classificação e Comportamento de Custos", expanded=False)
+        with st.expander("🔍 Clique aqui para responder ao segundo bloco"):
+            perguntas_parte2 = [
+                {
+                    "pergunta": "Depreciação de máquinas é considerada um custo:",
+                    "opcoes": ["A) Direto", "B) Variável", "C) Indireto", "D) Despesa", "E) Investimento"],
+                    "correta": "C",
+                    "tema": "Natureza de Custos"
+                },
+                {
+                    "pergunta": "Materiais diretos fazem parte da natureza dos custos de:",
+                    "opcoes": ["A) Administração", "B) Vendas", "C) Produção", "D) Marketing", "E) Finanças"],
+                    "correta": "C",
+                    "tema": "Natureza de Custos"
+                },
+                {
+                    "pergunta": "Sobre o custo semi-variável, é correto afirmar:",
+                    "opcoes": ["A) É totalmente fixo", "B) Varia somente com grandes alterações de produção", "C) Possui parte fixa e parte variável", "D) Sempre é indireto", "E) Nunca aparece nos relatórios financeiros"],
+                    "correta": "C",
+                    "tema": "Comportamento de Custos"
+                },
+                {
+                    "pergunta": "Custos fixos unitários:",
+                    "opcoes": ["A) Aumentam conforme a produção", "B) Diminuem com o aumento da produção", "C) São sempre zero", "D) São iguais aos custos variáveis", "E) Não existem"],
+                    "correta": "B",
+                    "tema": "Comportamento de Custos"
+                },
+                {
+                    "pergunta": "Perdas são definidas como:",
+                    "opcoes": ["A) Gastos normais da operação", "B) Eventos anormais e involuntários", "C) Custos fixos de longo prazo", "D) Investimentos não planejados", "E) Despesas estratégicas"],
+                    "correta": "B",
+                    "tema": "Terminologia"
+                }
+            ]
+        
+            for i, p in enumerate(perguntas_parte2):
+                resposta = st.radio(p["pergunta"], p["opcoes"], key=f"parte2_p{i}")
+                st.session_state.respostas_usuario[len(perguntas_parte1) + i] = resposta
+        
+        # --- VERIFICAR TODAS AS RESPOSTAS ---
+        if st.button("🔍 Verificar respostas", key="verificar_respostas"):
+            total_acertos = 0
+            todas_perguntas = perguntas_parte1 + perguntas_parte2
+        
+            for idx, p in enumerate(todas_perguntas):
+                resposta_usuario = st.session_state.respostas_usuario.get(idx)
+                if resposta_usuario and resposta_usuario[0] == p["correta"]:
+                    total_acertos += 1
+                    st.success(f"✅ Correto! ({p['tema']})")
+                else:
+                    st.error(f"❌ Incorreto. Resposta correta: {p['correta']} — {p['opcoes'][ord(p['correta']) - ord('A')]}. Justificativa: Veja o conteúdo relacionado a '{p['tema']}'.")
+        
+            st.session_state.pontuacao = total_acertos
+            st.info(f"🎯 Você acertou **{total_acertos} de {len(todas_perguntas)}**.")
         
         # --- FEEDBACK MOTIVACIONAL ---
         if st.session_state.pontuacao > 0:
             st.markdown("---")
             st.subheader("🏆 Resultado Final")
-            
+        
             col1, col2 = st.columns([3, 1])
             with col1:
-                if st.session_state.pontuacao == len(perguntas):
+                if st.session_state.pontuacao == len(todas_perguntas):
                     st.balloons()
                     st.success("🎉 Excelente! Você domina o tema!")
-                elif st.session_state.pontuacao >= 3:
+                elif st.session_state.pontuacao >= 7:
                     st.info("👍 Parabéns! Você está no caminho certo.")
                 else:
                     st.warning("💡 Que tal revisar os conceitos de custos e terminologia?")
             with col2:
-                st.metric(label="Pontuação", value=f"{st.session_state.pontuacao}/{len(perguntas)}")
+                st.metric(label="Pontuação", value=f"{st.session_state.pontuacao}/{len(todas_perguntas)}")
         
             # Sugestões de estudo
-            if st.session_state.pontuacao < len(perguntas):
-                st.markdown("📌 **Sugestões de revisão:**")
+            if st.session_state.pontuacao < len(todas_perguntas):
                 temas_a_estudar = set()
-                for i, p in enumerate(perguntas):
-                    resposta_usuario = st.session_state.respostas_usuario.get(i)
+                for idx, p in enumerate(todas_perguntas):
+                    resposta_usuario = st.session_state.respostas_usuario.get(idx)
                     if resposta_usuario and resposta_usuario[0] != p["correta"]:
                         temas_a_estudar.add(p["tema"])
                 if temas_a_estudar:
+                    st.markdown("📌 **Sugestões de revisão:**")
                     for tema in temas_a_estudar:
                         st.markdown(f"- Revisar: **{tema}**")
                 else:
-                    st.markdown("Você acertou todas as perguntas!")
+                    st.markdown("✅ Você acertou todas as perguntas!")
         
         # --- BOTÃO PARA REINICIAR ---
         if st.button("🔁 Reiniciar Quiz", key="reiniciar_quiz", on_click=reiniciar_quiz):
-            st.experimental_rerun()
-            
+            st.experimental_rerun()            
 if __name__ == "__main__":
     main()

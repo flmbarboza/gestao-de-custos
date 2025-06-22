@@ -474,7 +474,10 @@ def main():
                   - Matéria-prima específica
                   - Embalagem do produto
                   - Mão de obra dedicada
+                """)
                 
+            with col2:
+                st.markdown("""
                 **Custos Indiretos:**
                 - Não podem ser atribuídos diretamente
                 - Exemplos:
@@ -482,34 +485,8 @@ def main():
                   - Aluguel do prédio
                   - Limpeza geral
                 """)
+             
                 
-                produto_selecionado = st.selectbox(
-                    "Selecione um produto para análise:",
-                    ["Smartphone", "Notebook", "Tablet"],
-                    key="produto_select"
-                )
-                
-            with col2:
-                # Exemplo interativo por produto
-                data = {
-                    "Tipo": ["Direto", "Direto", "Indireto", "Indireto"],
-                    "Item": ["Tela LCD", "Processador", "Energia", "Depreciação"],
-                    "Valor": [120, 85, 30, 15],
-                    "Produto": [produto_selecionado]*4
-                }
-                
-                fig = px.sunburst(
-                    data,
-                    path=['Tipo', 'Item'],
-                    values='Valor',
-                    color='Tipo',
-                    color_discrete_map={'Direto':'#4CAF50','Indireto':'#FF9800'},
-                    title=f"Composição de Custos - {produto_selecionado}"
-                )
-                st.plotly_chart(fig, use_container_width=True)
-                
-                st.caption("🔎 Clique no gráfico para explorar a composição detalhada")
-
             # Dados personalizados por produto
             dados_produtos = {
                 "Smartphone": {
@@ -557,7 +534,7 @@ def main():
             }
             
             # Interface no Streamlit
-            st.title("Análise de Custos por Produto")
+            st.title("Vejamos um exemplo prático")
             
             colx1, colx2 = st.columns([1, 3])
             
@@ -590,13 +567,12 @@ def main():
                     color='Tipo',
                     color_discrete_map={'Direto': '#4CAF50', 'Indireto': '#FF9800'},
                     title=f"Composição de Custos - {produto_selecionadox}",
-                    hover_data=['Valor'],
                     branchvalues='total'
                 )
                 
                 # Ajustes de layout
                 fig.update_layout(margin=dict(t=50, l=0, r=0, b=0))
-                fig.update_traces(textinfo="label+percent parent")
+                fig.update_traces(textinfo="label+percent parent", hovertemplate='<b>%{label}</b><br>Valor: R$ %{value:.2f}<extra></extra>')
                 
                 st.plotly_chart(fig, use_container_width=True)
                 st.caption("🔎 Clique no gráfico para explorar a composição detalhada")

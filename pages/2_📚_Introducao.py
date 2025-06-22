@@ -1133,7 +1133,8 @@ def main():
                 resposta = st.radio(
                     p["pergunta"],
                     p["opcoes"],
-                    key=f"pergunta_{i}_{st.session_state.quiz_reiniciar}"
+                    key=f"pergunta_{i}_{st.session_state.quiz_reiniciar}",
+                index=None
                 )
                 st.session_state.respostas_usuario[i] = resposta
         

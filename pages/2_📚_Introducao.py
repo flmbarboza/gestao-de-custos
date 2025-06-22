@@ -573,7 +573,7 @@ def main():
                 # Ajustes de layout
                 fig.update_layout(margin=dict(t=50, l=0, r=0, b=0))
                 fig.update_traces(textinfo="label+percent parent", 
-                                  hovertemplate='<b>Custo %{id}</b><br><b>%{label}</b><br>Valor: R$ %{value:.2f}<extra></extra>')
+                                  hovertemplate='<b>Custo %{parent}</b><br><b>%{label}</b><br>Valor: R$ %{value:.2f}<extra></extra>')
                 
                 st.plotly_chart(fig, use_container_width=True)
                 st.caption("🔎 Clique no gráfico para explorar a composição detalhada")

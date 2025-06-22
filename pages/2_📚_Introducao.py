@@ -914,10 +914,15 @@ def main():
                     st.error("❌ Revise a classificação de custos indiretos")
                 
         
-        st.header("📊 Análise de Impacto de Custos")
+        st.header("📊 Análise [Simples] de Impacto de Custos")
         st.markdown("""
             ```math
             Custo\ Total = Custo\ Fixo + (Custo\ Variável\ Unitário × Quantidade)
+            ```
+
+            
+            ```math
+            Ponto\ de\ Equilíbrio = (Custo\ Total + Despesas)
             ```
         """)
 
@@ -936,11 +941,15 @@ def main():
                           help="Custo adicional por unidade produzida")
             q = st.slider("Quantidade Produzida:", 0, 1000, 200, 10,
                          help="Volume total de unidades produzidas")
+            d = st.slider("Despesas (R$):", 1, 100, 15, 1,
+                         help="Total de Despesas")
+            p = st.slider("Preço de venda:", 1, 100, 15, 1,
+                         help="Preço unitário do produto")
         
         # Cálculos
         ct = cf + (cv * q)
         custo_medio = ct / q if q > 0 else 0
-        
+        peq = (cf+d)/(p-cv) if p = cv else 0
         # Métricas
         st.divider()
         col_met1, col_met2 = st.columns(2)
@@ -957,7 +966,7 @@ def main():
             st.metric("Participação dos Custos Variáveis", f"{percent_var:.1f}%",
                      help="Quanto do custo total é variável")
         with col_met4:
-            st.metric("Ponto de Equilíbrio Financeiro", f"{int((ct-cf)/cv) if cv > 0 else '∞'} unidades",
+            st.metric("Ponto de Equilíbrio", f"{int(peq) if cv > 0 else '∞'} unidades",
                      help="Quantidade necessária para cobrir todos os custos")
         
         # Análise de sensibilidade

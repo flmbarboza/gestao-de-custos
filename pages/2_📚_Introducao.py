@@ -483,49 +483,14 @@ def main():
                   - Limpeza geral
                 """)
                 
-                produto_selecionado = st.selectbox("Selecione um produto para análise:", list(dados_produtos.keys()), key="produto_select")
-
-                dados_produtos = { "Smartphone": { "Direto": { "Display": 120, "Processador": 85, "Câmera": 60, "Outros": 45},
-                                                   "Indireto": { "Energia": 30, "Aluguel": 15, "Logística": 25, "Depreciação": 10}},
-                                   "Notebook": { "Direto": { "Tela LED": 200, "CPU": 150, "Memória RAM": 120, "Outros": 80},
-                                                 "Indireto": { "Manutenção": 40, "Transporte": 35, "Impostos": 50, "Vigilante": 20}},
-                                   "Tablet": { "Direto": { "Tela Touch": 90, "Display": 70, "Carregador": 30, "Conectividade": 25},
-                                               "Indireto": { "Pesquisa": 20, "Marketing": 35, "Armazenamento": 15, "Suporte": 10}}
-                                 }
+                produto_selecionado = st.selectbox(
+                    "Selecione um produto para análise:",
+                    ["Smartphone", "Notebook", "Tablet"],
+                    key="produto_select"
+                )
                 
             with col2:
-                    # Prepara os dados para o DataFrame
-                dados_formatados = []
-                for tipo, itens in dados_produtos[produto_selecionado].items():
-                    for item, valor in itens.items():
-                        dados_formatados.append({
-                            "Tipo": tipo,
-                            "Item": item,
-                            "Valor": valor,
-                            "Produto": produto_selecionado
-                        })
-                
-                df = pd.DataFrame(dados_formatados)
-                
-                # Cria o gráfico Sunburst
-                fig = px.sunburst(
-                    df,
-                    path=['Tipo', 'Item'],
-                    values='Valor',
-                    color='Tipo',
-                    color_discrete_map={'Direto': '#4CAF50', 'Indireto': '#FF9800'},
-                    title=f"Composição de Custos - {produto_selecionado}",
-                    hover_data=['Valor'],
-                    branchvalues='total'
-                )
-    
-                # Ajustes de layout
-                fig.update_layout(margin=dict(t=50, l=0, r=0, b=0))
-                fig.update_traces(textinfo="label+percent parent")
-                
-                st.plotly_chart(fig, use_container_width=True)
-                st.caption("🔎 Clique no gráfico para explorar a composição detalhada")# Exemplo interativo por produto
-                
+                # Exemplo interativo por produto
                 data = {
                     "Tipo": ["Direto", "Direto", "Indireto", "Indireto"],
                     "Item": ["Tela LCD", "Processador", "Energia", "Depreciação"],

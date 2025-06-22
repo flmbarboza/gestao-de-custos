@@ -1073,7 +1073,6 @@ def main():
 
     with tab4:  # Quiz
         st.header("🧠 Quiz Interativo: Terminologia e Comportamento de Custos")
-        st.subheader("🎯 Teste seus conhecimentos")
         
         # Inicialização da sessão para controle
         if "pontuacao" not in st.session_state:
@@ -1089,7 +1088,7 @@ def main():
             st.session_state.respostas_usuario.clear()
             st.session_state.quiz_reiniciar = True
                 
-        # --- QUIZ MULTIPLO ESCOLHA - PARTE 1 ---
+        # --- QUIZ MULTIPLA ESCOLHA - PARTE 1 ---
         st.subheader("🎯 Parte 1: Conceitos Básicos")
         with st.expander("🔍 Clique aqui para responder ao primeiro bloco", expanded=False):
             perguntas_parte1 = [
@@ -1130,8 +1129,8 @@ def main():
                 st.session_state.respostas_usuario[i] = resposta
         
         # --- QUIZ MULTIPLO ESCOLHA - PARTE 2 ---
-        st.subheader("🎯 Parte 2: Classificação e Comportamento de Custos", expanded=False)
-        with st.expander("🔍 Clique aqui para responder ao segundo bloco"):
+        st.subheader("🎯 Parte 2: Classificação e Comportamento de Custos")
+        with st.expander("🔍 Clique aqui para responder ao segundo bloco", expanded=False):
             perguntas_parte2 = [
                 {
                     "pergunta": "Depreciação de máquinas é considerada um custo:",

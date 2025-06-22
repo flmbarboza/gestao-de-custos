@@ -973,7 +973,7 @@ def main():
             elif p == cv:
                 st.markdown("""
                 Ponto de Equilíbrio = ERRO!<br>(Preço de Venda = Custo Unitário)
-                """)
+                """, unsafe_allow_html=True)
             else:
                 st.markdown("""
                 CUIDADO! (Preço de Venda abaixo do Custo Unitário)

@@ -21,7 +21,7 @@ def main():
         "💡 Ideação", "📌 Conceitos Básicos", 
         "📊 Classificação", 
         "📈 Comportamento", 
-        "🧠 Quiz (em breve)"
+        "🧠 Quiz"
     ])
     
     with tab0:  # Conceitos Básicos    
@@ -578,6 +578,8 @@ def main():
                 
                 st.plotly_chart(fig, use_container_width=True)
                 st.caption("🔎 Clique no gráfico para explorar a composição detalhada")
+
+                st.markdown("Vá no menu horizontal logo acima e clique em **📊 Comportamento (Fixo/Variável)** para continuar!")
                 
         with tb2:
             st.subheader("Fixos vs. Variáveis")
@@ -622,7 +624,9 @@ def main():
             - 🚚 **Custo Variável Típico:** Matéria-prima, frete por unidade vendida
             - 💡 **Custo Misto:** Energia (parte fixa + parte variável pelo uso)
             """)
-     
+
+            st.markdown("Vá para o topo dessa página e clique em **📈 Comportamento** para continuar!")
+    
     with tab3:  # Comportamento
         st.title("⚖️ Diferença entre Custos e Despesas")
         st.subheader("🔍 Como os custos e as despesas impactam o resultado da empresa?")
@@ -1059,40 +1063,126 @@ def main():
             **Análise de Sensibilidade** mostra como mudanças nos parâmetros afetam os resultados.
             """)
 
+        st.markdown("""E aí?! **Já domina os termos básicos da gestão de custos**???<br> 
+        Se está ok, vamos então verificar se isso é verdade? Clique em **🧠 Quiz** no topo dessa página e bora mostrar que você é TOP!""", unsafe_allow_html=True)
+        
         # 🔜 Botão para próxima página
         st.markdown(" ")
         if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio por Absorção"):
             st.switch_page("pages/3_📊_Custeio_por_Absorcao.py")
 
     with tab4:  # Quiz
-        st.header("Teste Seu Conhecimento")
+        st.header("Quizz - Teste Seu Conhecimento")
         
-        respostas = st.session_state.get('respostas', {})
+        # Inicialização da sessão para controle
+        if "pontuacao" not in st.session_state:
+            st.session_state.pontuacao = 0
+        if "respostas_usuario" not in st.session_state:
+            st.session_state.respostas_usuario = {}
+        if "quiz_reiniciar" not in st.session_state:
+            st.session_state.quiz_reiniciar = False
         
-        # Pergunta 1
-        q1 = st.radio(
-            "1. O aluguel da fábrica é classificado como:",
-            ["Custo Fixo", "Custo Variável", "Despesa Fixa"],
-            index=None
-        )
+        # Função para reiniciar o quiz
+        def reiniciar_quiz():
+            st.session_state.pontuacao = 0
+            st.session_state.respostas_usuario.clear()
+            st.session_state.quiz_reiniciar = True
         
-        # Pergunta 2
-        q2 = st.radio(
-            "2. Matéria-prima consumida na produção é:",
-            ["Custo Direto Variável", "Custo Indireto", "Investimento"],
-            index=None
-        )
+        # Título
+        st.title("🧠 Quiz Interativo: Terminologia e Comportamento de Custos")
         
-        if st.button("Verificar Respostas"):
-            respostas['q1'] = q1 == "Custo Fixo"
-            respostas['q2'] = q1 == "Custo Direto Variável"
-            st.session_state.respostas = respostas
+        # --- QUIZ MULTIPLO ESCOLHA ---
+        st.subheader("🎯 Teste seus conhecimentos")
+        
+        with st.expander("🔍 Clique aqui para responder ao quiz"):
+            perguntas = [
+                {
+                    "pergunta": "Qual das alternativas representa um investimento?",
+                    "opcoes": ["A) Depreciação de equipamentos", "B) Salário dos vendedores", "C) Aquisição de uma nova máquina", "D) Conta de luz da sede", "E) Gasto com propaganda"],
+                    "correta": "C",
+                    "tema": "Terminologia"
+                },
+                {
+                    "pergunta": "O que é considerado custo direto?",
+                    "opcoes": ["A) Aluguel da fábrica", "B) Materiais utilizados na produção", "C) Despesa com marketing", "D) Custo com energia elétrica", "E) Impostos sobre vendas"],
+                    "correta": "B",
+                    "tema": "Natureza de Custos"
+                },
+                {
+                    "pergunta": "Como são classificados os custos que permanecem constantes mesmo com aumento da produção?",
+                    "opcoes": ["A) Variáveis", "B) Semi-variáveis", "C) Fixos", "D) Diretos", "E) Indiretos"],
+                    "correta": "C",
+                    "tema": "Classificação de Custos"
+                },
+                {
+                    "pergunta": "Qual é um exemplo de desembolso?",
+                    "opcoes": ["A) Depreciação", "B) Compra de matéria-prima à vista", "C) Amortização", "D) Juros sobre capital próprio", "E) Perda por obsolescência"],
+                    "correta": "B",
+                    "tema": "Terminologia"
+                },
+                {
+                    "pergunta": "O comportamento de custo variável significa que ele:",
+                    "opcoes": ["A) Não muda com a produção", "B) É sempre fixo por unidade", "C) Aumenta proporcionalmente ao volume produzido", "D) Diminui com o tempo", "E) É irrelevante para decisão"],
+                    "correta": "C",
+                    "tema": "Comportamento de Custos"
+                }
+            ]
+        
+            # Exibindo perguntas
+            for i, p in enumerate(perguntas):
+                resposta = st.radio(
+                    p["pergunta"],
+                    p["opcoes"],
+                    key=f"pergunta_{i}_{st.session_state.quiz_reiniciar}"
+                )
+                st.session_state.respostas_usuario[i] = resposta
+        
+            # Botão para verificar respostas
+            if st.button("🔍 Verificar respostas"):
+                st.session_state.pontuacao = 0
+                for i, p in enumerate(perguntas):
+                    resposta_usuario = st.session_state.respostas_usuario.get(i)
+                    if resposta_usuario and resposta_usuario[0] == p["correta"]:
+                        st.session_state.pontuacao += 1
+                        st.success(f"✅ Correto! ({p['tema']})")
+                    else:
+                        st.error(f"❌ Incorreto. Resposta correta: {p['correta']} — {p['opcoes'][ord(p['correta']) - ord('A')]}. Justificativa: Veja o conteúdo relacionado a '{p['tema']}'.")
+        
+                st.info(f"🎯 Você acertou **{st.session_state.pontuacao} de {len(perguntas)}**.")
+        
+        # --- FEEDBACK MOTIVACIONAL ---
+        if st.session_state.pontuacao > 0:
+            st.markdown("---")
+            st.subheader("🏆 Resultado Final")
             
-            if all(respostas.values()):
-                st.success("✅ Parabéns! Todas corretas!")
-            else:
-                erros = [f"Pergunta {i+1}" for i, v in enumerate(respostas.values()) if not v]
-                st.warning(f"Revise: {', '.join(erros)}")
-
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                if st.session_state.pontuacao == len(perguntas):
+                    st.balloons()
+                    st.success("🎉 Excelente! Você domina o tema!")
+                elif st.session_state.pontuacao >= 3:
+                    st.info("👍 Parabéns! Você está no caminho certo.")
+                else:
+                    st.warning("💡 Que tal revisar os conceitos de custos e terminologia?")
+            with col2:
+                st.metric(label="Pontuação", value=f"{st.session_state.pontuacao}/{len(perguntas)}")
+        
+            # Sugestões de estudo
+            if st.session_state.pontuacao < len(perguntas):
+                st.markdown("📌 **Sugestões de revisão:**")
+                temas_a_estudar = set()
+                for i, p in enumerate(perguntas):
+                    resposta_usuario = st.session_state.respostas_usuario.get(i)
+                    if resposta_usuario and resposta_usuario[0] != p["correta"]:
+                        temas_a_estudar.add(p["tema"])
+                if temas_a_estudar:
+                    for tema in temas_a_estudar:
+                        st.markdown(f"- Revisar: **{tema}**")
+                else:
+                    st.markdown("Você acertou todas as perguntas!")
+        
+        # --- BOTÃO PARA REINICIAR ---
+        if st.button("🔁 Reiniciar Quiz", on_click=reiniciar_quiz):
+            st.experimental_rerun()
 if __name__ == "__main__":
     main()

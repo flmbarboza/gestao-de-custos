@@ -1086,7 +1086,6 @@ def main():
         def reiniciar_quiz():
             st.session_state.pontuacao = 0
             st.session_state.respostas_usuario.clear()
-            st.session_state.quiz_reiniciar = True
                 
         # --- QUIZ MULTIPLA ESCOLHA - PARTE 1 ---
         st.subheader("🎯 Parte 1: Conceitos Básicos")
@@ -1125,7 +1124,7 @@ def main():
             ]
         
             for i, p in enumerate(perguntas_parte1):
-                resposta = st.radio(p["pergunta"], p["opcoes"], key=f"parte1_p{i}")
+                resposta = st.radio(p["pergunta"], p["opcoes"], index=None, key=f"parte1_p{i}")
                 st.session_state.respostas_usuario[i] = resposta
         
         # --- QUIZ MULTIPLO ESCOLHA - PARTE 2 ---
@@ -1165,7 +1164,7 @@ def main():
             ]
         
             for i, p in enumerate(perguntas_parte2):
-                resposta = st.radio(p["pergunta"], p["opcoes"], key=f"parte2_p{i}")
+                resposta = st.radio(p["pergunta"], p["opcoes"], index=None, key=f"parte2_p{i}")
                 st.session_state.respostas_usuario[len(perguntas_parte1) + i] = resposta
         
         # --- VERIFICAR TODAS AS RESPOSTAS ---
@@ -1217,6 +1216,6 @@ def main():
         
         # --- BOTÃO PARA REINICIAR ---
         if st.button("🔁 Reiniciar Quiz", key="reiniciar_quiz", on_click=reiniciar_quiz):
-            st.experimental_rerun()            
+            st.rerun()            
 if __name__ == "__main__":
     main()

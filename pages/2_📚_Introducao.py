@@ -562,22 +562,22 @@ def main():
             colx1, colx2 = st.columns([1, 3])
             
             with colx1:
-                produto_selecionado = st.selectbox(
+                produto_selecionadox = st.selectbox(
                     "Selecione um produto para análise:",
                     list(dados_produtos.keys()),
-                    key="produto_select"
+                    key="produto_selectx"
                 )
             
             with colx2:
                 # Prepara os dados para o DataFrame
                 dados_formatados = []
-                for tipo, itens in dados_produtos[produto_selecionado].items():
+                for tipo, itens in dados_produtos[produto_selecionadox].items():
                     for item, valor in itens.items():
                         dados_formatados.append({
                             "Tipo": tipo,
                             "Item": item,
                             "Valor": valor,
-                            "Produto": produto_selecionado
+                            "Produto": produto_selecionadox
                         })
                 
                 df = pd.DataFrame(dados_formatados)
@@ -589,7 +589,7 @@ def main():
                     values='Valor',
                     color='Tipo',
                     color_discrete_map={'Direto': '#4CAF50', 'Indireto': '#FF9800'},
-                    title=f"Composição de Custos - {produto_selecionado}",
+                    title=f"Composição de Custos - {produto_selecionadox}",
                     hover_data=['Valor'],
                     branchvalues='total'
                 )

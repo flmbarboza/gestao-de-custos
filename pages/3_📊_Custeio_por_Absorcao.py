@@ -41,52 +41,54 @@ def main():
         # Criação do diagrama
     dot = Digraph('CusteioPorAbsorcao')
     dot.attr(rankdir='LR', size='8')
-    
+    node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'lightgray', 'fontname': 'Arial'}
+
     # Nós principais
-    dot.node('C', 'Custos')
-    dot.node('D', 'Despesas')
-    dot.node('V', 'Vendas')
-    dot.node('R', 'Resultado')
+    dot.node('C', 'Custos', **node_attr)
+    dot.node('D', 'Despesas', **node_attr)
+    dot.node('V', 'Vendas', **node_attr)
+    dot.node('R', 'Resultado', **node_attr)
     
     # Custos -> Diretos e Indiretos
-    dot.node('CI', 'Indiretos')
-    dot.node('CD', 'Diretos')
+    dot.node('CI', 'Indiretos', **node_attr)
+    dot.node('CD', 'Diretos', **node_attr)
     dot.edge('C', 'CI')
     dot.edge('C', 'CD')
     
-    # Indiretos -> Rateio
-    dot.node('RA', 'Rateio')
-    dot.edge('CI', 'RA')
-    
     # Produtos
-    dot.node('PA', 'Produto A')
-    dot.node('PB', 'Produto B')
-    dot.node('PC', 'Produto C')
+    dot.node('PA', 'Produto A', **node_attr)
+    dot.node('PB', 'Produto B', **node_attr)
+    dot.node('PC', 'Produto C', **node_attr)
     
-    # Rateio e Diretos alimentam produtos
-    dot.edge('RA', 'PA')
-    dot.edge('RA', 'PB')
-    dot.edge('RA', 'PC')
+    # Estoque e CPV
+    dot.node('E', 'Estoque', **node_attr)
+    dot.node('CPV', 'Custo dos Produtos Vendidos', **node_attr)
+    
+    # Fluxo de custos indiretos via rateio (com label nas edges)
+    dot.edge('CI', 'PA', label="Rateio")
+    dot.edge('CI', 'PB', label="Rateio")
+    dot.edge('CI', 'PC', label="Rateio")
+    
+    # Fluxo de custos diretos
     dot.edge('CD', 'PA')
     dot.edge('CD', 'PB')
     dot.edge('CD', 'PC')
     
-    # Estoque e CPV
-    dot.node('E', 'Estoque')
-    dot.node('CPV', 'Custo dos Produtos Vendidos')
-    
+    # Produtos para Estoque
     dot.edge('PA', 'E')
     dot.edge('PB', 'E')
     dot.edge('PC', 'E')
+    
+    # Estoque para CPV
     dot.edge('E', 'CPV')
     
-    # CPV -> Resultado
+    # CPV para Resultado
     dot.edge('CPV', 'R')
     
-    # Despesas -> Resultado
+    # Despesas para Resultado
     dot.edge('D', 'R')
     
-    # Vendas -> Resultado
+    # Vendas para Resultado
     dot.edge('V', 'R')
     
     # Exibir no Streamlit

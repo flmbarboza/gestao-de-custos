@@ -41,7 +41,7 @@ def main():
         # Criação do diagrama
     dot = Digraph('CusteioPorAbsorcao')
     dot.attr(rankdir='LR', size='8')
-    node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'black', 'fontname': 'Arial'}
+    node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'darkblue', 'fontname': 'Arial'}
 
     # Nós principais
     dot.node('C', 'Custos', **node_attr)

@@ -13,10 +13,10 @@ def main():
     ]
 
     # Renderização dos cards em 3 colunas
-    cols = st.columns(3)
+    cols = st.columns(2)
     
     for idx, card in enumerate(cards):
-        with cols[idx % 3]:
+        with cols[idx % 2]:
             st.markdown(
                 f"""
                 <div style="background-color: #f0f2f6; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">

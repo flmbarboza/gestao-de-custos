@@ -40,7 +40,7 @@ def main():
 
     # Criação do diagrama
     dot = Digraph('CusteioPorAbsorcao')
-    dot.attr(rankdir='LR', splines='curved')  # mantém curvas
+    dot.attr(rankdir='LR', splines='curved', ranksep='2')  # ranksep maior para espaçar verticalmente
     
     node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'cyan', 'fontname': 'Arial'}
     
@@ -50,17 +50,24 @@ def main():
     dot.node('V', 'Vendas', **node_attr)
     dot.node('R', 'Resultado', **node_attr)
     
-    # Subgraphs para CD e CI para distância
-    with dot.subgraph(name='cluster_CI') as c:
-        c.attr(rank='same')
-        c.node('CI', 'Indiretos', **node_attr)
-    with dot.subgraph(name='cluster_CD') as c:
-        c.attr(rank='same', style='invis')
-        c.node('CD', 'Diretos', **node_attr)
+    # Colocar CI e CD em ranks diferentes para espaçar verticalmente
+    with dot.subgraph() as s1:
+        s1.attr(rank='same')
+        s1.node('CI', 'Indiretos', **node_attr)
+    with dot.subgraph() as s2:
+        s2.attr(rank='same')
+        s2.node('CD', 'Diretos', **node_attr)
     
-    # Conexão C -> CI e CD com mais espaço
-    dot.edge('C', 'CI', constraint='true', minlen='3')
-    dot.edge('C', 'CD', constraint='true', minlen='5')
+    # Agora forçar CD ficar um pouco acima e CI um pouco abaixo, criando nós invisíveis para "empurrar" verticalmente
+    dot.node('invis_top', label='', shape='point', width='0', height='0', style='invis')
+    dot.node('invis_bottom', label='', shape='point', width='0', height='0', style='invis')
+    
+    dot.edge('invis_top', 'CD', style='invis')
+    dot.edge('CI', 'invis_bottom', style='invis')
+    
+    # Conectar C a CI e CD (sem alterar minlen, pq o foco é vertical)
+    dot.edge('C', 'CI')
+    dot.edge('C', 'CD')
     
     # Produtos
     dot.node('PA', 'Produto A', **node_attr)
@@ -76,7 +83,7 @@ def main():
     dot.edge('CI', 'PB', xlabel="Rateio", color="red", fontcolor="red", style='bold')
     dot.edge('CI', 'PC', xlabel="Rateio", color="red", fontcolor="red", style='bold')
     
-    # Fluxo de custos diretos: curvas azuis, mais grossas e arrowhead diferente
+    # Fluxo de custos diretos: curvas azuis, grossas e arrowhead diferente
     dot.edge('CD', 'PA', color='blue', penwidth='2', arrowhead='vee', style='solid')
     dot.edge('CD', 'PB', color='blue', penwidth='2', arrowhead='vee', style='solid')
     dot.edge('CD', 'PC', color='blue', penwidth='2', arrowhead='vee', style='solid')

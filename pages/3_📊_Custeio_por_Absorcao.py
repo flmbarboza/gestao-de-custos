@@ -89,7 +89,7 @@ def main():
     dot.edge('CPV', 'R')
     
     # Despesas para Resultado
-    dot.edge('D', 'R', minlen='3')
+    dot.edge('D', 'R', minlen='2')
     
     # Vendas para Resultado
     dot.edge('V', 'R')

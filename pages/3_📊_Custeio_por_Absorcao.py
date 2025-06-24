@@ -51,7 +51,7 @@ def main():
         c.attr(rank='same')
     
         c.node('C', 'Custos', **node_attr)
-        c.node('vs', '', shape='none', style='', color='white', fontcolor='black', fontsize='18', width='0.3', height='0.3', fixedsize='true')
+        c.node('x', label='vs')
         c.node('D', 'Despesas', **node_attr)
 
     # Nós principais

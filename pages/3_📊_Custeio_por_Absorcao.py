@@ -40,9 +40,9 @@ def main():
 
     # Criação do diagrama
     dot = Digraph('CusteioPorAbsorcao')
-    dot.attr(rankdir='LR', splines='curved', nodesep='1')
+    dot.attr(rankdir='LR', splines='curved', nodesep='0.5')
     
-    node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'cyan', 'fontname': 'Arial', 'fontsize': '8'}
+    node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'cyan', 'fontname': 'Arial', 'fontsize': '6'}
     
     # Nós principais
     dot.node('C', 'Custos', **node_attr)

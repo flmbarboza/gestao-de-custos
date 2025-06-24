@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from graphviz import Digraph 
 
 def main():
     st.title("📊 Custeio por Absorção")
@@ -33,8 +34,64 @@ def main():
     2o. Passo) Apropriar dos Custos Diretos
     3o. Passo) Rateio dos Custos Indiretos
     ```
+
+    Veja a figura para entender o esquema:
     """)
+
+        # Criação do diagrama
+    dot = Digraph('CusteioPorAbsorcao')
+    dot.attr(rankdir='LR', size='8')
     
+    # Nós principais
+    dot.node('C', 'Custos')
+    dot.node('D', 'Despesas')
+    dot.node('V', 'Vendas')
+    dot.node('R', 'Resultado')
+    
+    # Custos -> Diretos e Indiretos
+    dot.node('CI', 'Indiretos')
+    dot.node('CD', 'Diretos')
+    dot.edge('C', 'CI')
+    dot.edge('C', 'CD')
+    
+    # Indiretos -> Rateio
+    dot.node('RA', 'Rateio')
+    dot.edge('CI', 'RA')
+    
+    # Produtos
+    dot.node('PA', 'Produto A')
+    dot.node('PB', 'Produto B')
+    dot.node('PC', 'Produto C')
+    
+    # Rateio e Diretos alimentam produtos
+    dot.edge('RA', 'PA')
+    dot.edge('RA', 'PB')
+    dot.edge('RA', 'PC')
+    dot.edge('CD', 'PA')
+    dot.edge('CD', 'PB')
+    dot.edge('CD', 'PC')
+    
+    # Estoque e CPV
+    dot.node('E', 'Estoque')
+    dot.node('CPV', 'Custo dos Produtos Vendidos')
+    
+    dot.edge('PA', 'E')
+    dot.edge('PB', 'E')
+    dot.edge('PC', 'E')
+    dot.edge('E', 'CPV')
+    
+    # CPV -> Resultado
+    dot.edge('CPV', 'R')
+    
+    # Despesas -> Resultado
+    dot.edge('D', 'R')
+    
+    # Vendas -> Resultado
+    dot.edge('V', 'R')
+    
+    # Exibir no Streamlit
+    st.graphviz_chart(dot)
+
     # Simulador interativo
     st.subheader("📱 Simulador de Custeio")
     col1, col2 = st.columns(2)

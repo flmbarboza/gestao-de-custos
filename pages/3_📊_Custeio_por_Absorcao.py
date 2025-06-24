@@ -40,7 +40,8 @@ def main():
 
         # Criação do diagrama
     dot = Digraph('CusteioPorAbsorcao')
-    dot.attr(rankdir='LR', size='8')
+    dot.attr(rankdir='LR', size='8', splines='ortho')
+
     node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'cyan', 'fontname': 'Arial'}
 
     # Nós principais

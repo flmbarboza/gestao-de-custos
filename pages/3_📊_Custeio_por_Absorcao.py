@@ -6,12 +6,10 @@ def main():
 
         # Lista de cards
     cards = [
-        {"title": "Custo Direto Unitário (CDU)", "formula": "CDU = Custos Diretos Totais ÷ Quantidade Produzida"},
-        {"title": "Custo Indireto Unitário (CIU)", "formula": "CIU = Custos Indiretos Totais ÷ Base de Rateio"},
-        {"title": "Custo de Produção Unitário (CPU)", "formula": "CPU = CDU + CIU"},
-        {"title": "Custo de Produção Total (CPT)", "formula": "CPT = CPU × Quantidade Produzida"},
-        {"title": "Custo dos Produtos Vendidos (CPV)", "formula": "CPV = CPT - Estoques Finais"},
-        {"title": "Resultado Bruto", "formula": "Resultado Bruto = Receita - CPV"},
+        {"title": "Matéria-Prima (MP)", "formula": "MP = EIMP + Compra MP - EFMP"},
+        {"title": "Custo de Produção do Período (CPP)", "formula": "CPP = MP + MOD + CIF"},
+        {"title": "Custo do Produto Acabado (CPA)", "formula": "CPA = CPP + EIPP - EFPP"},
+        {"title": "Custo dos Produtos Vendidos (CPV)", "formula": "CPV = CPA + EIPA - EFPA"}
     ]
 
     # Renderização dos cards em 3 colunas
@@ -31,10 +29,9 @@ def main():
     st.markdown("""
     ### 🧮 Esquema Básico
     ```
-    MP (ou MD) = EIMP + Compra MP - EFMP
-    CPP = MP + MOD + CIF
-    CPA = CPP + EIPP - EFPP
-    CPV = CPA + EIPA - EFPA
+    1o. Passo) Separar Custos e Despesas
+    2o. Passo) Apropriar dos Custos Diretos
+    3o. Passo) Rateio dos Custos Indiretos
     ```
     """)
     

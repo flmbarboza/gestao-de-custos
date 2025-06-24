@@ -66,9 +66,9 @@ def main():
     dot.node('CPV', 'Custo dos Produtos Vendidos', **node_attr)
     
     # Fluxo de custos indiretos via rateio (com label nas edges)
-    dot.edge('CI', 'PA', label="Rateio")
-    dot.edge('CI', 'PB', label="Rateio")
-    dot.edge('CI', 'PC', label="Rateio")
+    dot.edge('CI', 'PA', label="Rateio", color="red", fontcolor="red")
+    dot.edge('CI', 'PB', label="Rateio", color="red", fontcolor="red")
+    dot.edge('CI', 'PC', label="Rateio", color="red", fontcolor="red")
     
     # Fluxo de custos diretos
     dot.edge('CD', 'PA')

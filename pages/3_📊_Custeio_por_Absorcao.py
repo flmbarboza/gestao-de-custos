@@ -3,13 +3,38 @@ import pandas as pd
 
 def main():
     st.title("📊 Custeio por Absorção")
+
+        # Lista de cards
+    cards = [
+        {"title": "Custo Direto Unitário (CDU)", "formula": "CDU = Custos Diretos Totais ÷ Quantidade Produzida"},
+        {"title": "Custo Indireto Unitário (CIU)", "formula": "CIU = Custos Indiretos Totais ÷ Base de Rateio"},
+        {"title": "Custo de Produção Unitário (CPU)", "formula": "CPU = CDU + CIU"},
+        {"title": "Custo de Produção Total (CPT)", "formula": "CPT = CPU × Quantidade Produzida"},
+        {"title": "Custo dos Produtos Vendidos (CPV)", "formula": "CPV = CPT - Estoques Finais"},
+        {"title": "Resultado Bruto", "formula": "Resultado Bruto = Receita - CPV"},
+    ]
+
+    # Renderização dos cards em 3 colunas
+    cols = st.columns(3)
     
+    for idx, card in enumerate(cards):
+        with cols[idx % 3]:
+            st.markdown(
+                f"""
+                <div style="background-color: #f0f2f6; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                    <h4 style="color: #0e1117;">{card['title']}</h4>
+                    <p style="font-size: 18px; color: #262730;"><strong>{card['formula']}</strong></p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
     st.markdown("""
     ### 🧮 Esquema Básico
     ```
+    MP (ou MD) = EIMP + Compra MP - EFMP
     CPP = MP + MOD + CIF
-    CPA = CPP + EI - EF
-    CPV = CPA + EIPP - EFPP
+    CPA = CPP + EIPP - EFPP
+    CPV = CPA + EIPA - EFPA
     ```
     """)
     

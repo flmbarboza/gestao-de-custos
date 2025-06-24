@@ -68,14 +68,14 @@ def main():
     dot.node('CPV', 'Custo dos Produtos Vendidos', **node_attr)
     
     # Edges que saem de CI — com minlen maior para alongar só essas arestas
-    dot.edge('CI', 'PA', xlabel="Rateio", color="red", fontcolor="red", style='bold', minlen='3')
-    dot.edge('CI', 'PB', xlabel="Rateio", color="red", fontcolor="red", style='bold', minlen='3')
-    dot.edge('CI', 'PC', xlabel="Rateio", color="red", fontcolor="red", style='bold', minlen='3')
+    dot.edge('CI', 'PA', xlabel="Rateio", color="red", fontcolor="red", style='bold', minlen='4')
+    dot.edge('CI', 'PB', xlabel="Rateio", color="red", fontcolor="red", style='bold', minlen='4')
+    dot.edge('CI', 'PC', xlabel="Rateio", color="red", fontcolor="red", style='bold', minlen='4')
     
     # Edges que saem de CD — também com minlen maior para alongar
-    dot.edge('CD', 'PA', color='blue', penwidth='2', arrowhead='vee', style='solid', minlen='3')
-    dot.edge('CD', 'PB', color='blue', penwidth='2', arrowhead='vee', style='solid', minlen='3')
-    dot.edge('CD', 'PC', color='blue', penwidth='2', arrowhead='vee', style='solid', minlen='3')
+    dot.edge('CD', 'PA', color='blue', penwidth='3', arrowhead='vee', style='solid', minlen='3')
+    dot.edge('CD', 'PB', color='blue', penwidth='3', arrowhead='vee', style='solid', minlen='3')
+    dot.edge('CD', 'PC', color='blue', penwidth='3', arrowhead='vee', style='solid', minlen='3')
     
     # Produtos para Estoque
     dot.edge('PA', 'E')
@@ -89,7 +89,7 @@ def main():
     dot.edge('CPV', 'R')
     
     # Despesas para Resultado
-    dot.edge('D', 'R')
+    dot.edge('D', 'R', minlen='5')
     
     # Vendas para Resultado
     dot.edge('V', 'R')

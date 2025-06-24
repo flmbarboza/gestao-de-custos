@@ -55,8 +55,8 @@ def main():
     c.node('D', 'Despesas', **node_attr)
 
     # Nós principais
-    dot.node('C', 'Custos', **node_attr)
-    dot.node('D', 'Despesas', **node_attr)
+    #dot.node('C', 'Custos', **node_attr)
+    #dot.node('D', 'Despesas', **node_attr)
     dot.node('V', 'Vendas', **node_attr)
     dot.node('R', 'Resultado', **node_attr)
     

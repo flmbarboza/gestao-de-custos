@@ -38,23 +38,29 @@ def main():
     Veja a figura para entender o esquema:
     """)
 
-        # Criação do diagrama
+    # Criação do diagrama
     dot = Digraph('CusteioPorAbsorcao')
-    dot.attr(rankdir='LR', splines='curved')
-
+    dot.attr(rankdir='LR', splines='curved')  # mantém curvas
+    
     node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'cyan', 'fontname': 'Arial'}
-
+    
     # Nós principais
     dot.node('C', 'Custos', **node_attr)
     dot.node('D', 'Despesas', **node_attr)
     dot.node('V', 'Vendas', **node_attr)
     dot.node('R', 'Resultado', **node_attr)
     
-    # Custos -> Diretos e Indiretos
-    dot.node('CI', 'Indiretos', **node_attr)
-    dot.node('CD', 'Diretos', **node_attr)
-    dot.edge('C', 'CI')
-    dot.edge('C', 'CD')
+    # Subgraphs para CD e CI para distância
+    with dot.subgraph(name='cluster_CI') as c:
+        c.attr(rank='same')
+        c.node('CI', 'Indiretos', **node_attr)
+    with dot.subgraph(name='cluster_CD') as c:
+        c.attr(rank='same', style='invis')
+        c.node('CD', 'Diretos', **node_attr)
+    
+    # Conexão C -> CI e CD com mais espaço
+    dot.edge('C', 'CI', constraint='true', minlen='3')
+    dot.edge('C', 'CD', constraint='true', minlen='5')
     
     # Produtos
     dot.node('PA', 'Produto A', **node_attr)
@@ -65,15 +71,15 @@ def main():
     dot.node('E', 'Estoque', **node_attr)
     dot.node('CPV', 'Custo dos Produtos Vendidos', **node_attr)
     
-    # Fluxo de custos indiretos via rateio (com label nas edges)
-    dot.edge('CI', 'PA', xlabel="Rateio", color="red", fontcolor="red")
-    dot.edge('CI', 'PB', xlabel="Rateio", color="red", fontcolor="red")
-    dot.edge('CI', 'PC', xlabel="Rateio", color="red", fontcolor="red")
+    # Fluxo de custos indiretos via rateio (curvas vermelhas)
+    dot.edge('CI', 'PA', xlabel="Rateio", color="red", fontcolor="red", style='bold')
+    dot.edge('CI', 'PB', xlabel="Rateio", color="red", fontcolor="red", style='bold')
+    dot.edge('CI', 'PC', xlabel="Rateio", color="red", fontcolor="red", style='bold')
     
-    # Fluxo de custos diretos
-    dot.edge('CD', 'PA')
-    dot.edge('CD', 'PB')
-    dot.edge('CD', 'PC')
+    # Fluxo de custos diretos: curvas azuis, mais grossas e arrowhead diferente
+    dot.edge('CD', 'PA', color='blue', penwidth='2', arrowhead='vee', style='solid')
+    dot.edge('CD', 'PB', color='blue', penwidth='2', arrowhead='vee', style='solid')
+    dot.edge('CD', 'PC', color='blue', penwidth='2', arrowhead='vee', style='solid')
     
     # Produtos para Estoque
     dot.edge('PA', 'E')

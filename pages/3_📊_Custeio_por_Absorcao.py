@@ -43,7 +43,17 @@ def main():
     dot.attr(rankdir='LR', splines='curved')
     
     node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'cyan', 'fontname': 'Arial', 'fontsize': '6'}
+
+    # Criar cluster para 1o passo
+    with dot.subgraph(name='cluster_1') as c:
+        c.attr(label='1o. passo', fontsize='20', fontname='Arial', labelloc='t', style='dashed')
+        # Nós alinhados verticalmente (rank=same para alinhamento horizontal, mas aqui, com rankdir=LR, 'same' alinha vertical)
+        c.attr(rank='same')
     
+    c.node('C', 'Custos', **node_attr)
+    c.node('x', 'x', shape='circle', style='', color='black', fontcolor='black', fontsize='18', width='0.3', height='0.3', fixedsize='true')
+    c.node('D', 'Despesas', **node_attr)
+
     # Nós principais
     dot.node('C', 'Custos', **node_attr)
     dot.node('D', 'Despesas', **node_attr)

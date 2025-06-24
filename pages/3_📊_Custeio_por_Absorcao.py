@@ -40,7 +40,7 @@ def main():
 
     # Criação do diagrama
     dot = Digraph('CusteioPorAbsorcao')
-    dot.attr(rankdir='LR', splines='curved', ranksep='2')  # ranksep maior para espaçar verticalmente
+    dot.attr(rankdir='LR', splines='curved')
     
     node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'cyan', 'fontname': 'Arial'}
     
@@ -50,22 +50,11 @@ def main():
     dot.node('V', 'Vendas', **node_attr)
     dot.node('R', 'Resultado', **node_attr)
     
-    # Colocar CI e CD em ranks diferentes para espaçar verticalmente
-    with dot.subgraph() as s1:
-        s1.attr(rank='same')
-        s1.node('CI', 'Indiretos', **node_attr)
-    with dot.subgraph() as s2:
-        s2.attr(rank='same')
-        s2.node('CD', 'Diretos', **node_attr)
+    # Nós CD e CI
+    dot.node('CI', 'Indiretos', **node_attr)
+    dot.node('CD', 'Diretos', **node_attr)
     
-    # Agora forçar CD ficar um pouco acima e CI um pouco abaixo, criando nós invisíveis para "empurrar" verticalmente
-    dot.node('invis_top', label='', shape='point', width='0', height='0', style='invis')
-    dot.node('invis_bottom', label='', shape='point', width='0', height='0', style='invis')
-    
-    dot.edge('invis_top', 'CD', style='invis')
-    dot.edge('CI', 'invis_bottom', style='invis')
-    
-    # Conectar C a CI e CD (sem alterar minlen, pq o foco é vertical)
+    # Conexões C -> CD e CI (sem minlen para não alongar aqui)
     dot.edge('C', 'CI')
     dot.edge('C', 'CD')
     
@@ -78,15 +67,15 @@ def main():
     dot.node('E', 'Estoque', **node_attr)
     dot.node('CPV', 'Custo dos Produtos Vendidos', **node_attr)
     
-    # Fluxo de custos indiretos via rateio (curvas vermelhas)
-    dot.edge('CI', 'PA', xlabel="Rateio", color="red", fontcolor="red", style='bold')
-    dot.edge('CI', 'PB', xlabel="Rateio", color="red", fontcolor="red", style='bold')
-    dot.edge('CI', 'PC', xlabel="Rateio", color="red", fontcolor="red", style='bold')
+    # Edges que saem de CI — com minlen maior para alongar só essas arestas
+    dot.edge('CI', 'PA', xlabel="Rateio", color="red", fontcolor="red", style='bold', minlen='3')
+    dot.edge('CI', 'PB', xlabel="Rateio", color="red", fontcolor="red", style='bold', minlen='3')
+    dot.edge('CI', 'PC', xlabel="Rateio", color="red", fontcolor="red", style='bold', minlen='3')
     
-    # Fluxo de custos diretos: curvas azuis, grossas e arrowhead diferente
-    dot.edge('CD', 'PA', color='blue', penwidth='2', arrowhead='vee', style='solid')
-    dot.edge('CD', 'PB', color='blue', penwidth='2', arrowhead='vee', style='solid')
-    dot.edge('CD', 'PC', color='blue', penwidth='2', arrowhead='vee', style='solid')
+    # Edges que saem de CD — também com minlen maior para alongar
+    dot.edge('CD', 'PA', color='blue', penwidth='2', arrowhead='vee', style='solid', minlen='3')
+    dot.edge('CD', 'PB', color='blue', penwidth='2', arrowhead='vee', style='solid', minlen='3')
+    dot.edge('CD', 'PC', color='blue', penwidth='2', arrowhead='vee', style='solid', minlen='3')
     
     # Produtos para Estoque
     dot.edge('PA', 'E')

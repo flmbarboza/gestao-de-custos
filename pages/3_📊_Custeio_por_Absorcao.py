@@ -6,7 +6,7 @@ def main():
 
         # Lista de cards
     cards = [
-        {"title": "Matéria-Prima (MP)", "formula": "MP = EIMP + Compra MP - EFMP"},
+        {"title": "Matéria-Prima (MP, ou MD - Material Direto)", "formula": "MP = EIMP + Compra MP - EFMP"},
         {"title": "Custo de Produção do Período (CPP)", "formula": "CPP = MP + MOD + CIF"},
         {"title": "Custo do Produto Acabado (CPA)", "formula": "CPA = CPP + EIPP - EFPP"},
         {"title": "Custo dos Produtos Vendidos (CPV)", "formula": "CPV = CPA + EIPA - EFPA"}

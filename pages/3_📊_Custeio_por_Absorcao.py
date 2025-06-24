@@ -65,7 +65,7 @@ def main():
     
     # Estoque e CPV
     dot.node('E', 'Estoque', **node_attr)
-    dot.node('CPV', 'Custo dos Produtos Vendidos', **node_attr)
+    dot.node('CPV', 'Custo dos\nProdutos Vendidos', **node_attr)
     
     # Edges que saem de CD — também com minlen maior para alongar
     dot.edge('CD', 'PA', color='blue', penwidth='2', arrowhead='vee', style='solid', minlen='3')

@@ -40,7 +40,7 @@ def main():
 
     # Criação do diagrama
     dot = Digraph('CusteioPorAbsorcao')
-    dot.attr(rankdir='LR', splines='curved', ranksep='2.5')
+    dot.attr(rankdir='LR', splines='curved', nodesep='1.5')
     
     node_attr = {'shape': 'box', 'style': 'rounded,filled', 'color': 'cyan', 'fontname': 'Arial'}
     
@@ -68,9 +68,9 @@ def main():
     dot.node('CPV', 'Custo dos Produtos Vendidos', **node_attr)
     
     # Edges que saem de CD — também com minlen maior para alongar
-    dot.edge('CD', 'PA', color='blue', penwidth='3', arrowhead='vee', style='solid', minlen='3')
-    dot.edge('CD', 'PB', color='blue', penwidth='3', arrowhead='vee', style='solid', minlen='3')
-    dot.edge('CD', 'PC', color='blue', penwidth='3', arrowhead='vee', style='solid', minlen='3')
+    dot.edge('CD', 'PA', color='blue', penwidth='2', arrowhead='vee', style='solid', minlen='3')
+    dot.edge('CD', 'PB', color='blue', penwidth='2', arrowhead='vee', style='solid', minlen='3')
+    dot.edge('CD', 'PC', color='blue', penwidth='2', arrowhead='vee', style='solid', minlen='3')
     
     # Edges que saem de CI — com minlen maior para alongar só essas arestas
     dot.edge('CI', 'PA', xlabel="Rateio", color="red", fontcolor="red", style='bold', minlen='3')

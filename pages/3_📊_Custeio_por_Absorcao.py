@@ -67,8 +67,8 @@ def main():
     
     # Fluxo de custos indiretos via rateio (com label nas edges)
     dot.edge('CI', 'PA', label="Rateio", labeldistance="0.5", labelangle="30", color="red", fontcolor="red")
-    dot.edge('CI', 'PB', label="Rateio", color="red", fontcolor="red")
-    dot.edge('CI', 'PC', label="Rateio", color="red", fontcolor="red")
+    dot.edge('CI', 'PB', label="Rateio", labeldistance="0.5", labelangle="30", color="red", fontcolor="red")
+    dot.edge('CI', 'PC', label="Rateio", labeldistance="0.5", labelangle="30", color="red", fontcolor="red")
     
     # Fluxo de custos diretos
     dot.edge('CD', 'PA')

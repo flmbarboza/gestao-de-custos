@@ -188,6 +188,77 @@ def main():
             st.plotly_chart(fig, use_container_width=True)
 
     st.divider()
+
+    # Exemplos setoriais
+    st.subheader("📌 Exemplos Práticos por Setor")
+    st.write("Explore como o custeio por absorção é aplicado em diferentes setores:")
+    
+    exemplos = [
+        {
+            "setor": "🏭 Indústria",
+            "titulo": "Fábrica de Móveis",
+            "dados": {
+                "MP": 15000,
+                "MOD": 8000,
+                "CIF": 5000,
+                "EI": 3000,
+                "EF": 4000,
+                "Unidades": 200
+            },
+            "descricao": "Cálculo para produção de 200 unidades de móveis, considerando estoques de matéria-prima e produtos em elaboração."
+        },
+        {
+            "setor": "🛒 Comércio",
+            "titulo": "Distribuidora de Eletrônicos",
+            "dados": {
+                "MP": 0,
+                "MOD": 5000,
+                "CIF": 3000,
+                "EI": 10000,
+                "EF": 6000,
+                "Unidades": 1
+            },
+            "descricao": "Adaptação para comércio, onde MOD representa logística e CIF inclui armazenagem. Estoque refere-se a produtos prontos."
+        },
+        {
+            "setor": "👨‍⚕️ Serviços",
+            "titulo": "Clínica Médica",
+            "dados": {
+                "MP": 3000,
+                "MOD": 20000,
+                "CIF": 10000,
+                "EI": 0,
+                "EF": 0,
+                "Unidades": 500
+            },
+            "descricao": "Modelo adaptado para serviços de saúde, onde 'unidades' são consultas realizadas e MOD representa os honorários médicos."
+        }
+    ]
+    
+    tabs = st.tabs([exemplo["setor"] for exemplo in exemplos])
+    
+    for i, tab in enumerate(tabs):
+        with tab:
+            exemplo = exemplos[i]
+            st.markdown(f"#### {exemplo['titulo']}")
+            st.write(exemplo['descricao'])
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("**Dados de Entrada:**")
+                st.json(exemplo['dados'], expanded=True)
+            
+            with col2:
+                # Cálculos
+                cpp = exemplo['dados']['MP'] + exemplo['dados']['MOD'] + exemplo['dados']['CIF']
+                cpa = cpp + exemplo['dados']['EI'] - exemplo['dados']['EF']
+                custo_unit = cpa / exemplo['dados']['Unidades'] if exemplo['dados']['Unidades'] > 0 else 0
+                
+                st.metric("CPP", f"R$ {cpp:,.2f}")
+                st.metric("CPA", f"R$ {cpa:,.2f}")
+                st.metric("Custo Unitário", f"R$ {custo_unit:,.2f}")
+    
+    st.divider()
     
     if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio Variável"):
         st.switch_page("pages/4_📈_Custeio_Variavel.py")

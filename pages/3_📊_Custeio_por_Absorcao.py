@@ -187,141 +187,179 @@ def main():
                          color="Indicador")
             st.plotly_chart(fig, use_container_width=True)
 
-    st.divider()
+    #st.divider()
 
     # Exemplos setoriais
     st.subheader("📌 Exemplos Práticos por Setor")
     st.write("")
     
     with st.expander("Clique aqui para ver:", expanded=False):
+        x 
+        exemplos = {
+        "Industrial": {
+            "icon": "🏭",
+            "titulo": "Fábrica de Móveis",
+            "dados": {
+                "EIMP": 5000,
+                "Compras_MP": 20000,
+                "EFMP": 3000,
+                "MOD": 15000,
+                "CIF": 8000,
+                "EIPP": 4000,
+                "EFPP": 2000,
+                "EIPA": 6000,
+                "EFPA": 3000,
+                "Unidades_Vendidas": 500
+            },
+            "premissas": [
+                "Alto estoque inicial de madeira (matéria-prima)",
+                "Produção contínua com produtos em processo",
+                "Estoque significativo de produtos acabados",
+                "CIF inclui depreciação de máquinas e energia industrial"
+            ],
+            "conclusoes": [
+                "CPP elevado devido ao intensivo uso de mão-de-obra especializada",
+                "Necessidade de capital de giro para manter estoques",
+                "Custo unitário competitivo pela escala de produção"
+            ]
+        },
+        "Comércio": {
+            "icon": "🛒",
+            "titulo": "Distribuidora de Eletrônicos",
+            "dados": {
+                "EIMP": 0,
+                "Compras_MP": 0,
+                "EFMP": 0,
+                "MOD": 8000,
+                "CIF": 5000,
+                "EIPP": 0,
+                "EFPP": 0,
+                "EIPA": 15000,
+                "EFPA": 8000,
+                "Unidades_Vendidas": 1
+            },
+            "premissas": [
+                "Sem matéria-prima (revenda de produtos prontos)",
+                "MOD representa logística e montagem",
+                "CIF inclui armazenagem e embalagem",
+                "Estoque único de produtos acabados"
+            ],
+            "conclusoes": [
+                "Estrutura de custos mais simples que indústria",
+                "Giro de estoque é o indicador crítico",
+                "Custo unitário igual ao CPV (venda por unidade)"
+            ]
+        },
+        "Serviços": {
+            "icon": "👨‍⚕️",
+            "titulo": "Clínica Médica",
+            "dados": {
+                "EIMP": 1000,
+                "Compras_MP": 2000,
+                "EFMP": 500,
+                "MOD": 25000,
+                "CIF": 12000,
+                "EIPP": 0,
+                "EFPP": 0,
+                "EIPA": 0,
+                "EFPA": 0,
+                "Unidades_Vendidas": 600
+            },
+            "premissas": [
+                "Pequeno estoque de materiais médicos",
+                "MOD representa 80% dos custos (honorários)",
+                "CIF inclui aluguel e equipamentos",
+                "Sem estoques de processo ou produtos (serviço imediato)"
+            ],
+            "conclusoes": [
+                "Estrutura de custos concentrada em pessoal",
+                "Baixo investimento em estoques",
+                "Custo unitário variável conforme produtividade"
+            ]}}
 
-        exemplos = [
-            {
-                "setor": "🏭 Indústria (Fábrica de Móveis)",
-                "dados": {
-                    "EIMP": 5000,
-                    "Compras_MP": 20000,
-                    "EFMP": 3000,
-                    "MOD": 15000,
-                    "CIF": 8000,
-                    "EIPP": 4000,
-                    "EFPP": 2000,
-                    "EIPA": 6000,
-                    "EFPA": 3000,
-                    "Unidades_Vendidas": 500
-                },
-                "descricao": "Cálculo completo para indústria com todos os estoques: Matéria-Prima, Produtos em Processo e Acabados."
-            },
-            {
-                "setor": "🛒 Comércio (Distribuidora)",
-                "dados": {
-                    "EIMP": 0,
-                    "Compras_MP": 0,
-                    "EFMP": 0,
-                    "MOD": 8000,
-                    "CIF": 5000,
-                    "EIPP": 0,
-                    "EFPP": 0,
-                    "EIPA": 15000,
-                    "EFPA": 8000,
-                    "Unidades_Vendidas": 1
-                },
-                "descricao": "Adaptação para comércio (sem produção, apenas estoque de produtos acabados)."
-            },
-            {
-                "setor": "👨‍⚕️ Serviços (Clínica Médica)",
-                "dados": {
-                    "EIMP": 1000,
-                    "Compras_MP": 2000,
-                    "EFMP": 500,
-                    "MOD": 25000,
-                    "CIF": 12000,
-                    "EIPP": 0,
-                    "EFPP": 0,
-                    "EIPA": 0,
-                    "EFPA": 0,
-                    "Unidades_Vendidas": 600
-                },
-                "descricao": "Serviços com pequeno estoque de materiais (sem produtos em processo ou acabados)."
-            }
-        ]
+        # Seletor interativo
+        setor_selecionado = st.selectbox(
+            "Selecione o setor para análise:",
+            options=list(exemplos.keys()),
+            format_func=lambda x: f"{exemplos[x]['icon']} {x}"
+        )
     
-        tabs = st.tabs([exemplo["setor"] for exemplo in exemplos])
+        exemplo = exemplos[setor_selecionado]
+        dados = exemplo['dados']
+    
+        with st.expander(f"🔍 {exemplo['icon']} Premissas do Setor {setor_selecionado}", expanded=True):
+            st.markdown("**Por que esses valores?**")
+            for premissa in exemplo['premissas']:
+                st.markdown(f"- {premissa}")
+            
+            st.markdown("\n**Justificativas para estoques:**")
+            if dados['EIMP'] == 0 and dados['EIPA'] == 0:
+                st.warning("Estoques zerados: típico de serviços que não mantêm materiais em estoque")
+            elif dados['EIPP'] == 0:
+                st.info("Sem produtos em processo: característica de comércio/serviços sem produção")
+            else:
+                st.success("Todos estoques ativos: padrão industrial com produção contínua")
+    
+        # Cálculos (mesma lógica anterior)
+        mp = dados['EIMP'] + dados['Compras_MP'] - dados['EFMP']
+        cpp = mp + dados['MOD'] + dados['CIF']
+        cpa = cpp + dados['EIPP'] - dados['EFPP']
+        cpv = cpa + dados['EIPA'] - dados['EFPA']
+        custo_unit = cpv / dados['Unidades_Vendidas'] if dados['Unidades_Vendidas'] > 0 else 0
+    
+        # Visualização dos resultados
+        col_res1, col_res2 = st.columns(2)
+        with col_res1:
+            st.markdown("**📊 Fluxo de Custos**")
+            st.metric("MP (Matéria-Prima)", f"R$ {mp:,.2f}")
+            st.metric("CPP (Produção)", f"R$ {cpp:,.2f}")
+            st.metric("CPA (Acabados)", f"R$ {cpa:,.2f}")
         
-        for i, tab in enumerate(tabs):
-            with tab:
-                exemplo = exemplos[i]
-                dados = exemplo['dados']
+        with col_res2:
+            st.markdown("**💰 Resultados Finais**")
+            st.metric("CPV (Vendas)", f"R$ {cpv:,.2f}", delta_color="inverse")
+            st.metric("Custo Unitário", f"R$ {custo_unit:,.2f}/unidade")
+            st.metric("Margem Bruta", f"{(1 - (cpv/(cpv + dados['MOD'] + dados['CIF'])):.1%}", 
+                     help="Relação entre CPV e custos totais")
+    
+        # Conclusões interativas
+        #st.divider()
+        with st.expander("💡 Conclusões e Análise Gerencial", expanded=True):
+            st.markdown(f"**Lições para o setor {setor_selecionado}:**")
+            for conclusao in exemplo['conclusoes']:
+                st.markdown(f"✅ {conclusao}")
+            
+            if st.checkbox("🔎 Mostrar análise detalhada"):
+                if setor_selecionado == "Industrial":
+                    st.markdown("""
+                    **Análise Industrial:**
+                    - Alta participação de MOD ({(dados['MOD']/cpp):.1%}) indica processo artesanal
+                    - Estoque final de MP (R$ {dados['EFMP']:,.2f}) sugere compras eficientes
+                    - CIF elevado ({(dados['CIF']/cpp):.1%}) requer análise de otimização
+                    """.format(**dados))
                 
-                # Cálculos completos
-                mp = dados['EIMP'] + dados['Compras_MP'] - dados['EFMP']
-                cpp = mp + dados['MOD'] + dados['CIF']
-                cpa = cpp + dados['EIPP'] - dados['EFPP']
-                cpv = cpa + dados['EIPA'] - dados['EFPA']
-                custo_unit = cpv / dados['Unidades_Vendidas'] if dados['Unidades_Vendidas'] > 0 else 0
-                
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.markdown("**Dados de Entrada:**")
-                    st.json({
-                        "Matéria-Prima": {
-                            "EIMP": dados['EIMP'],
-                            "Compras MP": dados['Compras_MP'],
-                            "EFMP": dados['EFMP']
-                        },
-                        "Produção": {
-                            "MOD": dados['MOD'],
-                            "CIF": dados['CIF'],
-                            "EIPP": dados['EIPP'],
-                            "EFPP": dados['EFPP']
-                        },
-                        "Produtos Acabados": {
-                            "EIPA": dados['EIPA'],
-                            "EFPA": dados['EFPA']
-                        },
-                        "Unidades Vendidas": dados['Unidades_Vendidas']
-                    })
-                
-                with col2:
-                    st.markdown("**Cálculos Detalhados:**")
-                    
-                    st.markdown(f"""
-                    **1. Matéria-Prima (MP)**  
-                    `MP = EIMP + Compras - EFMP`  
-                    `= {dados['EIMP']} + {dados['Compras_MP']} - {dados['EFMP']} = **{mp:,.2f}**`
-                    
-                    **2. Custo Produção Período (CPP)**  
-                    `CPP = MP + MOD + CIF`  
-                    `= {mp:,.2f} + {dados['MOD']} + {dados['CIF']} = **{cpp:,.2f}**`
-                    
-                    **3. Custo Produto Acabado (CPA)**  
-                    `CPA = CPP + EIPP - EFPP`  
-                    `= {cpp:,.2f} + {dados['EIPP']} - {dados['EFPP']} = **{cpa:,.2f}**`
-                    
-                    **4. Custo Produtos Vendidos (CPV)**  
-                    `CPV = CPA + EIPA - EFPA`  
-                    `= {cpa:,.2f} + {dados['EIPA']} - {dados['EFPA']} = **{cpv:,.2f}**`
-                    
-                    **5. Custo Unitário**  
-                    `= CPV / Unidades = {cpv:,.2f} / {dados['Unidades_Vendidas']} = **{custo_unit:,.2f}**`
+                elif setor_selecionado == "Comércio":
+                    st.markdown("""
+                    **Análise Comercial:**
+                    - Custo fixo significativo ({(dados['CIF']/(dados['MOD']+dados['CIF'])):.1%} da estrutura)
+                    - Giro de estoque: {(cpv/dados['EIPA']):.1f}x (ideal >4x para eletrônicos)
                     """)
                 
-                # Gráfico de estoques
-                estoques = pd.DataFrame({
-                    "Tipo": ["Matéria-Prima", "Prod. Processo", "Prod. Acabados"],
-                    "Estoque Inicial": [dados['EIMP'], dados['EIPP'], dados['EIPA']],
-                    "Estoque Final": [dados['EFMP'], dados['EFPP'], dados['EFPA']]
-                })
-                
-                fig = px.bar(estoques, 
-                            x="Tipo", 
-                            y=["Estoque Inicial", "Estoque Final"],
-                            title="Movimentação de Estoques",
-                            barmode='group',
-                            labels={"value": "Valor (R$)", "variable": "Tipo de Estoque"})
-                st.plotly_chart(fig, use_container_width=True)
+                else:
+                    st.markdown("""
+                    **Análise de Serviços:**
+                    - Pessoal representa {(dados['MOD']/(dados['MOD']+dados['CIF'])):.1%} dos custos
+                    - Custo por atendimento: R$ {custo_unit:,.2f} (benchmark: R$ 50-150)
+                    """)
     
-    st.divider()    
+        # Gráfico comparativo
+        fig = px.pie(
+            names=["Matéria-Prima", "Mão-de-Obra", "Custos Indiretos"],
+            values=[mp, dados['MOD'], dados['CIF']],
+            title=f"Composição do CPP - {setor_selecionado}"
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    #st.divider()    
     if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio Variável"):
         st.switch_page("pages/4_📈_Custeio_Variavel.py")
 

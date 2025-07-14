@@ -336,11 +336,25 @@ def main():
                     - CIF elevado ({(dados['CIF']/cpp):.1%}) requer análise de otimização
                     """)            
                 elif setor_selecionado == "Comércio":
-                    st.markdown("""
-                    **Análise Comercial:**
-                    - Custo fixo significativo ({(dados['CIF']/(dados['MOD']+dados['CIF'])):.1%}) da estrutura)
-                    - Giro de estoque: {(cpv/dados['EIPA']):.1f}x (ideal >4x para eletrônicos)
-                    """)
+                    st.markdown("**Análise Comercial:**")
+                    
+                    try:
+                        # Cálculo custo fixo
+                        total_custos = dados['MOD'] + dados['CIF']
+                        participacao_cif = dados['CIF'] / total_custos if total_custos > 0 else 0
+                        st.markdown(f"- Custo fixo significativo ({participacao_cif:.1%} da estrutura)")
+                        
+                        # Cálculo giro de estoque
+                        if dados['EIPA'] > 0:
+                            giro_estoque = cpv / dados['EIPA']
+                            st.markdown(f"- Giro de estoque: {giro_estoque:.1f}x (ideal >4x para eletrônicos)")
+                            if giro_estoque < 4:
+                                st.error("⚠️ Atenção: Giro abaixo do recomendado para o setor!")
+                        else:
+                            st.markdown("- Giro de estoque: Estoque zerado - não calculável")
+                            
+                    except KeyError as e:
+                        st.error(f"Erro nos dados: campo {e} não encontrado")
                 
                 else:
                     st.markdown("""

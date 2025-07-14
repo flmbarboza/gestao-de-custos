@@ -158,7 +158,7 @@ def main():
         if st.button("📊 Avançar para Custeio Variável"):
             st.switch_page("pages/4_📈_Custeio_Variavel.py")
     with cols[2]:
-        subcol1, subcol2 = st.columns([2,1])  # 3:1 ratio
+        subcol1, subcol2 = st.columns([1,2])  # 3:1 ratio
         with subcol2:
             if st.button("🔄 Refazer Teste"):
                 st.session_state.score = 0

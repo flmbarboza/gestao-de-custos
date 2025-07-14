@@ -29,13 +29,13 @@ def main():
         },
         {
             "type": "true_false",
-            "question": "2. No custeio por absorção, os custos fixos são rateados aos produtos conforme o volume produzido.",
+            "question": "2. No custeio por absorção, os custos fixos podem ser rateados usando o volume produzido como critério de rateio.",
             "answer": True,
-            "explanation": "Verdadeiro. Essa é uma característica fundamental do custeio por absorção."
+            "explanation": "Verdadeiro. Essa é uma característica considerada mais simples do custeio por absorção, porém é aplicável."
         },
         {
             "type": "calculation",
-            "question": "3. Uma empresa teve: MP R$ 50.000, MOD R$ 30.000, CIF R$ 20.000. Qual o CPP?",
+            "question": "3. Uma empresa teve: MP R\$ 50.000, MOD R\$ 30.000, CIF R\$ 20.000. Qual o CPP?",
             "answer": 100000,
             "tolerance": 0,
             "explanation": "CPP = MP + MOD + CIF = 50.000 + 30.000 + 20.000 = R$ 100.000"
@@ -54,10 +54,10 @@ def main():
         },
         {
             "type": "case_analysis",
-            "question": "5. Uma fábrica produziu 1.000 unidades com CPA de R$ 80.000 e vendeu 800 unidades. Se o EIPA era R$ 10.000, qual o CPV?",
+            "question": "5. Uma fábrica produziu 1.000 unidades com CPA de R\$ 80.000 e vendeu 800 unidades. Se o EIPA era R\$ 10.000, qual o CPV?",
             "answer": 74000,
             "tolerance": 0,
-            "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R$ 74.000"
+            "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R\$ 74.000"
         }
     ]
     
@@ -151,11 +151,11 @@ def main():
     st.divider()
     cols = st.columns(3)
     with cols[0]:
-        if st.button("⬅️ Voltar ao Básico"):
-            st.switch_page("pages/3_📊_Custeio_Absorcao.py")
+        if st.button("⬅️ Voltar ao Custeio por Absorção"):
+            st.switch_page("pages/3_📊_Custeio_por_Absorcao_I.py")
     with cols[1]:
-        if st.button("📊 Ver Avançado"):
-            st.switch_page("pages/3b_📈_Custeio_Absorcao_Avancado.py")
+        if st.button("📊 Avançar para Custeio Variável"):
+            st.switch_page("pages/4_📈_Custeio_Variavel.py")
     with cols[2]:
         if st.button("🔄 Refazer Teste"):
             st.session_state.score = 0

@@ -319,8 +319,6 @@ def main():
             st.markdown("**💰 Resultados Finais**")
             st.metric("CPV (Vendas)", f"R$ {cpv:,.2f}", delta_color="inverse")
             st.metric("Custo Unitário", f"R$ {custo_unit:,.2f}/unidade")
-            st.metric("Margem Bruta", f"{(1 - (cpv/(cpv + dados['MOD'] + dados['CIF'])):.1%}", 
-                     help="Relação entre CPV e custos totais")
     
         # Conclusões interativas
         #st.divider()

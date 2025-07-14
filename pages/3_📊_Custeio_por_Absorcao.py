@@ -329,17 +329,16 @@ def main():
             
             if st.checkbox("🔎 Mostrar análise detalhada"):
                 if setor_selecionado == "Industrial":
-                    st.markdown("""
+                    st.markdown(f"""
                     **Análise Industrial:**
                     - Alta participação de MOD ({(dados['MOD']/cpp):.1%}) indica processo artesanal
                     - Estoque final de MP (R$ {dados['EFMP']:,.2f}) sugere compras eficientes
                     - CIF elevado ({(dados['CIF']/cpp):.1%}) requer análise de otimização
-                    """.format(**dados))
-                
+                    """)            
                 elif setor_selecionado == "Comércio":
                     st.markdown("""
                     **Análise Comercial:**
-                    - Custo fixo significativo ({(dados['CIF']/(dados['MOD']+dados['CIF'])):.1%} da estrutura)
+                    - Custo fixo significativo ({(dados['CIF']/(dados['MOD']+dados['CIF'])):.1%}) da estrutura)
                     - Giro de estoque: {(cpv/dados['EIPA']):.1f}x (ideal >4x para eletrônicos)
                     """)
                 

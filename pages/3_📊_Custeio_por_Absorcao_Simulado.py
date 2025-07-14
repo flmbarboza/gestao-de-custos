@@ -158,10 +158,13 @@ def main():
         if st.button("📊 Avançar para Custeio Variável"):
             st.switch_page("pages/4_📈_Custeio_Variavel.py")
     with cols[2]:
-        if st.button("🔄 Refazer Teste"):
-            st.session_state.score = 0
-            st.session_state.answers = {}
-            st.rerun()
+        subcol1, subcol2 = st.columns([3,1])  # 3:1 ratio
+        with subcol2:
+            st.button("🔄 Refazer Teste")
+            if st.button("🔄 Refazer Teste"):
+                st.session_state.score = 0
+                st.session_state.answers = {}
+                st.rerun()
 
 if __name__ == "__main__":
     main()

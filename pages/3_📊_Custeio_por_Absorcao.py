@@ -109,29 +109,83 @@ def main():
 
     # Simulador interativo
     st.subheader("📱 Simulador de Custeio")
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        mp = st.number_input("Matéria-Prima (R$):", 1000, 100000, 5000)
-        mod = st.number_input("Mão de Obra (R$):", 1000, 100000, 3000)
-    
-    with col2:
-        cif = st.number_input("Custos Indiretos (R$):", 1000, 100000, 2000)
-        ei = st.number_input("Estoque Inicial (R$):", 0, 100000, 0)
-        ef = st.number_input("Estoque Final (R$):", 0, 100000, 1000)
-    
-    if st.button("Calcular"):
-        cpp = mp + mod + cif
-        cpa = cpp + ei - ef
+
+    with st.expander("🔧 Simulador Interativo de Custeio por Absorção", expanded=False):
+        # Container principal
+        with st.container():
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                st.markdown("**Matéria-Prima**")
+                eimp = st.number_input("Estoque Inicial MP (R$):", min_value=0, value=2000, step=100)
+                compras_mp = st.number_input("Compras MP (R$):", min_value=0, value=8000, step=100)
+                efmp = st.number_input("Estoque Final MP (R$):", min_value=0, value=1000, step=100)
+                mp = eimp + compras_mp - efmp
+                st.metric("Matéria-Prima Calculada", f"R$ {mp:,.2f}", 
+                         delta=f"EIMP + Compras - EFMP = {eimp} + {compras_mp} - {efmp}")
+                
+            with col2:
+                st.markdown("**Custos de Produção**")
+                mod = st.number_input("Mão de Obra Direta (R$):", min_value=0, value=5000, step=100)
+                cif = st.number_input("Custos Indiretos (R$):", min_value=0, value=3000, step=100)
+                eipp = st.number_input("Estoque Inicial PP (R$):", min_value=0, value=1500, step=100)
+                efpp = st.number_input("Estoque Final PP (R$):", min_value=0, value=1000, step=100)
+                
+            with col3:
+                st.markdown("**Produtos Acabados**")
+                eipa = st.number_input("Estoque Inicial PA (R$):", min_value=0, value=2000, step=100)
+                efpa = st.number_input("Estoque Final PA (R$):", min_value=0, value=1500, step=100)
+                unidades_vendidas = st.number_input("Unidades Vendidas:", min_value=0, value=800, step=10)
         
-        resultados = pd.DataFrame({
-            "Conceito": ["CPP", "CPA"],
-            "Valor (R$)": [cpp, cpa]
-        })
-        
-        st.bar_chart(resultados.set_index("Conceito"))
-        st.table(resultados)
-    
+        # Cálculos
+        if st.button("🔢 Calcular", type="primary"):
+            cpp = mp + mod + cif
+            cpa = cpp + eipp - efpp
+            cpv = cpa + eipa - efpa
+            custo_unitario = cpv / unidades_vendidas if unidades_vendidas > 0 else 0
+            
+            resultados = pd.DataFrame({
+                "Indicador": ["CPP (Custo de Produção do Período)", 
+                             "CPA (Custo de Produção Acumulado)", 
+                             "CPV (Custo dos Produtos Vendidos)",
+                             "Custo Unitário"],
+                "Valor (R$)": [cpp, cpa, cpv, custo_unitario],
+                "Fórmula": [
+                    "MP + MOD + CIF",
+                    "CPP + EIPP - EFPP",
+                    "CPA + EIPA - EFPA",
+                    "CPV / Unidades Vendidas"
+                ],
+                "Cálculo": [
+                    f"{mp} + {mod} + {cif}",
+                    f"{cpp} + {eipp} - {efpp}",
+                    f"{cpa} + {eipa} - {efpa}",
+                    f"{cpv} / {unidades_vendidas}" if unidades_vendidas > 0 else "N/A"
+                ]
+            })
+            
+            # Exibição dos resultados
+            st.success("🎯 Resultados do Custeio por Absorção")
+            
+            col_res1, col_res2, col_res3 = st.columns(3)
+            with col_res1:
+                st.metric("CPP", f"R$ {cpp:,.2f}")
+            with col_res2:
+                st.metric("CPA", f"R$ {cpa:,.2f}")
+            with col_res3:
+                st.metric("CPV", f"R$ {cpv:,.2f}")
+            
+            st.dataframe(resultados.style.format({"Valor (R$)": "R$ {:,.2f}"}), hide_index=True)
+            
+            # Gráfico
+            fig = px.bar(resultados.iloc[:3], 
+                         x="Indicador", 
+                         y="Valor (R$)",
+                         title="Indicadores de Custeio",
+                         text_auto='.2f',
+                         color="Indicador")
+            st.plotly_chart(fig, use_container_width=True)
+
     st.divider()
     
     if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio Variável"):

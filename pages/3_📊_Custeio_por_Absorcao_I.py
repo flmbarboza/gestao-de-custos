@@ -383,7 +383,8 @@ def main():
             title=f"Composição do CPP - {setor_selecionado}"
         )
         st.plotly_chart(fig, use_container_width=True)
-    #st.divider()    
+    
+    st.divider()    
     if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio Variável"):
         st.switch_page("pages/4_📈_Custeio_Variavel.py")
 

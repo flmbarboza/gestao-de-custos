@@ -142,9 +142,10 @@ def main():
         # Sugestões de estudo
         st.markdown("""
         **Recursos recomendados:**
-        - Revisar página de [Custeio Básico](3_📊_Custeio_Absorcao)
-        - Praticar [Exercícios Avançados](3b_📈_Custeio_Absorcao_Avancado)
-        - Capítulo 3 do livro 'Contabilidade de Custos' de Eliseu Martins
+        - Capítulos 5 e 6 do livro 'Contabilidade de Custos' do Prof. Eliseu Martins;
+        - Capítulos 2 e 4 do livro 'Série Desvendando as Finanças - Administração Custos Preços Lucros' do Prof. Bruni;
+        - Unidade 2 do livro 'Análise de Custo' de Aline Alves e colaboradores; e,
+        - Parte I do livro 'Análise de custos: uma abordagem simples e objetiva' de Eduardo F. Lyrio e colaboradores.
         """)
     
     # Navegação

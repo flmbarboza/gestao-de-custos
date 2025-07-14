@@ -194,7 +194,7 @@ def main():
     st.write("")
     
     with st.expander("Clique aqui para ver:", expanded=False):
-        x 
+         
         exemplos = {
         "Industrial": {
             "icon": "🏭",

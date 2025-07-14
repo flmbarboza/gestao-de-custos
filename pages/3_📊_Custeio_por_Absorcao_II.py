@@ -15,56 +15,52 @@ def main():
     
     with tab1:
         st.header("Método de Departamentalização")
-        col1, col2 = st.columns(2)
+        st.subheader("Dados de Entrada")
+        deptos = pd.DataFrame({
+            'Departamento': ['Montagem', 'Acabamento', 'Administração'],
+            'Custo Direto': [120000, 80000, 50000],
+            'Horas-Mod': [3000, 2000, 1000],
+            'Horas-Máquina': [1500, 1000, 500],
+            'Área (m²)': [800, 600, 400]
+        })
+        edited_deptos = st.data_editor(deptos, num_rows="dynamic")
         
-        with col1:
-            st.subheader("Dados de Entrada")
-            deptos = pd.DataFrame({
-                'Departamento': ['Montagem', 'Acabamento', 'Administração'],
-                'Custo Direto': [120000, 80000, 50000],
-                'Horas-Mod': [3000, 2000, 1000],
-                'Horas-Máquina': [1500, 1000, 500],
-                'Área (m²)': [800, 600, 400]
-            })
-            edited_deptos = st.data_editor(deptos, num_rows="dynamic")
+        criterio = st.selectbox(
+            "Critério de Rateio:",
+            ["Horas-Máquina", "Horas-MOD", "Área", "Custo Direto"],
+            key="depto"
+        )
+    
+        st.subheader("Resultado do Rateio")
+        if st.button("Calcular Rateio", key="calc_depto"):
+            total_cif = st.number_input("Total CIF a Ratear (R$):", value=150000)
             
-            criterio = st.selectbox(
-                "Critério de Rateio:",
-                ["Horas-Máquina", "Horas-MOD", "Área", "Custo Direto"],
-                key="depto"
-            )
-        
-        with col2:
-            st.subheader("Resultado do Rateio")
-            if st.button("Calcular Rateio", key="calc_depto"):
-                total_cif = st.number_input("Total CIF a Ratear (R$):", value=150000)
-                
-                if criterio == "Horas-Máquina":
-                    base = edited_deptos['Horas-Máquina'].sum()
-                    edited_deptos['% Rateio'] = edited_deptos['Horas-Máquina'] / base
-                elif criterio == "Horas-MOD":
-                    base = edited_deptos['Horas-Mod'].sum()
-                    edited_deptos['% Rateio'] = edited_deptos['Horas-Mod'] / base
-                elif criterio == "Área":
-                    base = edited_deptos['Área (m²)'].sum()
-                    edited_deptos['% Rateio'] = edited_deptos['Área (m²)'] / base
-                else:
-                    base = edited_deptos['Custo Direto'].sum()
-                    edited_deptos['% Rateio'] = edited_deptos['Custo Direto'] / base
-                
-                edited_deptos['CIF Rateado'] = edited_deptos['% Rateio'] * total_cif
-                edited_deptos['Custo Total'] = edited_deptos['Custo Direto'] + edited_deptos['CIF Rateado']
-                
-                st.dataframe(edited_deptos.style.format({
-                    '% Rateio': '{:.1%}',
-                    'CIF Rateado': 'R$ {:,.2f}',
-                    'Custo Total': 'R$ {:,.2f}'
-                }))
-                
-                # Gráfico de composição
-                fig = px.pie(edited_deptos, values='CIF Rateado', names='Departamento',
-                            title='Distribuição do CIF por Departamento')
-                st.plotly_chart(fig, use_container_width=True)
+            if criterio == "Horas-Máquina":
+                base = edited_deptos['Horas-Máquina'].sum()
+                edited_deptos['% Rateio'] = edited_deptos['Horas-Máquina'] / base
+            elif criterio == "Horas-MOD":
+                base = edited_deptos['Horas-Mod'].sum()
+                edited_deptos['% Rateio'] = edited_deptos['Horas-Mod'] / base
+            elif criterio == "Área":
+                base = edited_deptos['Área (m²)'].sum()
+                edited_deptos['% Rateio'] = edited_deptos['Área (m²)'] / base
+            else:
+                base = edited_deptos['Custo Direto'].sum()
+                edited_deptos['% Rateio'] = edited_deptos['Custo Direto'] / base
+            
+            edited_deptos['CIF Rateado'] = edited_deptos['% Rateio'] * total_cif
+            edited_deptos['Custo Total'] = edited_deptos['Custo Direto'] + edited_deptos['CIF Rateado']
+            
+            st.dataframe(edited_deptos.style.format({
+                '% Rateio': '{:.1%}',
+                'CIF Rateado': 'R$ {:,.2f}',
+                'Custo Total': 'R$ {:,.2f}'
+            }))
+            
+            # Gráfico de composição
+            fig = px.pie(edited_deptos, values='CIF Rateado', names='Departamento',
+                        title='Distribuição do CIF por Departamento')
+            st.plotly_chart(fig, use_container_width=True)
     
     with tab2:
         st.header("Rateio por Linha de Produtos")

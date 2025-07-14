@@ -191,9 +191,9 @@ def main():
 
     # Exemplos setoriais
     st.subheader("📌 Exemplos Práticos por Setor")
-    st.write("Explore como o custeio por absorção é aplicado em diferentes setores:")
+    st.write("")
     
-    with st.expander("🔧 Simulador Interativo de Custeio por Absorção", expanded=True):
+    with st.expander("Clique aqui para ver:", expanded=False):
 
         exemplos = [
             {

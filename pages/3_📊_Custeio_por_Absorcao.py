@@ -364,7 +364,7 @@ def main():
                         st.markdown(f"""
                         **Análise de Serviços:**
                         - Pessoal representa {participacao_mod:.1%} dos custos
-                        - Custo por atendimento: R$ {custo_unit:,.2f} (benchmark: R$ 50-150)
+                        - Custo por atendimento: R\$ {custo_unit:,.2f} (benchmark: R\$ 50-150)
                         """)
                         
                         # Adiciona um aviso se o custo unitário estiver fora do benchmark

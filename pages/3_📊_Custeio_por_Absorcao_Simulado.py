@@ -160,7 +160,6 @@ def main():
     with cols[2]:
         subcol1, subcol2 = st.columns([3,1])  # 3:1 ratio
         with subcol2:
-            st.button("🔄 Refazer Teste")
             if st.button("🔄 Refazer Teste"):
                 st.session_state.score = 0
                 st.session_state.answers = {}

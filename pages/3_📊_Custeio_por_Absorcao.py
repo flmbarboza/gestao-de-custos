@@ -357,11 +357,24 @@ def main():
                         st.error(f"Erro nos dados: campo {e} não encontrado")
                 
                 else:
-                    st.markdown("""
-                    **Análise de Serviços:**
-                    - Pessoal representa {(dados['MOD']/(dados['MOD']+dados['CIF'])):.1%} dos custos
-                    - Custo por atendimento: R$ {custo_unit:,.2f} (benchmark: R$ 50-150)
-                    """)
+                    try:
+                        # Calcula a participação da MOD nos custos totais
+                        participacao_mod = dados['MOD'] / (dados['MOD'] + dados['CIF']) if (dados['MOD'] + dados['CIF']) > 0 else 0
+                        
+                        st.markdown(f"""
+                        **Análise de Serviços:**
+                        - Pessoal representa {participacao_mod:.1%} dos custos
+                        - Custo por atendimento: R$ {custo_unit:,.2f} (benchmark: R$ 50-150)
+                        """)
+                        
+                        # Adiciona um aviso se o custo unitário estiver fora do benchmark
+                        if custo_unit < 50 or custo_unit > 150:
+                            st.warning("O custo por atendimento está fora da faixa recomendada para serviços médicos")
+                            
+                    except KeyError as e:
+                        st.error(f"Erro ao acessar dados: campo {e} não encontrado")
+                    except ZeroDivisionError:
+                        st.error("Erro: Divisão por zero - verifique os valores de MOD e CIF")
     
         # Gráfico comparativo
         fig = px.pie(

@@ -158,7 +158,7 @@ def main():
     col1, col2 = st.columns(2)
     with col1:
         if st.button("⬅️ Voltar para Custeio por Absorção I"):
-            st.switch_page("pages/3_📊_Custeio_Absorcao_I.py")
+            st.switch_page("pages/3_📊_Custeio_por_Absorcao_I.py")
 
     with col2:
         if st.button("Avançar para Custeio Variável ➡️"):

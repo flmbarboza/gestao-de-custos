@@ -193,73 +193,135 @@ def main():
     st.subheader("📌 Exemplos Práticos por Setor")
     st.write("Explore como o custeio por absorção é aplicado em diferentes setores:")
     
-    exemplos = [
-        {
-            "setor": "🏭 Indústria",
-            "titulo": "Fábrica de Móveis",
-            "dados": {
-                "MP": 15000,
-                "MOD": 8000,
-                "CIF": 5000,
-                "EI": 3000,
-                "EF": 4000,
-                "Unidades": 200
+    with st.expander("🔧 Simulador Interativo de Custeio por Absorção", expanded=True):
+
+        exemplos = [
+            {
+                "setor": "🏭 Indústria (Fábrica de Móveis)",
+                "dados": {
+                    "EIMP": 5000,
+                    "Compras_MP": 20000,
+                    "EFMP": 3000,
+                    "MOD": 15000,
+                    "CIF": 8000,
+                    "EIPP": 4000,
+                    "EFPP": 2000,
+                    "EIPA": 6000,
+                    "EFPA": 3000,
+                    "Unidades_Vendidas": 500
+                },
+                "descricao": "Cálculo completo para indústria com todos os estoques: Matéria-Prima, Produtos em Processo e Acabados."
             },
-            "descricao": "Cálculo para produção de 200 unidades de móveis, considerando estoques de matéria-prima e produtos em elaboração."
-        },
-        {
-            "setor": "🛒 Comércio",
-            "titulo": "Distribuidora de Eletrônicos",
-            "dados": {
-                "MP": 0,
-                "MOD": 5000,
-                "CIF": 3000,
-                "EI": 10000,
-                "EF": 6000,
-                "Unidades": 1
+            {
+                "setor": "🛒 Comércio (Distribuidora)",
+                "dados": {
+                    "EIMP": 0,
+                    "Compras_MP": 0,
+                    "EFMP": 0,
+                    "MOD": 8000,
+                    "CIF": 5000,
+                    "EIPP": 0,
+                    "EFPP": 0,
+                    "EIPA": 15000,
+                    "EFPA": 8000,
+                    "Unidades_Vendidas": 1
+                },
+                "descricao": "Adaptação para comércio (sem produção, apenas estoque de produtos acabados)."
             },
-            "descricao": "Adaptação para comércio, onde MOD representa logística e CIF inclui armazenagem. Estoque refere-se a produtos prontos."
-        },
-        {
-            "setor": "👨‍⚕️ Serviços",
-            "titulo": "Clínica Médica",
-            "dados": {
-                "MP": 3000,
-                "MOD": 20000,
-                "CIF": 10000,
-                "EI": 0,
-                "EF": 0,
-                "Unidades": 500
-            },
-            "descricao": "Modelo adaptado para serviços de saúde, onde 'unidades' são consultas realizadas e MOD representa os honorários médicos."
-        }
-    ]
+            {
+                "setor": "👨‍⚕️ Serviços (Clínica Médica)",
+                "dados": {
+                    "EIMP": 1000,
+                    "Compras_MP": 2000,
+                    "EFMP": 500,
+                    "MOD": 25000,
+                    "CIF": 12000,
+                    "EIPP": 0,
+                    "EFPP": 0,
+                    "EIPA": 0,
+                    "EFPA": 0,
+                    "Unidades_Vendidas": 600
+                },
+                "descricao": "Serviços com pequeno estoque de materiais (sem produtos em processo ou acabados)."
+            }
+        ]
     
-    tabs = st.tabs([exemplo["setor"] for exemplo in exemplos])
-    
-    for i, tab in enumerate(tabs):
-        with tab:
-            exemplo = exemplos[i]
-            st.markdown(f"#### {exemplo['titulo']}")
-            st.write(exemplo['descricao'])
-            
-            col1, col2 = st.columns(2)
-            with col1:
-                st.markdown("**Dados de Entrada:**")
-                st.json(exemplo['dados'], expanded=True)
-            
-            with col2:
-                # Cálculos
-                cpp = exemplo['dados']['MP'] + exemplo['dados']['MOD'] + exemplo['dados']['CIF']
-                cpa = cpp + exemplo['dados']['EI'] - exemplo['dados']['EF']
-                custo_unit = cpa / exemplo['dados']['Unidades'] if exemplo['dados']['Unidades'] > 0 else 0
+        tabs = st.tabs([exemplo["setor"] for exemplo in exemplos])
+        
+        for i, tab in enumerate(tabs):
+            with tab:
+                exemplo = exemplos[i]
+                dados = exemplo['dados']
                 
-                st.metric("CPP", f"R$ {cpp:,.2f}")
-                st.metric("CPA", f"R$ {cpa:,.2f}")
-                st.metric("Custo Unitário", f"R$ {custo_unit:,.2f}")
+                # Cálculos completos
+                mp = dados['EIMP'] + dados['Compras_MP'] - dados['EFMP']
+                cpp = mp + dados['MOD'] + dados['CIF']
+                cpa = cpp + dados['EIPP'] - dados['EFPP']
+                cpv = cpa + dados['EIPA'] - dados['EFPA']
+                custo_unit = cpv / dados['Unidades_Vendidas'] if dados['Unidades_Vendidas'] > 0 else 0
+                
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.markdown("**Dados de Entrada:**")
+                    st.json({
+                        "Matéria-Prima": {
+                            "EIMP": dados['EIMP'],
+                            "Compras MP": dados['Compras_MP'],
+                            "EFMP": dados['EFMP']
+                        },
+                        "Produção": {
+                            "MOD": dados['MOD'],
+                            "CIF": dados['CIF'],
+                            "EIPP": dados['EIPP'],
+                            "EFPP": dados['EFPP']
+                        },
+                        "Produtos Acabados": {
+                            "EIPA": dados['EIPA'],
+                            "EFPA": dados['EFPA']
+                        },
+                        "Unidades Vendidas": dados['Unidades_Vendidas']
+                    })
+                
+                with col2:
+                    st.markdown("**Cálculos Detalhados:**")
+                    
+                    st.markdown(f"""
+                    **1. Matéria-Prima (MP)**  
+                    `MP = EIMP + Compras - EFMP`  
+                    `= {dados['EIMP']} + {dados['Compras_MP']} - {dados['EFMP']} = **{mp:,.2f}**`
+                    
+                    **2. Custo Produção Período (CPP)**  
+                    `CPP = MP + MOD + CIF`  
+                    `= {mp:,.2f} + {dados['MOD']} + {dados['CIF']} = **{cpp:,.2f}**`
+                    
+                    **3. Custo Produto Acabado (CPA)**  
+                    `CPA = CPP + EIPP - EFPP`  
+                    `= {cpp:,.2f} + {dados['EIPP']} - {dados['EFPP']} = **{cpa:,.2f}**`
+                    
+                    **4. Custo Produtos Vendidos (CPV)**  
+                    `CPV = CPA + EIPA - EFPA`  
+                    `= {cpa:,.2f} + {dados['EIPA']} - {dados['EFPA']} = **{cpv:,.2f}**`
+                    
+                    **5. Custo Unitário**  
+                    `= CPV / Unidades = {cpv:,.2f} / {dados['Unidades_Vendidas']} = **{custo_unit:,.2f}**`
+                    """)
+                
+                # Gráfico de estoques
+                estoques = pd.DataFrame({
+                    "Tipo": ["Matéria-Prima", "Prod. Processo", "Prod. Acabados"],
+                    "Estoque Inicial": [dados['EIMP'], dados['EIPP'], dados['EIPA']],
+                    "Estoque Final": [dados['EFMP'], dados['EFPP'], dados['EFPA']]
+                })
+                
+                fig = px.bar(estoques, 
+                            x="Tipo", 
+                            y=["Estoque Inicial", "Estoque Final"],
+                            title="Movimentação de Estoques",
+                            barmode='group',
+                            labels={"value": "Valor (R$)", "variable": "Tipo de Estoque"})
+                st.plotly_chart(fig, use_container_width=True)
     
-    st.divider()
-    
+    st.divider()    
     if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio Variável"):
         st.switch_page("pages/4_📈_Custeio_Variavel.py")
 

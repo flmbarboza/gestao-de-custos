@@ -232,7 +232,7 @@ def main():
                     st.success(f"✅ Correta! {q['explanation']}")
                     st.session_state.score += 1
                 else:
-                    st.error(f"❌ Incorreta. Resposta correta: R\$ {q['answer']:,.2f}. {q['explanation']}")
+                    st.error(f"❌ Incorreta. Resposta correta: R$ {q['answer']:,.2f}. {q['explanation']}")
         
         # Resultado final
         st.divider()

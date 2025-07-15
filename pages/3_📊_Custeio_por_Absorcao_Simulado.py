@@ -145,7 +145,7 @@ def main():
         },
         {
         "type": "multiple_choice",
-        "question": "13. Uma indústria possui dois departamentos auxiliares: Manutenção e Refeitório. Os custos mensais são R$ 10.000 para Manutenção e R$ 5.000 para Refeitório. Se os departamentos produtivos utilizam 70% da Manutenção e 60% do Refeitório, quanto será alocado ao setor produtivo no total?",
+        "question": "13. Uma indústria possui dois departamentos auxiliares: Manutenção e Refeitório. Os custos mensais são R\$ 10.000 para Manutenção e R\$ 5.000 para Refeitório. Se os departamentos produtivos utilizam 70% da Manutenção e 60% do Refeitório, quanto será alocado ao setor produtivo no total?",
         "options": [
             "R$ 11.500",
             "R$ 12.000",
@@ -153,7 +153,7 @@ def main():
             "R$ 13.000"
         ],
         "answer": 0,
-        "explanation": "Manutenção: 70% x 10.000 = 7.000. Refeitório: 60% x 5.000 = 3.000. Total alocado ao setor produtivo: 7.000 + 3.000 = R$ 10.000."
+        "explanation": "Manutenção: 70% x 10.000 = 7.000. Refeitório: 60% x 5.000 = 3.000. Total alocado ao setor produtivo: 7.000 + 3.000 = R\$ 10.000."
         },
         {
         "type": "multiple_choice",

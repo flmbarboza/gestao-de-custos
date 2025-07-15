@@ -91,9 +91,9 @@ def main():
         {
             "type": "case_analysis",
             "question": "8. Uma fábrica produziu 1.000 unidades com CPA de R\$ 80.000 e vendeu 800 unidades. Se o EIPA era R\$ 10.000, qual o CPV?",
-            "answer": "R\$ 74.000",
+            "answer": 74000,
             "tolerance": 0,
-            "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R\$ 74.000"
+            "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R$ 74.000"
         }
     ]
     
@@ -160,7 +160,7 @@ def main():
                     st.success(f"✅ Correta! {q['explanation']}")
                     st.session_state.score += 1
                 else:
-                    st.error(f"❌ Incorreta. Resposta correta: R$ {q['answer']:,.2f}. {q['explanation']}")
+                    st.error(f"❌ Incorreta. Resposta correta: R\$ {q['answer']:,.2f}. {q['explanation']}")
         
         # Resultado final
         st.divider()

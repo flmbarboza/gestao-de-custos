@@ -250,7 +250,7 @@ def main():
         # Sugestões de estudo
         st.markdown("""
         **Recursos recomendados:**
-        - Capítulos 5 e 6 do livro 'Contabilidade de Custos' do Prof. Eliseu Martins;
+        - Capítulos 5 a 7 do livro 'Contabilidade de Custos' do Prof. Eliseu Martins;
         - Capítulos 2 e 4 do livro 'Série Desvendando as Finanças - Administração Custos Preços Lucros' do Prof. Bruni;
         - Unidade 2 do livro 'Análise de Custo' de Aline Alves e colaboradores; e,
         - Parte I do livro 'Análise de custos: uma abordagem simples e objetiva' de Eduardo F. Lyrio e colaboradores.

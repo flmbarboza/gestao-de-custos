@@ -94,6 +94,78 @@ def main():
             "answer": 74000,
             "tolerance": 0,
             "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R$ 74.000"
+        },
+        {
+        "type": "multiple_choice",
+        "question": "9. Qual é o principal objetivo da utilização de critérios de rateio em custos indiretos?",
+        "options": [
+            "Atribuir custos diretos aos produtos de forma precisa",
+            "Distribuir custos indiretos entre departamentos ou produtos de forma justa e racional",
+            "Identificar os custos variáveis de produção",
+            "Controlar apenas os custos fixos da organização"
+        ],
+        "answer": 1,
+        "explanation": "O critério de rateio busca distribuir os custos indiretos de maneira justa e racional entre departamentos ou produtos que se beneficiam desses custos."
+        },
+        {
+        "type": "multiple_choice",
+        "question": "10. Uma empresa deseja ratear R$ 60.000 de custos indiretos com base no consumo de horas-máquina. O Departamento A utilizou 1.000 horas e o Departamento B utilizou 2.000 horas. Qual será o valor rateado para o Departamento B?",
+        "options": [
+            "R$ 20.000",
+            "R$ 30.000",
+            "R$ 40.000",
+            "R$ 45.000"
+        ],
+        "answer": 1,
+        "explanation": "O total de horas é 3.000. O Departamento B utilizou 2.000 horas, ou seja, 2/3 dos custos. Logo, 2/3 x R$ 60.000 = R$ 40.000."
+        },
+        {
+        "type": "multiple_choice",
+        "question": "11. A departamentalização de custos tem como principal objetivo:",
+        "options": [
+            "Dividir a empresa em áreas menores para facilitar a apuração e controle dos custos",
+            "Criar novos produtos para diferentes departamentos",
+            "Reduzir o número de funcionários por departamento",
+            "Aumentar as despesas administrativas"
+        ],
+        "answer": 0,
+        "explanation": "A departamentalização visa facilitar a apuração e o controle dos custos, alocando-os corretamente por departamento."
+        },
+        {
+        "type": "multiple_choice",
+        "question": "12. Na departamentalização, qual a principal diferença entre departamentos produtivos e departamentos auxiliares?",
+        "options": [
+            "Departamentos produtivos geram produtos ou serviços; os auxiliares prestam suporte",
+            "Departamentos produtivos não geram custos diretos",
+            "Departamentos auxiliares são responsáveis pelas vendas",
+            "Departamentos auxiliares determinam o preço de venda"
+        ],
+        "answer": 0,
+        "explanation": "Departamentos produtivos são responsáveis pela transformação de insumos em produtos ou serviços; os auxiliares apenas prestam suporte às demais áreas."
+        },
+        {
+        "type": "multiple_choice",
+        "question": "13. Uma indústria possui dois departamentos auxiliares: Manutenção e Refeitório. Os custos mensais são R$ 10.000 para Manutenção e R$ 5.000 para Refeitório. Se os departamentos produtivos utilizam 70% da Manutenção e 60% do Refeitório, quanto será alocado ao setor produtivo no total?",
+        "options": [
+            "R$ 11.500",
+            "R$ 12.000",
+            "R$ 10.500",
+            "R$ 13.000"
+        ],
+        "answer": 0,
+        "explanation": "Manutenção: 70% x 10.000 = 7.000. Refeitório: 60% x 5.000 = 3.000. Total alocado ao setor produtivo: 7.000 + 3.000 = R$ 10.000."
+        },
+        {
+        "type": "multiple_choice",
+        "question": "14. Qual dos seguintes critérios é mais comumente utilizado para ratear custos de energia elétrica entre departamentos?",
+        "options": [
+            "Área ocupada",
+            "Número de funcionários",
+            "Consumo estimado de energia",
+            "Valor das vendas"
+        ],
+        "answer": 2,
+        "explanation": "O consumo estimado de energia é o critério mais apropriado para ratear custos de energia elétrica, pois reflete o uso real pelos departamentos."
         }
     ]
     

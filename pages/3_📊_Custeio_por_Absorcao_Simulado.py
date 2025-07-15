@@ -74,7 +74,7 @@ def main():
             "question": "6. Uma empresa teve: MP R\$ 50.000, MOD R\$ 30.000, CIF R\$ 20.000. Qual o CPP?",
             "answer": 100000,
             "tolerance": 0,
-            "explanation": "CPP = MP + MOD + CIF = 50.000 + 30.000 + 20.000 = R\$ 100.000"
+            "explanation": "CPP = MP + MOD + CIF = 50.000 + 30.000 + 20.000 = R$ 100.000"
         },
         {
             "type": "multiple_choice",

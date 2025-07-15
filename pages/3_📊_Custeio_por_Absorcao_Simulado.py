@@ -111,10 +111,10 @@ def main():
         "type": "multiple_choice",
         "question": "10. Uma empresa deseja ratear R\$ 60.000 de custos indiretos com base no consumo de horas-máquina. O Departamento A utilizou 1.000 horas e o Departamento B utilizou 2.000 horas. Qual será o valor rateado para o Departamento B?",
         "options": [
-            "R$ 20.000",
-            "R$ 30.000",
-            "R$ 40.000",
-            "R$ 45.000"
+            "R\$ 20.000",
+            "R\$ 30.000",
+            "R\$ 40.000",
+            "R\$ 45.000"
         ],
         "answer": 1,
         "explanation": "O total de horas é 3.000. O Departamento B utilizou 2.000 horas, ou seja, 2/3 dos custos. Logo, 2/3 x R$ 60.000 = R$ 40.000."

@@ -74,7 +74,7 @@ def main():
             "question": "6. Uma empresa teve: MP R\$ 50.000, MOD R\$ 30.000, CIF R\$ 20.000. Qual o CPP?",
             "answer": 100000,
             "tolerance": 0,
-            "explanation": "CPP = MP + MOD + CIF = 50.000 + 30.000 + 20.000 = R$ 100.000"
+            "explanation": "CPP = MP + MOD + CIF = 50.000 + 30.000 + 20.000 = R\$ 100.000"
         },
         {
             "type": "multiple_choice",
@@ -93,7 +93,7 @@ def main():
             "question": "8. Uma fábrica produziu 1.000 unidades com CPA de R\$ 80.000 e vendeu 800 unidades. Se o EIPA era R\$ 10.000, qual o CPV?",
             "answer": 74000,
             "tolerance": 0,
-            "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R$ 74.000"
+            "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R\$ 74.000"
         },
         {
         "type": "multiple_choice",
@@ -196,7 +196,7 @@ def main():
                 
             elif q['type'] in ['calculation', 'case_analysis']:
                 user_answer = st.number_input(
-                    f"Resposta Q{i+1} (R$)",
+                    f"Resposta Q{i+1} (R\$)",
                     value=None,
                     step=1000,
                     key=f"q{i}"
@@ -232,7 +232,7 @@ def main():
                     st.success(f"✅ Correta! {q['explanation']}")
                     st.session_state.score += 1
                 else:
-                    st.error(f"❌ Incorreta. Resposta correta: R$ {q['answer']:,.2f}. {q['explanation']}")
+                    st.error(f"❌ Incorreta. Resposta correta: R\$ {q['answer']:,.2f}. {q['explanation']}")
         
         # Resultado final
         st.divider()

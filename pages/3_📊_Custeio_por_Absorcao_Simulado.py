@@ -117,7 +117,7 @@ def main():
             "R$ 45.000"
         ],
         "answer": 1,
-        "explanation": "O total de horas é 3.000. O Departamento B utilizou 2.000 horas, ou seja, 2/3 dos custos. Logo, 2/3 x R\$ 60.000 = R\$ 40.000."
+        "explanation": "O total de horas é 3.000. O Departamento B utilizou 2.000 horas, ou seja, 2/3 dos custos. Logo, 2/3 x R$ 60.000 = R$ 40.000."
         },
         {
         "type": "multiple_choice",

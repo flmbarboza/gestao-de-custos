@@ -27,22 +27,58 @@ def main():
             "answer": 0,
             "explanation": "O CPP é a soma de Matéria-Prima (MP), Mão de Obra Direta (MOD) e Custos Indiretos de Fabricação (CIF)."
         },
+         {
+        "type": "multiple_choice",
+        "question": "2. Qual o impacto do aumento do Estoque Final de Produtos em Elaboração (EFPE) no cálculo da CPA?",
+        "options": [
+            "Diminui a CPA",
+            "Aumenta a CPA",
+            "Não impacta a CPA",
+            "Diminui o CPP"
+        ],
+        "answer": 0,
+        "explanation": "Quando o Estoque Final de Produtos em Elaboração (EFPE) aumenta, ele reduz a CPA porque representa custos que não foram concluídos no período."
+        },
+        {
+        "type": "multiple_choice",
+        "question": "3. Se o CPP foi de R$ 500.000, o Estoque Inicial de Produtos em Elaboração é de R$ 40.000 e o Estoque Final de Produtos em Elaboração é de R$ 10.000, qual é o valor da CPA?",
+        "options": [
+            "R$ 450.000",
+            "R$ 490.000", 
+            "R$ 510.000",
+            "R$ 530.000"
+        ],
+        "answer": 3,
+        "explanation": "CPA = 500.000 + 40.000 - 10.000 = 530.000."
+        },
+        {
+        "type": "multiple_choice",
+        "question": "4. Quais elementos formam o Custo da Produção do Período (CPP)?",
+        "options": [
+            "Estoque Inicial, Compras, Vendas",
+            "Matéria-Prima, Mão de Obra Direta e Custos Indiretos de Fabricação",
+            "Receitas, Despesas e Impostos",
+            "Lucro Bruto, Impostos, Resultado Operacional"
+        ],
+        "answer": 1,
+        "explanation": "O CPP é composto por Matéria-Prima (MP), Mão de Obra Direta (MOD) e Custos Indiretos de Fabricação (CIF)."
+    }
         {
             "type": "true_false",
-            "question": "2. No custeio por absorção, os custos fixos podem ser rateados usando o volume produzido como critério de rateio.",
+            "question": "5. No custeio por absorção, os custos fixos podem ser rateados usando o volume produzido como critério de rateio.",
             "answer": True,
             "explanation": "Verdadeiro. Essa é uma característica considerada mais simples do custeio por absorção, porém é aplicável."
         },
         {
             "type": "calculation",
-            "question": "3. Uma empresa teve: MP R\$ 50.000, MOD R\$ 30.000, CIF R\$ 20.000. Qual o CPP?",
+            "question": "6. Uma empresa teve: MP R\$ 50.000, MOD R\$ 30.000, CIF R\$ 20.000. Qual o CPP?",
             "answer": 100000,
             "tolerance": 0,
             "explanation": "CPP = MP + MOD + CIF = 50.000 + 30.000 + 20.000 = R$ 100.000"
         },
         {
             "type": "multiple_choice",
-            "question": "4. Qual destes NÃO é um critério comum para rateio de CIF?",
+            "question": "7. Qual destes NÃO é um critério comum para rateio de CIF?",
             "options": [
                 "Horas-máquina",
                 "Número de funcionários",
@@ -54,7 +90,7 @@ def main():
         },
         {
             "type": "case_analysis",
-            "question": "5. Uma fábrica produziu 1.000 unidades com CPA de R\$ 80.000 e vendeu 800 unidades. Se o EIPA era R\$ 10.000, qual o CPV?",
+            "question": "8. Uma fábrica produziu 1.000 unidades com CPA de R\$ 80.000 e vendeu 800 unidades. Se o EIPA era R\$ 10.000, qual o CPV?",
             "answer": 74000,
             "tolerance": 0,
             "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R\$ 74.000"

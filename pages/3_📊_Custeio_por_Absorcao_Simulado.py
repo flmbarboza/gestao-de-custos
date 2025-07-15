@@ -62,7 +62,7 @@ def main():
         ],
         "answer": 1,
         "explanation": "O CPP é composto por Matéria-Prima (MP), Mão de Obra Direta (MOD) e Custos Indiretos de Fabricação (CIF)."
-    }
+        },
         {
             "type": "true_false",
             "question": "5. No custeio por absorção, os custos fixos podem ser rateados usando o volume produzido como critério de rateio.",
@@ -93,7 +93,7 @@ def main():
             "question": "8. Uma fábrica produziu 1.000 unidades com CPA de R\$ 80.000 e vendeu 800 unidades. Se o EIPA era R\$ 10.000, qual o CPV?",
             "answer": 74000,
             "tolerance": 0,
-            "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R\$ 74.000"
+            "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R$ 74.000"
         }
     ]
     

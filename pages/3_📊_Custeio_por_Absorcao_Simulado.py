@@ -153,7 +153,7 @@ def main():
             "R$ 13.000"
         ],
         "answer": 0,
-        "explanation": "Manutenção: 70% x 10.000 = 7.000. Refeitório: 60% x 5.000 = 3.000. Total alocado ao setor produtivo: 7.000 + 3.000 = R\$ 10.000."
+        "explanation": "Manutenção: 70\% x 10.000 = 7.000. Refeitório: 60\% x 5.000 = 3.000. Total alocado ao setor produtivo: 7.000 + 3.000 = R\$ 10.000."
         },
         {
         "type": "multiple_choice",

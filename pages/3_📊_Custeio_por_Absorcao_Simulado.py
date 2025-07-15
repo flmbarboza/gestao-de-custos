@@ -117,7 +117,7 @@ def main():
             "R\$ 45.000"
         ],
         "answer": 1,
-        "explanation": "O total de horas é 3.000. O Departamento B utilizou 2.000 horas, ou seja, 2/3 dos custos. Logo, 2/3 x R$ 60.000 = R$ 40.000."
+        "explanation": "O total de horas é 3.000. O Departamento B utilizou 2.000 horas, ou seja, 2/3 dos custos. Logo, 2/3 x R\$ 60.000 = R\$ 40.000."
         },
         {
         "type": "multiple_choice",
@@ -147,13 +147,13 @@ def main():
         "type": "multiple_choice",
         "question": "13. Uma indústria possui dois departamentos auxiliares: Manutenção e Refeitório. Os custos mensais são R\$ 10.000 para Manutenção e R\$ 5.000 para Refeitório. Se os departamentos produtivos utilizam 70% da Manutenção e 60% do Refeitório, quanto será alocado ao setor produtivo no total?",
         "options": [
-            "R$ 11.500",
-            "R$ 12.000",
-            "R$ 10.500",
-            "R$ 13.000"
+            "R\$ 11.500",
+            "R\$ 12.000",
+            "R\$ 10.500",
+            "R\$ 13.000"
         ],
         "answer": 0,
-        "explanation": "Manutenção: 70% x 10.000 = 7.000. Refeitório: 60% x 5.000 = 3.000. Total alocado ao setor produtivo: 7.000 + 3.000 = R$ 10.000."
+        "explanation": "Manutenção: 70% x 10.000 = 7.000. Refeitório: 60% x 5.000 = 3.000. Total alocado ao setor produtivo: 7.000 + 3.000 = R\$ 10.000."
         },
         {
         "type": "multiple_choice",

@@ -41,7 +41,7 @@ def main():
         },
         {
         "type": "multiple_choice",
-        "question": "3. Se o CPP foi de R$ 500.000, o Estoque Inicial de Produtos em Elaboração é de R$ 40.000 e o Estoque Final de Produtos em Elaboração é de R$ 10.000, qual é o valor da CPA?",
+        "question": "3. Se o CPP foi de R\$ 500.000, o Estoque Inicial de Produtos em Elaboração é de R\$ 40.000 e o Estoque Final de Produtos em Elaboração é de R$ 10.000, qual é o valor da CPA?",
         "options": [
             "R$ 450.000",
             "R$ 490.000", 
@@ -67,14 +67,14 @@ def main():
             "type": "true_false",
             "question": "5. No custeio por absorção, os custos fixos podem ser rateados usando o volume produzido como critério de rateio.",
             "answer": True,
-            "explanation": "Verdadeiro. Essa é uma característica considerada mais simples do custeio por absorção, porém é aplicável."
+            "explanation": "Essa é uma característica considerada mais simples do custeio por absorção, porém é aplicável."
         },
         {
             "type": "calculation",
             "question": "6. Uma empresa teve: MP R\$ 50.000, MOD R\$ 30.000, CIF R\$ 20.000. Qual o CPP?",
-            "answer": 100000,
+            "answer": "R\$ 100.000",
             "tolerance": 0,
-            "explanation": "CPP = MP + MOD + CIF = 50.000 + 30.000 + 20.000 = R$ 100.000"
+            "explanation": "CPP = MP + MOD + CIF = 50.000 + 30.000 + 20.000 = R\$ 100.000"
         },
         {
             "type": "multiple_choice",
@@ -91,9 +91,9 @@ def main():
         {
             "type": "case_analysis",
             "question": "8. Uma fábrica produziu 1.000 unidades com CPA de R\$ 80.000 e vendeu 800 unidades. Se o EIPA era R\$ 10.000, qual o CPV?",
-            "answer": 74000,
+            "answer": "R\$ 74.000",
             "tolerance": 0,
-            "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R$ 74.000"
+            "explanation": "CPV = (CPA / Unidades Produzidas) × Unidades Vendidas + EIPA - EFPA\n= (80.000/1.000)×800 + 10.000 - (80.000/1.000×200) = R\$ 74.000"
         }
     ]
     

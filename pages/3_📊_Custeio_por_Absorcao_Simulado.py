@@ -44,11 +44,12 @@ def main():
         "question": "3. Se o CPP foi de R\$ 500.000, o Estoque Inicial de Produtos em Elaboração é de R\$ 40.000 e o Estoque Final de Produtos em Elaboração é de R$ 10.000, qual é o valor da CPA?",
         "options": [
             "R$ 450.000",
+            "R$ 470.000",
             "R$ 490.000", 
             "R$ 510.000",
             "R$ 530.000"
         ],
-        "answer": 3,
+        "answer": 4,
         "explanation": "CPA = 500.000 + 40.000 - 10.000 = 530.000."
         },
         {
@@ -114,9 +115,10 @@ def main():
             "R\$ 20.000",
             "R\$ 30.000",
             "R\$ 40.000",
-            "R\$ 45.000"
+            "R\$ 50.000",
+            "R\$ 60.000"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "O total de horas é 3.000. O Departamento B utilizou 2.000 horas, ou seja, 2/3 dos custos. Logo, 2/3 x R\$ 60.000 = R\$ 40.000."
         },
         {
@@ -147,10 +149,11 @@ def main():
         "type": "multiple_choice",
         "question": "13. Uma indústria possui dois departamentos auxiliares: Manutenção e Refeitório. Os custos mensais são R\$ 10.000 para Manutenção e R\$ 5.000 para Refeitório. Se os departamentos produtivos utilizam 70% da Manutenção e 60% do Refeitório, quanto será alocado ao setor produtivo no total?",
         "options": [
+            "R\$ 10.000",
+            "R\$ 10.500",
+            "R\$ 11.000",
             "R\$ 11.500",
             "R\$ 12.000",
-            "R\$ 10.500",
-            "R\$ 13.000"
         ],
         "answer": 0,
         "explanation": "Manutenção: 70% x 10.000 = 7.000. Refeitório: 60% x 5.000 = 3.000. Total alocado ao setor produtivo: 7.000 + 3.000 = R\$ 10.000."

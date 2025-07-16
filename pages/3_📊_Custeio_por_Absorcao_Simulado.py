@@ -50,7 +50,7 @@ def main():
             "R$ 530.000"
         ],
         "answer": 4,
-        "explanation": "CPA = 500.000 + 40.000 - 10.000 = 530.000."
+        "explanation": "CPA = 500.000 + 40.000 - 10.000 = 530.000"
         },
         {
         "type": "multiple_choice",

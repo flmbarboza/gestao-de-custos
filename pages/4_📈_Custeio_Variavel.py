@@ -361,7 +361,7 @@ def main():
                 q["question"],
                 options=q["options"],
                 key=f"quiz1_q{i}",
-                index=st.session_state.quiz_answers_part1[i] if st.session_state.quiz_answers_part1[i] is not None else -1
+                index=st.session_state.quiz_answers_part1[i] if st.session_state.quiz_answers_part1[i] is not None else None
             )
             st.session_state.quiz_answers_part1[i] = q["options"].index(user_answer) if user_answer else None
     
@@ -524,7 +524,7 @@ def main():
                 q["question"],
                 options=q["options"],
                 key=f"quiz2_q{i}",
-                index=st.session_state.quiz_answers_part2[i] if st.session_state.quiz_answers_part2[i] is not None else -1
+                index=st.session_state.quiz_answers_part2[i] if st.session_state.quiz_answers_part2[i] is not None else None
             )
             st.session_state.quiz_answers_part2[i] = q["options"].index(user_answer) if user_answer else None
     

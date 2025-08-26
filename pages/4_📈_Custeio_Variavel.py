@@ -207,7 +207,7 @@ def main():
     # Expander 7: Deficiências do Custeio por Absorção
     # ===========================
     with st.expander("⚠️ 7. Deficiências do Custeio por Absorção", expanded=False):
-        st.markdown(f"""
+        st.markdown("""
         ### ❌ Por que o custeio por absorção pode atrapalhar decisões?
         - **Efeito do estoque:** lucro sobe com produção (mesmo sem venda)
         - **Máscara de rentabilidade:** produtos com alto custo fixo podem parecer menos lucrativos
@@ -215,8 +215,8 @@ def main():
 
         📌 **Exemplo:**
         - Produção: 10.000 unidades, Vendas: 8.000 unidades
-        - Custo fixo: R$ 100.000 → R$ 10/unidade alocado
-        - Lucro contábil: positivo (porque R$ 20.000 de custo fixo estão no estoque)
+        - Custo fixo: R\$ 100.000 → R$ 10/unidade alocado
+        - Lucro contábil: positivo (porque R\$ 20.000 de custo fixo estão no estoque)
         - Mas caixa não entrou!
         """)
 

@@ -38,8 +38,8 @@ if not st.session_state.usuario_logado:
             st.experimental_rerun()  # rerun seguro para atualizar página
         elif submitted:
             st.warning("Por favor, insira seu nome.")
-    else:
-        st.success(f"Olá, {st.session_state.nome}! Bem-vindo de volta.")
+else:
+    st.success(f"Olá, {st.session_state.nome}! Bem-vindo de volta.")
 
     st.markdown("""
     ### Como começar?

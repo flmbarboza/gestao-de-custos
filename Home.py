@@ -7,10 +7,12 @@ st.set_page_config(
     layout="centered"  # Layout mais clean para a página inicial
 )
 
-# Mensagem de boas-vindas (aparece apenas na root URL)
-if not st.session_state.get('redirecionado'):
-    st.session_state.redirecionado = True
-    
+# Inicializa session_state
+if 'usuario_logado' not in st.session_state:
+    st.session_state.usuario_logado = False
+
+ # Formulário de entrada (só aparece se não estiver logado)
+if not st.session_state.usuario_logado:
     st.title("🏦 Bem-vindo ao Gestão de Custos Academy!")
     st.markdown("""
     ## 👋 Olá, [futuro] Gestor de Custos!
@@ -19,25 +21,23 @@ if not st.session_state.get('redirecionado'):
     por meio de fundamentos associados a tema, no âmbito do curso superior em Administração.
     """)
 
-    # Formulário de entrada (só aparece uma vez por sessão)
-    if 'usuario_logado' not in st.session_state:
-        with st.form("form_login"):
-            st.markdown("### Ajude-nos a melhorar! Por favor, identifique-se:")
-            nome = st.text_input("Seu nome")
-            email = st.text_input("Seu e-mail (opcional)")
-            submitted = st.form_submit_button("Entrar")
-    
-            if submitted and nome.strip():
-                st.session_state.usuario_logado = True
-                st.session_state.nome = nome
-                st.session_state.email = email
-                st.session_state.data_entrada = str(st.session_state.get("data_entrada", datetime.now()))
-                
-                # Salvar no log
-                log_acesso(nome, email, "home")
-                st.rerun()
-            elif submitted:
-                st.warning("Por favor, insira seu nome.")
+    with st.form("form_login"):
+        st.markdown("### Ajude-nos a melhorar! Por favor, identifique-se:")
+        nome = st.text_input("Seu nome")
+        email = st.text_input("Seu e-mail (opcional)")
+        submitted = st.form_submit_button("Entrar")
+
+        if submitted and nome.strip():
+            st.session_state.usuario_logado = True
+            st.session_state.nome = nome
+            st.session_state.email = email
+            st.session_state.data_entrada = str(st.session_state.get("data_entrada", datetime.now()))
+            
+            # Salvar no log
+            log_acesso(nome, email, "home")
+            st.experimental_rerun()  # rerun seguro para atualizar página
+        elif submitted:
+            st.warning("Por favor, insira seu nome.")
     else:
         st.success(f"Olá, {st.session_state.nome}! Bem-vindo de volta.")
 

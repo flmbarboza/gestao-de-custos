@@ -27,7 +27,7 @@ def log_acesso_google(nome, email, pagina):
     if not gc:
         return
     try:
-        planilha = gc.open("Logs Gestão de Custos")  # Nome da planilha
+        planilha = gc.open("Logs-gestao-custos")  # Nome da planilha
         worksheet = planilha.worksheet("Acessos")   # Aba "Acessos"
 
         worksheet.append_row([
@@ -45,7 +45,7 @@ def log_interacao_google(nome, pagina, acao):
     if not gc:
         return
     try:
-        planilha = gc.open("Logs Gestão de Custos")
+        planilha = gc.open("Logs-gestao-custos")
         worksheet = planilha.worksheet("Interações")  # Aba "Interações"
 
         worksheet.append_row([

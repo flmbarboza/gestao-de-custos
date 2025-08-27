@@ -2,10 +2,60 @@ import gtts
 from io import BytesIO
 import streamlit as st
 import base64
+import pandas as pd
 import csv
 import os
 from datetime import datetime
+import gspread
 
+# Função para conectar ao Google Sheets
+def conectar_planilha():
+    if 'gc' not in st.session_state:
+        try:
+            # Usa os secrets do Streamlit
+            from streamlit import secrets
+            gc = gspread.service_account_from_dict(secrets["gspread"])
+            st.session_state.gc = gc
+        except Exception as e:
+            st.error(f"Erro ao conectar ao Google Sheets: {e}")
+            return None
+    return st.session_state.gc
+
+# Função para logar acessos no Google Sheets
+def log_acesso_google(nome, email, pagina):
+    gc = conectar_planilha()
+    if not gc:
+        return
+    try:
+        planilha = gc.open("Logs Gestão de Custos")  # Nome da planilha
+        worksheet = planilha.worksheet("Acessos")   # Aba "Acessos"
+
+        worksheet.append_row([
+            nome,
+            email or "anonimo",
+            pagina,
+            str(datetime.now())
+        ])
+    except Exception as e:
+        st.warning(f"Erro ao salvar no Google Sheets (acesso): {e}")
+
+# Função para logar interações no Google Sheets
+def log_interacao_google(nome, pagina, acao):
+    gc = conectar_planilha()
+    if not gc:
+        return
+    try:
+        planilha = gc.open("Logs Gestão de Custos")
+        worksheet = planilha.worksheet("Interações")  # Aba "Interações"
+
+        worksheet.append_row([
+            nome,
+            pagina,
+            acao,
+            str(datetime.now())
+        ])
+    except Exception as e:
+        st.warning(f"Erro ao salvar no Google Sheets (interação): {e}")
 
 def leitor_de_texto(texto, lang='pt-br'):
     """

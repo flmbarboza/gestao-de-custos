@@ -32,15 +32,17 @@ if not st.session_state.usuario_logado:
         email = st.text_input("Seu e-mail (opcional)")
         submitted = st.form_submit_button("Entrar")
 
-        if submitted and nome.strip():
-            st.session_state.usuario_logado = True
-            st.session_state.nome = nome
-            st.session_state.email = email
-            st.session_state.data_entrada = str(st.session_state.get("data_entrada", datetime.now()))
-            
-            # Salvar no log
-            log_acesso(nome, email, "home")
-            st.experimental_rerun()  # rerun seguro para atualizar página
+        if submitted:
+            if nome.strip():
+                st.session_state.usuario_logado = True
+                st.session_state.nome = nome
+                st.session_state.email = email
+                st.session_state.data_entrada = str(datetime.now())
+                log_acesso(nome, email, "home")
+                st.success(f"Olá, {st.session_state.nome}! Bem-vindo de volta.")
+            else:
+                st.warning("Por favor, insira seu nome.")
+
         elif submitted:
             st.warning("Por favor, insira seu nome.")
 else:

@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime
+from utils import leitor_de_texto, log_acesso_google, log_interacao_google
 
 # Configuração da página
 st.set_page_config(

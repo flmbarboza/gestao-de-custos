@@ -2,6 +2,10 @@ import gtts
 from io import BytesIO
 import streamlit as st
 import base64
+import csv
+import os
+from datetime import datetime
+
 
 def leitor_de_texto(texto, lang='pt-br'):
     """
@@ -38,3 +42,19 @@ def leitor_de_texto(texto, lang='pt-br'):
 def formatar_moeda(valor):
     """Formata valores como moeda brasileira"""
     return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+def inicializar_log_interacoes():
+    """Cria o arquivo de log se não existir"""
+    if not os.path.exists("log_interacoes.csv"):
+        with open("log_interacoes.csv", "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(["nome", "pagina", "acao", "timestamp"])
+
+def log_interacao(nome, pagina, acao):
+    """Registra uma interação no CSV"""
+    try:
+        with open("log_interacoes.csv", "a", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow([nome, pagina, acao, datetime.now()])
+    except Exception as e:
+        st.warning(f"Erro ao salvar interação: {e}")

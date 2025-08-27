@@ -35,7 +35,7 @@ def main():
             st.session_state.expander_objetivos_expandido = True
         else:
             st.session_state.expander_objetivos_expandido = True
-            log_interacao(nome_usuario, pagina_atual, "expandiu_objetivos")
+            log_interacao_google(nome_usuario, pagina_atual, "expandiu_objetivos")
 
     # Ementa interativa
     st.subheader("📚 Programa da Disciplina")
@@ -52,7 +52,7 @@ def main():
         botao_key = f"botao_unidade_{i}"
         if cols[i % 3].button(unidade, help=desc, use_container_width=True, key=botao_key):
             # Registra o clique
-            log_interacao(nome_usuario, pagina_atual, f"clicou_unidade_{i+1}")
+            log_interacao_google(nome_usuario, pagina_atual, f"clicou_unidade_{i+1}")
             st.toast(f"Ótimo! Você selecionou: {unidade}", icon="✅")
 
     # Botão de áudio (exemplo futuro)

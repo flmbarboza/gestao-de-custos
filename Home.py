@@ -1,6 +1,10 @@
 import streamlit as st
 from datetime import datetime
 
+# Função de log de acesso (temporária, só para evitar erro)
+def log_acesso(nome, email, pagina):
+    print(f"{datetime.now()} - {nome} ({email}) acessou {pagina}")
+
 # Configuração da página
 st.set_page_config(
     page_title="Gestão de Custos Academy",

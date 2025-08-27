@@ -1,10 +1,6 @@
 import streamlit as st
 from datetime import datetime
 
-# Função de log de acesso (temporária, só para evitar erro)
-def log_acesso(nome, email, pagina):
-    print(f"{datetime.now()} - {nome} ({email}) acessou {pagina}")
-
 # Configuração da página
 st.set_page_config(
     page_title="Gestão de Custos Academy",
@@ -48,7 +44,7 @@ if not st.session_state.usuario_logado:
                 st.session_state.nome = nome
                 st.session_state.email = email
                 st.session_state.data_entrada = str(datetime.now())
-                log_acesso(nome, email, "home")
+                log_acesso_google(st.session_state.nome, st.session_state.email, "home")
                 st.success(f"Olá, {st.session_state.nome}! Bem-vindo de volta.")
             else:
                 st.warning("Por favor, insira seu nome.")

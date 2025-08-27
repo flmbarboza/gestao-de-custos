@@ -4,9 +4,6 @@ from utils import leitor_de_texto, log_acesso_google, log_interacao_google
 def main():
     st.title("🏦 Gestão de Custos - FAGEN/UFU")
 
-    # Garante que o log de interações existe
-    inicializar_log_interacoes()
-
     # Recupera o nome do usuário do session_state (da home)
     nome_usuario = st.session_state.get("nome", "Anônimo")
     pagina_atual = "Inicio"

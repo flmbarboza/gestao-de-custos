@@ -5,7 +5,7 @@ def main():
     st.title("🏦 Gestão de Custos - FAGEN/UFU")
 
     # Recupera o nome do usuário do session_state (da home)
-    user_id = get_anon_user_id()
+    nome_usuario = get_anon_user_id()
     pagina_atual = "Inicio"
 
     # Texto de boas-vindas

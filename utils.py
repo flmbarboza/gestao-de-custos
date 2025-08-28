@@ -7,6 +7,14 @@ import csv
 import os
 from datetime import datetime
 import gspread
+import uuid
+
+def get_anon_user_id():
+    """Gera ou recupera um ID anônimo único por sessão"""
+    if 'anon_user_id' not in st.session_state:
+        # Gera um ID curto e legível (ex: anon_a1b2c3d4)
+        st.session_state.anon_user_id = f"anon_{str(uuid.uuid4())[:8]}"
+    return st.session_state.anon_user_id
 
 # Função para conectar ao Google Sheets
 def conectar_planilha():

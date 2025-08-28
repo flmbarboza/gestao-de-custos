@@ -19,12 +19,16 @@ def main():
     """
     st.markdown(texto_boas_vindas)
 
-    # Seção de objetivos com log
-    if "expander_objetivos" not in st.session_state:
-        st.session_state.expander_objetivos = False
+    # Inicializa as variáveis de estado
+    if "expander_objetivos_antes" not in st.session_state:
+        st.session_state.expander_objetivos_antes = False
+    if "expander_objetivos_agora" not in st.session_state:
+        st.session_state.expander_objetivos_agora = False
+    if "logou_expandido_objetivos" not in st.session_state:
+        st.session_state.logou_expandido_objetivos = False
     
-    # Detecta se o expander foi expandido (aberto) pelo usuário
-    expander = st.expander("🎯 Objetivos da Disciplina", expanded=st.session_state.expander_objetivos)
+    # Define o expander com chave — o estado é controlado automaticamente
+    expander = st.expander("🎯 Objetivos da Disciplina", expanded=st.session_state.expander_objetivos_agora)
     
     with expander:
         st.markdown("""
@@ -34,11 +38,20 @@ def main():
         - Desenvolver habilidades para tomada de decisão com restrições
         """)
     
-    # ✅ Registra APENAS se foi aberto agora (e ainda não estava registrado)
-    if st.session_state.expander_objetivos and not st.session_state.get("logou_expandido_objetivos", False):
-        log_interacao_google(nome_usuario, pagina_atual, "expandiu_objetivos")
-        st.session_state.logou_expandido_objetivos = True  # Evita log duplicado
-        
+    # === DETECÇÃO DE CLIQUE NO EXPANDER ===
+    # Salva o estado atual para comparação na próxima execução
+    estado_atual = st.session_state.expander_objetivos_agora
+    
+    # Na próxima execução, vamos comparar
+    if not st.session_state.expander_objetivos_antes and estado_atual:
+        # O expander foi aberto neste clique!
+        if not st.session_state.logou_expandido_objetivos:
+            log_interacao_google(nome_usuario, pagina_atual, "expandiu_objetivos")
+            st.session_state.logou_expandido_objetivos = True
+    
+    # Atualiza o estado "anterior" para a próxima vez
+    st.session_state.expander_objetivos_antes = estado_atual
+            
     # Ementa interativa
     st.subheader("📚 Programa da Disciplina")
     cols = st.columns(3)

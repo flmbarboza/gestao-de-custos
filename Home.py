@@ -21,7 +21,7 @@ if not st.session_state.get('redirecionado'):
     por meio de fundamentos associados a tema, no âmbito do curso superior em Administração.
     """)
 
-    st.image("pages/figs/welcome.png", use_column_width=True, caption="Bem-vindo!")
+    st.image("pages/figs/welcome.png")
 
     # ✅ Gera um ID anônimo para este visitante
     user_id = get_anon_user_id()

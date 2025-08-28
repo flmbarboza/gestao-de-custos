@@ -5,7 +5,7 @@ def main():
     st.title("🏦 Gestão de Custos - FAGEN/UFU")
 
     # Recupera o nome do usuário do session_state (da home)
-    nome_usuario = st.session_state.get("nome", "Anônimo")
+    user_id = get_anon_user_id()
     pagina_atual = "Inicio"
 
     # Texto de boas-vindas
@@ -38,7 +38,7 @@ def main():
     st.subheader("📚 Programa da Disciplina")
     cols = st.columns(3)
     unidades = [
-        ("1️⃣ Introdução à Contabilidade de Custos", "Terminologia, Classificação e Comportamento de Custos"),
+        ("1️⃣ Introdução a Custos", "Terminologia, Classificação e Comportamento de Custos"),
         ("2️⃣ Custeio por Absorção", "CPP, CPA, CPV, Rateio de CIF, DRE"),
         ("3️⃣ Custeio Variável", "Margem de Contribuição, Ponto de Equilíbrio"),
         ("4️⃣ Precificação", "Método Mark-up, Impacto Tributário"),

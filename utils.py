@@ -52,6 +52,23 @@ def log_interacao_google(nome, pagina, acao):
     gc = conectar_planilha()
     if not gc:
         return
+    
+    agora = datetime.now()
+    timestamp_str = str(agora)
+    # 🕒 Calcula o tempo desde o último clique
+    ultimo_tempo = st.session_state.get('ultimo_clique_tempo')
+    tempo_desde_ultimo = None
+    tempo_segundos = "0"
+
+    if ultimo_tempo:
+        diff = (agora - ultimo_tempo).total_seconds()
+        tempo_segundos = f"{diff:.1f}"
+    else:
+        tempo_segundos = "0"  # Primeira ação
+
+    # Atualiza o timestamp da última ação
+    st.session_state.ultimo_clique_tempo = agora
+
     try:
         planilha = gc.open("Logs-gestao-custos")
         worksheet = planilha.worksheet("Interações")  # Aba "Interações"
@@ -60,11 +77,12 @@ def log_interacao_google(nome, pagina, acao):
             nome,
             pagina,
             acao,
-            str(datetime.now())
+            timestamp_str,
+            tempo_segundos
         ])
     except Exception as e:
         st.warning(f"Erro ao salvar no Google Sheets (interação): {e}")
-
+        
 def leitor_de_texto(texto, lang='pt-br'):
     """
     Converte texto em áudio e reproduz no navegador

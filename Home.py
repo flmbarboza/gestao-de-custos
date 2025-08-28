@@ -10,11 +10,12 @@ st.set_page_config(
 )
 
 # === REGISTRA O ACESSO À PÁGINA (APENAS UMA VEZ POR SESSÃO) ===
-user_id = get_anon_user_id()
+nome_usuario = get_anon_user_id()
+pagina = "Página de Abertura"
 
 if 'home_acessada' not in st.session_state:
     # ✅ Registra que a home foi acessada
-    log_acesso_google(nome_usario,"home", acao="acessou_home")  # ← Registro silencioso de visualização
+    log_acesso_google(nome_usuario,pagina, acao="acessou_home")  # ← Registro silencioso de visualização
     st.session_state.home_acessada = True
     # Não mostra nada, só registra
 

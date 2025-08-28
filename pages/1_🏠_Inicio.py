@@ -19,18 +19,8 @@ def main():
     """
     st.markdown(texto_boas_vindas)
 
-    # Inicializa as variáveis de estado
-    if "expander_objetivos_antes" not in st.session_state:
-        st.session_state.expander_objetivos_antes = False
-    if "expander_objetivos_agora" not in st.session_state:
-        st.session_state.expander_objetivos_agora = False
-    if "logou_expandido_objetivos" not in st.session_state:
-        st.session_state.logou_expandido_objetivos = False
-    
-    # Define o expander com chave — o estado é controlado automaticamente
-    expander = st.expander("🎯 Objetivos da Disciplina", expanded=st.session_state.expander_objetivos_agora)
-    
-    with expander:
+    # Expander normal
+    with st.expander("🎯 Objetivos da Disciplina", expanded=False):
         st.markdown("""
         - Apresentar conceitos de registro, apuração e controle de custos
         - Fornecer visão ampla da contabilidade financeira e gerencial
@@ -38,19 +28,11 @@ def main():
         - Desenvolver habilidades para tomada de decisão com restrições
         """)
     
-    # === DETECÇÃO DE CLIQUE NO EXPANDER ===
-    # Salva o estado atual para comparação na próxima execução
-    estado_atual = st.session_state.expander_objetivos_agora
-    
-    # Na próxima execução, vamos comparar
-    if not st.session_state.expander_objetivos_antes and estado_atual:
-        # O expander foi aberto neste clique!
-        if not st.session_state.logou_expandido_objetivos:
+        # ✅ BOTÃO INVISÍVEL PARA DETECTAR A ABERTURA
+        if st.button("✅ Marcar: Visualizei os objetivos", key="btn_objetivos"):
+            # Registra no Google Sheets
             log_interacao_google(nome_usuario, pagina_atual, "expandiu_objetivos")
-            st.session_state.logou_expandido_objetivos = True
-    
-    # Atualiza o estado "anterior" para a próxima vez
-    st.session_state.expander_objetivos_antes = estado_atual
+            st.toast("Obrigado por explorar os objetivos! 🎯", icon="💡")
             
     # Ementa interativa
     st.subheader("📚 Programa da Disciplina")

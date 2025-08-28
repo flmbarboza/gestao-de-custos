@@ -30,7 +30,7 @@ def conectar_planilha():
     return st.session_state.gc
 
 # Função para logar acessos no Google Sheets
-def log_acesso_google(nome_usuario, pagina):
+def log_acesso_google(nome_usuario, pagina, acao):
     gc = conectar_planilha()
     if not gc:
         return

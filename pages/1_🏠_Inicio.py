@@ -1,5 +1,5 @@
 import streamlit as st
-from utils import leitor_de_texto, log_acesso_google, log_interacao_google
+from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google
 
 def main():
     st.title("🏦 Gestão de Custos - FAGEN/UFU")

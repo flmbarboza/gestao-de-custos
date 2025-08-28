@@ -30,7 +30,7 @@ def conectar_planilha():
     return st.session_state.gc
 
 # Função para logar acessos no Google Sheets
-def log_acesso_google(nome, email, pagina):
+def log_acesso_google(nome_usuario, pagina):
     gc = conectar_planilha()
     if not gc:
         return
@@ -39,8 +39,7 @@ def log_acesso_google(nome, email, pagina):
         worksheet = planilha.worksheet("Acessos")   # Aba "Acessos"
 
         worksheet.append_row([
-            nome,
-            email or "anonimo",
+            nome_usuario,
             pagina,
             str(datetime.now())
         ])

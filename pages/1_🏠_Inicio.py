@@ -20,20 +20,25 @@ def main():
     st.markdown(texto_boas_vindas)
 
     # Seção de objetivos com log
-    with st.expander("🎯 Objetivos da Disciplina", expanded=False):
+    if "expander_objetivos" not in st.session_state:
+        st.session_state.expander_objetivos = False
+    
+    # Detecta se o expander foi expandido (aberto) pelo usuário
+    expander = st.expander("🎯 Objetivos da Disciplina", expanded=st.session_state.expander_objetivos)
+    
+    with expander:
         st.markdown("""
         - Apresentar conceitos de registro, apuração e controle de custos
         - Fornecer visão ampla da contabilidade financeira e gerencial
         - Analisar impactos tributários em custos e preços
         - Desenvolver habilidades para tomada de decisão com restrições
         """)
-        # Registra se o usuário expandiu
-        if st.session_state.get("expander_objetivos_expandido", False):
-            st.session_state.expander_objetivos_expandido = True
-        else:
-            st.session_state.expander_objetivos_expandido = True
-            log_interacao_google(nome_usuario, pagina_atual, "expandiu_objetivos")
-
+    
+    # ✅ Registra APENAS se foi aberto agora (e ainda não estava registrado)
+    if st.session_state.expander_objetivos and not st.session_state.get("logou_expandido_objetivos", False):
+        log_interacao_google(nome_usuario, pagina_atual, "expandiu_objetivos")
+        st.session_state.logou_expandido_objetivos = True  # Evita log duplicado
+        
     # Ementa interativa
     st.subheader("📚 Programa da Disciplina")
     cols = st.columns(3)

@@ -41,6 +41,7 @@ def log_acesso_google(nome_usuario, pagina):
         worksheet.append_row([
             nome_usuario,
             pagina,
+            acao,
             str(datetime.now())
         ])
     except Exception as e:

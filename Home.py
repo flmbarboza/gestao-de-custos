@@ -38,13 +38,6 @@ if not st.session_state.get('redirecionado'):
     # ✅ Gera um ID anônimo para este visitante
     user_id = get_anon_user_id()
 
-    # ✅ Registra o acesso no Google Sheets
-    log_acesso_google(
-        nome=user_id,
-        email="anonimo",  # ou deixe vazio
-        pagina="home"
-    )
-
    # ✅ Mensagem de boas-vindas anônima
     st.success(f"✅ Sua sessão foi iniciada! ID: {user_id}")
     st.info("Seus dados de uso serão coletados de forma anônima para melhorar a plataforma.")

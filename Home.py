@@ -89,7 +89,7 @@ with st.expander("🌍 Benchmarks: o que as top financeiras fazem", expanded=Fal
     st.markdown("""
     Funções financeiras de elite gastam apenas **0,66% da receita** com operações.  
     O resto vai para inovação, análise e estratégia.  
-    → [The Hackett Group](https://www.thehackettgroup.com/)
+    → [CFO.com](https://www.cfo.com/news/the-cost-of-financial-management-metric-of-the-month/736658/)
     """)
     if st.button("✅ Entendi: eficiência gera espaço para inovação", key="benchmark"):
         safe_log_interacao(nome_usuario, pagina, "expandiu_benchmark")
@@ -111,8 +111,8 @@ with st.expander(" 💬 Quer conversar com quem entende de custos? (sem cobrar h
 # === VÍDEOS RECOMENDADOS (com mini-descrições) ===
 st.markdown("#### 🎥 Aprenda rápido com vídeos práticos")
 videos = {
-    "Introdução à Gestão de Custos (PT-BR)": "https://youtu.be/Dykj7QoifPM?si=7xVwzljWUi560Acq",
-    "Cost-to-Serve em ação (EN)": "https://youtu.be/FZsikxMiDak?si=0beG90FrQQWHzk9D"
+    "Gestão de Custos é importante? (Sebrae-SP)": "https://youtu.be/Dykj7QoifPM?si=7xVwzljWUi560Acq",
+    "Eficiência a partir da GC (Falconi)": "https://youtu.be/FZsikxMiDak?si=0beG90FrQQWHzk9D"
 }
 for nome, link in videos.items():
     if st.button(f"▶️ Assistir: {nome}", key=f"btn_{nome}"):

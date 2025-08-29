@@ -1,4 +1,14 @@
 import streamlit as st
+from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google, safe_log_interacao
+
+# Recupera o nome do usuário
+nome_usuario = get_anon_user_id()
+pagina_atual = "Bib"
+
+# Registra o acesso
+if 'pagebib_acessada' not in st.session_state:
+    log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
+    st.session_state.pagebib_acessada = True
 
 def main():
     st.title("📚 Bibliografia Recomendada")

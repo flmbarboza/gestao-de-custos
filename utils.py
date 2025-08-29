@@ -82,7 +82,14 @@ def log_interacao_google(nome, pagina, acao):
         ])
     except Exception as e:
         st.warning(f"Erro ao salvar no Google Sheets (interação): {e}")
-        
+
+def safe_log_interacao(nome, pagina, acao):
+    try:
+        log_interacao_google(nome=nome, pagina=pagina, acao=acao)
+    except Exception:
+        # falha silenciosa no log para não interromper o app
+        pass
+
 def leitor_de_texto(texto, lang='pt-br'):
     """
     Converte texto em áudio e reproduz no navegador

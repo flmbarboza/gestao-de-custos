@@ -6,80 +6,152 @@ from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_inte
 st.set_page_config(
     page_title="Gestão de Custos Academy",
     page_icon="🏦",
-    layout="centered"  # Layout mais clean para a página inicial
+    layout="centered"
 )
 
-# === REGISTRA O ACESSO À PÁGINA (APENAS UMA VEZ POR SESSÃO) ===
+# === REGISTRA O ACESSO (APENAS UMA VEZ POR SESSÃO) ===
 nome_usuario = get_anon_user_id()
 pagina = "Página de Abertura"
 
 if 'home_acessada' not in st.session_state:
-    # ✅ Registra que a home foi acessada
-    log_acesso_google(nome_usuario,pagina, acao="acessou_home")  # ← Registro silencioso de visualização
+    log_acesso_google(nome_usuario, pagina, acao="acessou_home")
     st.session_state.home_acessada = True
-    # Não mostra nada, só registra
 
-# ===============================================================
+# Evita reexecução
+if 'redirecionado' not in st.session_state:
+    st.session_state.redirecionado = False
 
-# Mensagem de boas-vindas (aparece apenas na root URL)
-if not st.session_state.get('redirecionado'):
+if not st.session_state.redirecionado:
     st.session_state.redirecionado = True
 
-    st.title("🏦 Bem-vindo ao Gestão de Custos Academy!")
+    # === TÍTULO E BOAS-VINDAS DINÂMICAS ===
+    st.markdown("<h1 style='text-align: center;'>🏦 Gestão de Custos <span style='color:#27ae60'>Academy</span></h1>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: #2C3E50;'>Onde números viram poder de decisão</h3>", unsafe_allow_html=True)
+
     st.markdown("""
-    ## 👋 Olá, [futuro] Gestor de Custos!
-    
-    Esta plataforma foi desenvolvida para auxiliar no desenvolvimento de análises e na tomada de decisão de custos
-    por meio de fundamentos associados a tema, no âmbito do curso superior em Administração.
-    """)
-
-    st.image("pages/figs/welcome.png")
-
-    # ✅ Gera um ID anônimo para este visitante
-    user_id = get_anon_user_id()
-
-   # ✅ Mensagem de boas-vindas anônima
-    st.success(f"✅ Sua sessão foi iniciada! ID: {user_id}")
-    st.info("Seus dados de uso serão coletados de forma anônima para melhorar a plataforma.")
-
-    # ✅ Link para continuar
-    st.markdown("""
-    ### Como começar?
-    1. Clique no botão abaixo
-    2. Siga o fluxo de estudos
-    3. Explore as ferramentas interativas
-    """)
-
-      # Mensagem de privacidade
-    st.markdown("""
-    ---
-    <p style="font-size: 12px; color: gray; text-align: center;">
-        **Disclosure**: Este site coleta dados de uso de forma anônima para fins educacionais. 
-        Nenhum dado pessoal é solicitado ou armazenado sem consentimento.
-    </p>
+    <div style='text-align: center; font-size: 1.1em; color: #34495E; margin-bottom: 20px;'>
+        Você já parou pra pensar que <strong>o maior erro de gestão</strong> não é perder dinheiro...<br>
+        <strong>É achar que está economizando quando, na verdade, está destruindo valor?</strong>
+    </div>
     """, unsafe_allow_html=True)
 
-if st.button("➡️ Ir para o INÍCIO da jornada", key="btn_inicio"):
-    # Gera ou recupera o ID anônimo
+    st.image("pages/figs/welcome.png", use_column_width=True)
+
+    # === IDENTIFICAÇÃO ANÔNIMA (com toque de gamificação) ===
     user_id = get_anon_user_id()
-    
-    # Registra a intenção de navegar
-    log_interacao_google(
-        nome=user_id,
-        pagina="home",
-        acao="clicou_link_inicio"
+    st.success(f"🔐 Sua missão começou! ID: `{user_id[:8]}`")
+    st.info("🔐 Dados anônimos. Usamos isso para tornar a experiência melhor — nada pessoal, tudo pedagógico.")
+
+    # === QUIZ RÁPIDO (para engajar desde o início) ===
+    with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=True):
+        resposta = st.radio(
+            "Se uma empresa vende mais, mas lucra menos, o problema provavelmente é:",
+            ["A) Falta de marketing",
+             "B) Preço baixo demais",
+             "C) Custo mal calculado ou mal alocado",
+             "D) Crise econômica"]
+        )
+        if st.button("✅ Verificar resposta"):
+            if resposta == "C) Custo mal calculado ou mal alocado":
+                st.success("🔥 Acertou! Esse é o *núcleo* da Gestão de Custos.")
+                st.balloons()
+                log_interacao_google(nome_usuario, pagina, "quiz_acertou")
+            else:
+                st.warning("💡 Quase! O erro mais comum é achar que é marketing ou preço. Mas sem custos bem mapeados, qualquer decisão é no escuro.")
+                log_interacao_google(nome_usuario, pagina, "quiz_errou")
+            st.info("📌 Aprender a enxergar isso é o que separa um técnico de um estrategista.")
+
+    # === INSIGHTS PROVOCATIVOS (com expanders interativos) ===
+    st.markdown("### 🔥 O que os melhores gestores sabem (e os outros não percebem)")
+
+    with st.expander("📉 Produtividade > Corte de gastos"):
+        st.markdown("""
+        Cortar custos é fácil. **Receber mais com menos é arte.**  
+        Empresas de alta performance focam em **produtividade real**, não em demissões.  
+        → [McKinsey: The Productivity Imperative](https://www.mckinsey.com/featured-insights/productivity/driving-productivity-imperative)
+        """)
+        if st.button("✅ Entendi: produtividade é estratégia", key="produtividade"):
+            log_interacao_google(nome_usuario, pagina, "expandiu_produtividade")
+
+    with st.expander("🤖 IA e Automação: o novo 'corte de custos'"):
+        st.markdown("""
+        Automatizar processos de custos com IA pode reduzir tempo em 70%.  
+        Mas o grande ganho? **Libera tempo para análise estratégica.**  
+        → [McKinsey: State of AI 2023](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-in-2023)
+        """)
+        if st.button("✅ Entendi: IA é aliada, não substituta", key="ia"):
+            log_interacao_google(nome_usuario, pagina, "expandiu_ia")
+
+    with st.expander("🛒 Cost-to-Serve: o segredo dos lucros ocultos"):
+        st.markdown("""
+        Muitas empresas crescem... e perdem dinheiro.  
+        Por quê? **Clientes 'grandes' podem ser os mais caros.**  
+        Mapear o custo por cliente é essencial.  
+        → [Gartner: Cost Optimization](https://www.gartner.com/en/insights/cost-optimization)
+        """)
+        if st.button("✅ Entendi: nem todo cliente é lucrativo", key="cost_to_serve"):
+            log_interacao_google(nome_usuario, pagina, "expandiu_cost_to_serve")
+
+    with st.expander("🌍 Benchmarks: o que as top financeiras fazem"):
+        st.markdown("""
+        Funções financeiras de elite gastam apenas **0,66% da receita** com operações.  
+        O resto vai para inovação, análise e estratégia.  
+        → [The Hackett Group](https://www.thehackettgroup.com/)
+        """)
+        if st.button("✅ Entendi: eficiência gera espaço para inovação", key="benchmark"):
+            log_interacao_google(nome_usuario, pagina, "expandiu_benchmark")
+
+    # === CHAMADA PARA USAR IA (interação real e moderna) ===
+    st.markdown("### 💬 Quer conversar com quem entende de custos? (sem cobrar hora)")
+    if st.button("🤖 Pergunte à IA sobre Gestão de Custos"):
+        st.info("""
+        🔍 Abra seu chat favorito (Copilot, Gemini, ChatGPT) e pergunte:
+        
+        > _"Como calcular o custo real de um produto que tem produção terceirizada e logística variável?"_
+        
+        > _"Quais são os 3 erros mais comuns na precificação com base em custos?"_
+        
+        ✅ Use a IA como **tutora**, mas **você é o estrategista**.
+        """)
+        log_interacao_google(nome_usuario, pagina, "dica_ia_usada")
+
+    # === VÍDEOS RECOMENDADOS (com mini-descrições) ===
+    st.markdown("### 🎥 Aprenda rápido com vídeos práticos")
+    videos = {
+        "Introdução à Gestão de Custos (PT-BR)": "https://youtu.be/Dykj7QoifPM?si=7xVwzljWUi560Acq",
+        "Cost-to-Serve em ação (EN)": "https://youtu.be/FZsikxMiDak?si=0beG90FrQQWHzk9D"
+    }
+    for nome, link in videos.items():
+        if st.button(f"▶️ Assistir: {nome}", key=f"btn_{nome}"):
+            st.video(link)
+            log_interacao_google(nome_usuario, pagina, f"assistiu_video_{nome}")
+
+    # === ESCOLHA DO CAMINHO (interatividade com propósito) ===
+    st.markdown("---")
+    st.markdown("### 🧭 Por onde você quer começar?")
+    caminho = st.radio(
+        "Escolha seu estilo de aprendizagem:",
+        [
+            "🚀 Rápido e prático – quero resolver problemas reais",
+            "🧠 Profundo e estratégico – quero entender o sistema todo",
+            "📊 Analítico e técnico – quero dominar os cálculos"
+        ]
     )
-    
-    # Redireciona
-    st.switch_page("pages/1_🏠_Inicio.py")
-    
-# Footer (aparece em todas as páginas)
+
+    if st.button("➡️ Iniciar minha jornada", key="btn_inicio"):
+        log_interacao_google(nome_usuario, pagina, f"escolheu_caminho_{caminho.split('–')[0].strip()}")
+        st.session_state.caminho_escolhido = caminho
+        st.switch_page("pages/1_🏠_Inicio.py")
+
+# === FOOTER ELEGANTE E PROFISIONAL ===
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
-<div style='text-align: center; color: gray; font-size: 12px;'>
-    Gestão de Custos Academy (versão beta)<br>
-    Desenvolvido para a disciplina de <br>
-    Gestão de Custos <br>
-    FAGEN/UFU
+<div style='text-align: center; color: gray; font-size: 12px; line-height: 1.5;'>
+    <strong>Gestão de Custos Academy</strong><br>
+    <em>versão beta | 2025</em><br><br>
+    Desenvolvido para a disciplina de<br>
+    <strong>Gestão de Custos</strong><br>
+    FAGEN / UFU<br><br>
+    🌐 Conectando teoria, prática e futuro
 </div>
 """, unsafe_allow_html=True)

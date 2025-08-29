@@ -1,6 +1,9 @@
 import streamlit as st
 from datetime import datetime
-from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google
+from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google, safe_log_interacao
+
+# Registra o acesso
+log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}") 
 
 # Configuração da página
 st.set_page_config(
@@ -11,15 +14,8 @@ st.set_page_config(
 
 # === REGISTRA O ACESSO (APENAS UMA VEZ POR SESSÃO) ===
 nome_usuario = get_anon_user_id()
-pagina = "Página de Abertura"
+pagina_atual = "Página de Abertura"
 
-# wrapper seguro para logging (garante que falha no logger não quebre a UI)
-def safe_log_interacao(nome, pagina, acao):
-    try:
-        log_interacao_google(nome=nome, pagina=pagina, acao=acao)
-    except Exception:
-        # falha silenciosa no log para não interromper o app
-        pass
 
 if "quiz_choice" not in st.session_state:
     st.session_state.quiz_choice = None
@@ -28,15 +24,15 @@ if "quiz_done" not in st.session_state:
     st.session_state.quiz_done = False
 
 if 'home_acessada' not in st.session_state:
-    log_acesso_google(nome_usuario, pagina, acao="acessou_home")
+    log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
     st.session_state.home_acessada = True
 
 # Evita reexecução
-if 'redirecionado' not in st.session_state:
-    st.session_state.redirecionado = False
+#if 'redirecionado' not in st.session_state:
+ #   st.session_state.redirecionado = False
 
-if not st.session_state.redirecionado:
-    st.session_state.redirecionado = True
+#if not st.session_state.redirecionado:
+ #   st.session_state.redirecionado = True
 
 # === TÍTULO E BOAS-VINDAS DINÂMICAS ===
 st.markdown("<h1 style='text-align: center;'>🏦 Gestão de Custos <span style='color:#27ae60'>Academy</span></h1>", unsafe_allow_html=True)
@@ -59,7 +55,7 @@ with st.expander("📉 Produtividade > Corte de gastos", expanded=False):
     → [McKinsey: The Productivity Imperative](https://www.mckinsey.com/capabilities/operations/our-insights/productivity-at-the-core-how-coos-deliver-strategy)
     """)
     if st.button("✅ Entendi: produtividade é estratégia", key="produtividade"):
-        safe_log_interacao(nome_usuario, pagina, "expandiu_produtividade")
+        safe_log_interacao(nome_usuario, pagina_atual, "expandiu_produtividade")
 
 with st.expander("🤖 IA e Automação: o novo 'corte de custos'", expanded=False):
     st.markdown("""
@@ -68,11 +64,11 @@ with st.expander("🤖 IA e Automação: o novo 'corte de custos'", expanded=Fal
     → [Rand Group: How much does AI save a company?](https://www.randgroup.com/insights/services/ai-machine-learning/how-much-does-ai-save-a-company/)
     """)
     if st.button("✅ Entendi: IA é aliada, não substituta", key="concorda_ia"):
-        safe_log_interacao(nome_usuario, pagina, "concorda_ia")
+        safe_log_interacao(nome_usuario, pagina_atual, "concorda_ia")
     if st.button("❌ Discordo: IA ainda está tomando empregos", key="discordou_ia"):
-        safe_log_interacao(nome_usuario, pagina, "discordou_ia")
+        safe_log_interacao(nome_usuario, pagina_atual, "discordou_ia")
     if st.button("🤔 Não tenho opinião formada", key="nao_sei_ia"):
-        safe_log_interacao(nome_usuario, pagina, "nao_sei_ia")
+        safe_log_interacao(nome_usuario, pagina_atual, "nao_sei_ia")
 
 
 with st.expander("🛒 Cost-to-Serve: o segredo dos lucros ocultos", expanded=False):
@@ -83,7 +79,7 @@ with st.expander("🛒 Cost-to-Serve: o segredo dos lucros ocultos", expanded=Fa
     → [Gartner: Cost Optimization](https://www.gartner.com/en/insights/cost-optimization)
     """)
     if st.button("✅ Entendi: nem todo cliente é lucrativo", key="cost_to_serve"):
-        safe_log_interacao(nome_usuario, pagina, "expandiu_cost_to_serve")
+        safe_log_interacao(nome_usuario, pagina_atual, "expandiu_cost_to_serve")
 
 with st.expander("🌍 Benchmarks: o que as top financeiras fazem", expanded=False):
     st.markdown("""
@@ -92,7 +88,7 @@ with st.expander("🌍 Benchmarks: o que as top financeiras fazem", expanded=Fal
     → [CFO.com](https://www.cfo.com/news/the-cost-of-financial-management-metric-of-the-month/736658/)
     """)
     if st.button("✅ Entendi: eficiência gera espaço para inovação", key="benchmark"):
-        safe_log_interacao(nome_usuario, pagina, "expandiu_benchmark")
+        safe_log_interacao(nome_usuario, pagina_atual, "expandiu_benchmark")
 
 # === CHAMADA PARA USAR IA (interação real e moderna) ===
 with st.expander(" 💬 Quer conversar com quem entende de custos? (sem cobrar hora)", expanded=False):
@@ -106,7 +102,7 @@ with st.expander(" 💬 Quer conversar com quem entende de custos? (sem cobrar h
         
         ✅ Use a IA como **tutora**, mas **você é o estrategista**.
         """)
-        safe_log_interacao(nome_usuario, pagina, "dica_ia_usada")
+        safe_log_interacao(nome_usuario, pagina_atual, "dica_ia_usada")
 
 # === VÍDEOS RECOMENDADOS (com mini-descrições) ===
 st.markdown("#### 🎥 Aprenda rápido com vídeos práticos")
@@ -117,7 +113,7 @@ videos = {
 for nome, link in videos.items():
     if st.button(f"▶️ Assistir: {nome}", key=f"btn_{nome}"):
         st.video(link)
-        safe_log_interacao(nome_usuario, pagina, f"assistiu_video_{nome}")
+        safe_log_interacao(nome_usuario, pagina_atual, f"assistiu_video_{nome}")
 
 # === QUIZ RÁPIDO (para engajar desde o início) ===
 st.markdown("#### 🤔 Você entende de custos?")
@@ -141,7 +137,7 @@ with st.expander("🎯 Teste rápido", expanded=False):
     if enviar:
         if escolha == "-- Selecione --":
             st.warning("⚠️ Por favor, selecione uma opção antes de verificar!")
-            safe_log_interacao(nome_usuario, pagina, "quiz_sem_resposta")
+            safe_log_interacao(nome_usuario, pagina_atual, "quiz_sem_resposta")
         else:
             idx = q[0]["options"].index(escolha)
             quiz_choice = idx
@@ -150,11 +146,11 @@ with st.expander("🎯 Teste rápido", expanded=False):
             if idx == q[0]["answer"]:
                 st.success("🔥 Acertou! " + q[0].get("explanation", ""))
                 st.balloons()
-                safe_log_interacao(nome_usuario, pagina, "quiz_acertou")
+                safe_log_interacao(nome_usuario, pagina_atual, "quiz_acertou")
             else:
                 st.warning(f"💡 Quase! Resposta correta: {q[0]['options'][q[0]['answer']]}.")
                 st.info(q[0].get("explanation", ""))
-                safe_log_interacao(nome_usuario, pagina, "quiz_errou")
+                safe_log_interacao(nome_usuario, pagina_atual, "quiz_errou")
 
 st.markdown("""💡✨Entender custos pode transformar sua forma de ver qualquer negócio. 🚀
                 🔎 Que tal explorar mais? 📚 Quer vir com a gente? 🌍""")
@@ -178,12 +174,12 @@ caminho = st.radio(
 
 if st.button("➡️ Iniciar minha jornada", key="btn_inicio"):
     if caminho is not None:
-        safe_log_interacao(nome_usuario, pagina, 
+        safe_log_interacao(nome_usuario, pagina_atual, 
             f"escolheu_caminho_{caminho.split('–')[0].strip()}")
         st.session_state['caminho_escolhido'] = caminho
         st.switch_page("pages/1_🏠_Inicio.py")
     else:
-        safe_log_interacao(nome_usuario, pagina, 
+        safe_log_interacao(nome_usuario, pagina_atual, 
                            f"Nenhum caminho foi selecionado.")
         st.switch_page("pages/1_🏠_Inicio.py")
         

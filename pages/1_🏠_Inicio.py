@@ -7,10 +7,10 @@ def main():
 
     # Recupera o nome do usuário
     nome_usuario = get_anon_user_id()
-    pagina_atual = "Inicio"
+    pagina_atual = "Início"
 
     # Registra o acesso
-    log_acesso_google(nome_usuario, pagina_atual)
+    log_acesso_google(nome_usuario, pagina_atual, "acessou_inicio")
 
     # Título principal com ícone
     st.title("🏦 Gestão de Custos – FAGEN/UFU")

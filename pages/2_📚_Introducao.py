@@ -604,12 +604,11 @@ def main():
                 st.caption("🔎 Clique no gráfico para explorar a composição detalhada")
 
                 
-                # Registra navegação
-                if st.button("✅ Clique aqui se essa informação foi útil", key="classif_intro"):
-                    safe_log_interacao(nome_usuario, pagina_atual, "viu_classificacao_introducao")
+            # Registra navegação
+            if st.button("✅ Clique aqui se essa informação foi útil", key="classif_intro"):
+                safe_log_interacao(nome_usuario, pagina_atual, "viu_classificacao_introducao")
 
-
-                st.markdown("Vá no menu horizontal logo acima e clique em **📊 Comportamento (Fixo/Variável)** para continuar!")
+            st.markdown("Vá no menu horizontal logo acima e clique em **📊 Comportamento (Fixo/Variável)** para continuar!")
                 
         with tb2:
             st.subheader("Fixos vs. Variáveis")
@@ -1221,10 +1220,6 @@ def main():
             st.session_state.pontuacao = total_acertos
             st.info(f"🎯 Você acertou **{total_acertos} de {len(todas_perguntas)}**.")
     
-            # Registra navegação
-            if st.button("✅ Clique aqui se você fez o Quiz", key="quiz_intro"):
-                safe_log_interacao(nome_usuario, pagina_atual, "fez_quiz_introducao")
-
         
         # --- FEEDBACK MOTIVACIONAL ---
         if st.session_state.pontuacao > 0:
@@ -1256,9 +1251,14 @@ def main():
                         st.markdown(f"- Revisar: **{tema}**")
                 else:
                     st.markdown("✅ Você acertou todas as perguntas!")
-        
+
+        # Registra navegação
+        if st.button("✅ Clique aqui se você fez o Quiz", key="quiz_intro"):
+            safe_log_interacao(nome_usuario, pagina_atual, "fez_quiz_introducao")
+    
         # --- BOTÃO PARA REINICIAR ---
         if st.button("🔁 Reiniciar Quiz", key="reiniciar_quiz", on_click=reiniciar_quiz):
             st.rerun()            
+            
 if __name__ == "__main__":
     main()

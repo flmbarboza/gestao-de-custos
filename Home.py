@@ -56,7 +56,7 @@ with st.expander("📉 Produtividade > Corte de gastos", expanded=False):
     st.markdown("""
     Cortar custos é fácil. **Receber mais com menos é arte.**  
     Empresas de alta performance focam em **produtividade real**, não em demissões.  
-    → [McKinsey: The Productivity Imperative](https://www.mckinsey.com/featured-insights/productivity/driving-productivity-imperative)
+    → [McKinsey: The Productivity Imperative](https://www.mckinsey.com/capabilities/operations/our-insights/productivity-at-the-core-how-coos-deliver-strategy)
     """)
     if st.button("✅ Entendi: produtividade é estratégia", key="produtividade"):
         safe_log_interacao(nome_usuario, pagina, "expandiu_produtividade")
@@ -65,10 +65,15 @@ with st.expander("🤖 IA e Automação: o novo 'corte de custos'", expanded=Fal
     st.markdown("""
     Automatizar processos de custos com IA pode reduzir tempo em 70%.  
     Mas o grande ganho? **Libera tempo para análise estratégica.**  
-    → [McKinsey: State of AI 2023](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-in-2023)
+    → [Rand Group: How much does AI save a company?](https://www.randgroup.com/insights/services/ai-machine-learning/how-much-does-ai-save-a-company/)
     """)
-    if st.button("✅ Entendi: IA é aliada, não substituta", key="ia"):
-        safe_log_interacao(nome_usuario, pagina, "expandiu_ia")
+    if st.button("✅ Entendi: IA é aliada, não substituta", key="concorda_ia"):
+        safe_log_interacao(nome_usuario, pagina, "concorda_ia")
+    if st.button("❌ Discordo: IA ainda está tomando empregos", key="discordou_ia"):
+        safe_log_interacao(nome_usuario, pagina, "discordou_ia")
+    if st.button("🤔 Não tenho opinião formada", key="nao_sei_ia"):
+        safe_log_interacao(nome_usuario, pagina, "nao_sei_ia")
+
 
 with st.expander("🛒 Cost-to-Serve: o segredo dos lucros ocultos", expanded=False):
     st.markdown("""
@@ -104,7 +109,7 @@ with st.expander(" 💬 Quer conversar com quem entende de custos? (sem cobrar h
         safe_log_interacao(nome_usuario, pagina, "dica_ia_usada")
 
 # === VÍDEOS RECOMENDADOS (com mini-descrições) ===
-st.markdown("### 🎥 Aprenda rápido com vídeos práticos")
+st.markdown("#### 🎥 Aprenda rápido com vídeos práticos")
 videos = {
     "Introdução à Gestão de Custos (PT-BR)": "https://youtu.be/Dykj7QoifPM?si=7xVwzljWUi560Acq",
     "Cost-to-Serve em ação (EN)": "https://youtu.be/FZsikxMiDak?si=0beG90FrQQWHzk9D"
@@ -114,8 +119,10 @@ for nome, link in videos.items():
         st.video(link)
         safe_log_interacao(nome_usuario, pagina, f"assistiu_video_{nome}")
 
- # === QUIZ RÁPIDO (para engajar desde o início) ===
-with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=False):
+# === QUIZ RÁPIDO (para engajar desde o início) ===
+st.markdown("#### Você entende de custos?")
+
+with st.expander("🎯 Teste rápido", expanded=False):
     
     # --- questão (estrutura solicitada) ---
     q = [{   "question": "Se uma empresa vende mais, mas lucra menos, o problema provavelmente é:",

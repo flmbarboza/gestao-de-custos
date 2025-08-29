@@ -5,17 +5,28 @@ import graphviz
 import matplotlib.pyplot as plt
 import plotly.express as px
 from matplotlib.patches import Rectangle, FancyBboxPatch
-from utils import leitor_de_texto
+from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google, safe_log_interacao
 
 def main():
     st.title("📚 Introdução à Contabilidade de Custos")
+
+    # Recupera o nome do usuário
+    nome_usuario = get_anon_user_id()
+    pagina_atual = "Introdução a Custos"
+    
+    # Registra o acesso
+    log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}") 
+
     with st.expander("🎯 Objetivos da Unidade", expanded=False):
             st.markdown("""
             - Compreender terminologia básica de custos
             - Classificar custos por natureza e comportamento
             - Analisar o comportamento de custos
             """)    
-    
+            #Registra navegação
+            if st.button("✅ Clique aqui se essa informação foi útil", key="obj_intro"):
+                 safe_log_interacao(nome_usuario, pagina_atual, "viu_ojetivos_introducao")
+
     # Criando abas para o submenu
     tab0, tab1, tab2, tab3, tab4 = st.tabs([
         "💡 Ideação", "📌 Conceitos Básicos", 
@@ -98,7 +109,10 @@ def main():
 
             Vá para o topo dessa página e clique em **📌 Conceitos Básicos** para continuar!
         """)
-        
+        #Registra navegação
+        if st.button("✅ Clique aqui se essa informação foi útil", key="intro_context"):
+             safe_log_interacao(nome_usuario, pagina_atual, "viu_intro_contexto")
+
     with tab1:  # Conceitos Básicos    
         st.header("Terminologia")
 
@@ -226,7 +240,10 @@ def main():
             Ah! Só pra constar... Alves et al. (2018) é um livro e sua referência completa é: ALVES, Aline et al. **Análise de custo**. Porto Alegre: SAGAH, 2018.
         
             """)
-            
+            #Registra navegação
+            if st.button("✅ Clique aqui se essa informação foi útil", key="intro_termos"):
+                 safe_log_interacao(nome_usuario, pagina_atual, "viu_intro_terminologia")
+
         # ✅ Integração do vídeo
         st.video("https://youtu.be/9GUog7H4Bgk")
         

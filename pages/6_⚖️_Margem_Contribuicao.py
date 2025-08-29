@@ -1,9 +1,18 @@
 import streamlit as st
 import pandas as pd
+from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google, safe_log_interacao
 
 def main():
     st.title("⚖️ Margem de Contribuição")
+    # Recupera o nome do usuário
+    nome_usuario = get_anon_user_id()
+    pagina_atual = "Margem"
     
+    # Registra o acesso
+    if 'page6_acessada' not in st.session_state:
+        log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
+        st.session_state.page6_acessada = True
+
     st.markdown("""
     ### 📌 Conceito Fundamental
     ```

@@ -10,7 +10,9 @@ def main():
     pagina_atual = "Início"
 
     # Registra o acesso
-    log_acesso_google(nome_usuario, pagina_atual, "acessou_inicio")
+    if 'page1_acessada' not in st.session_state:
+        log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
+        st.session_state.page1_acessada = True
 
     # Título principal com ícone
     st.title("🏦 Gestão de Custos – FAGEN/UFU")

@@ -2,11 +2,20 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from graphviz import Digraph 
+from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google, safe_log_interacao
 
 def main():
     st.title("📊 Custeio por Absorção")
+    # Recupera o nome do usuário
+    nome_usuario = get_anon_user_id()
+    pagina_atual = "Custeio por Absorção"
 
-        # Lista de cards
+    # Registra o acesso
+    if 'page30_acessada' not in st.session_state:
+        log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
+        st.session_state.page30_acessada = True
+
+    # Lista de cards
     cards = [
         {"title": "Matéria-Prima (MP, ou MD - Material Direto)", "formula": "MP = EIMP + Compra MP - EFMP"},
         {"title": "Custo de Produção do Período (CPP)", "formula": "CPP = MP + MOD + CIF"},
@@ -187,7 +196,11 @@ def main():
                          color="Indicador")
             st.plotly_chart(fig, use_container_width=True)
 
-    #st.divider()
+    
+    #Registra navegação
+    if st.button("✅ Clique aqui se essa informação foi útil", key="custeio_abs"):
+         safe_log_interacao(nome_usuario, pagina_atual, "viu_custeio_absorcao")
+
 
     # Exemplos setoriais
     st.subheader("📌 Exemplos Práticos por Setor")
@@ -384,6 +397,11 @@ def main():
         )
         st.plotly_chart(fig, use_container_width=True)
     
+    
+    #Registra navegação
+    if st.button("✅ Clique aqui se essa informação foi útil", key="custabsex"):
+         safe_log_interacao(nome_usuario, pagina_atual, "viu_ex_c_abs")
+
     st.divider()    
     if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio Variável"):
         st.switch_page("pages/4_📈_Custeio_Variavel.py")

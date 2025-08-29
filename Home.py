@@ -120,7 +120,7 @@ for nome, link in videos.items():
         safe_log_interacao(nome_usuario, pagina, f"assistiu_video_{nome}")
 
 # === QUIZ RÁPIDO (para engajar desde o início) ===
-st.markdown("#### Você entende de custos?")
+st.markdown("#### 🤔 Você entende de custos?")
 
 with st.expander("🎯 Teste rápido", expanded=False):
     
@@ -156,7 +156,8 @@ with st.expander("🎯 Teste rápido", expanded=False):
                 st.info(q[0].get("explanation", ""))
                 safe_log_interacao(nome_usuario, pagina, "quiz_errou")
 
-
+st.markdown("""💡✨Entender custos pode transformar sua forma de ver qualquer negócio. 🚀
+                🔎 Que tal explorar mais? 📚 Quer vir com a gente? 🌍""")
 st.image("pages/figs/welcome.png")
 
 st.success(f"""🔐 Dados anônimos. Usamos isso para tornar a experiência melhor — nada pessoal, tudo pedagógico.

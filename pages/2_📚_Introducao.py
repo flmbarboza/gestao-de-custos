@@ -25,8 +25,8 @@ def main():
         """)    
     
         # Registra navegação
-    #    if st.button("✅ Clique aqui se essa informação foi útil", key="obj_intro"):
-     #       safe_log_interacao(nome_usuario, pagina_atual, "viu_objetivos_introducao")
+        if st.button("✅ Clique aqui se essa informação foi útil", key="obj_intro"):
+            safe_log_interacao(nome_usuario, pagina_atual, "viu_objetivos_introducao")
 
     # Criando abas para o submenu
     tab0, tab1, tab2, tab3, tab4 = st.tabs([

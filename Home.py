@@ -166,14 +166,14 @@ st.success(f"""🔐 Dados anônimos. Usamos isso para tornar a experiência melh
 
 # === ESCOLHA DO CAMINHO (interatividade com propósito) ===
 st.markdown("---")
-st.markdown("### 🧭 Por onde você quer começar?")
+st.markdown("### 🧭 Por onde você quer começar? Temos nossa trilha, mas sempre reavaliamos dada a sua necessidade.")
 caminho = st.radio(
     "Escolha seu estilo de aprendizagem:",
     [
         "🚀 Rápido e prático – quero resolver problemas reais",
         "🧠 Profundo e estratégico – quero entender o sistema todo",
         "📊 Analítico e técnico – quero dominar os cálculos"
-    ], index=0
+    ], index=None
 )
 
 if st.button("➡️ Iniciar minha jornada", key="btn_inicio"):

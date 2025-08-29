@@ -15,7 +15,9 @@ def main():
     pagina_atual = "Introdução a Custos"
     
     # Registra o acesso
-    log_acesso_google(nome_usuario, pagina_atual, "acessou_introducao")
+    if 'page2_acessada' not in st.session_state:
+        log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
+        st.session_state.page2_acessada = True
 
     with st.expander("🎯 Objetivos da Unidade", expanded=False):
         st.markdown("""

@@ -35,12 +35,6 @@ if not st.session_state.redirecionado:
     </div>
     """, unsafe_allow_html=True)
 
-    st.image("pages/figs/welcome.png")
-
-    st.success(f"""🔐 Dados anônimos. Usamos isso para tornar a experiência melhor — nada pessoal, tudo pedagógico.
-                Assim começa sua missão! Toda sua jornada contribui para melhorar esse site. 
-                Vamos usar um código de identificação para você `{nome_usuario[:8]}`. Caso queira saber mais sobre isso, contate o idealizador.""")
-    
     # === INSIGHTS PROVOCATIVOS (com expanders interativos) ===
     st.markdown("### 🔥 O que os melhores gestores sabem (e os outros não percebem)")
 
@@ -106,6 +100,60 @@ if not st.session_state.redirecionado:
             st.video(link)
             log_interacao_google(nome_usuario, pagina, f"assistiu_video_{nome}")
 
+     # === QUIZ RÁPIDO (para engajar desde o início) ===
+    with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=False):
+        
+        # --- questão (estrutura solicitada) ---
+        q = [{   "question": "Se uma empresa vende mais, mas lucra menos, o problema provavelmente é:",
+                "options": [ "A) Falta de marketing", "B) Preço baixo demais", "C) Custo mal calculado ou mal alocado",
+                    "D) Crise econômica"],
+                "answer": 2,  # índice correto
+                "explanation": "O núcleo da Gestão de Custos está em entender e alocar corretamente os custos."
+                }]
+    
+        if "quiz_done" not in st.session_state:
+            st.session_state.quiz_done = False
+            st.session_state.quiz_choice = None
+        
+        # wrapper seguro para logging (garante que falha no logger não quebre a UI)
+        def safe_log_interacao(nome, pagina, acao):
+            try:
+                log_interacao_google(nome=nome, pagina=pagina, acao=acao)
+            except Exception:
+                # falha silenciosa no log para não interromper o app
+                pass
+                
+        # --- formulário simples ---
+        with st.form("quiz_form"):
+            choices = ["-- Selecione --"] + q[0]["options"]
+            escolha = st.radio( "Escolha uma opção:", choices, index=None, key="quiz_0")
+            enviar = st.form_submit_button("✅ Verificar resposta")
+        
+        if enviar:
+            if escolha == "-- Selecione --":
+                st.warning("⚠️ Por favor, selecione uma opção antes de verificar!")
+                safe_log_interacao(nome_usuario, pagina, "quiz_sem_resposta")
+            else:
+                idx = q[0]["options"].index(escolha)
+                st.session_state.quiz_choice = idx
+                st.session_state.quiz_done = True
+        
+                if idx == q[0]["answer"]:
+                    st.success("🔥 Acertou! " + q[0].get("explanation", ""))
+                    st.balloons()
+                    safe_log_interacao(nome_usuario, pagina, "quiz_acertou")
+                else:
+                    st.warning(f"💡 Quase! Resposta correta: {q[0]['options'][q[0]['answer']]}.")
+                    st.info(q[0].get("explanation", ""))
+                    safe_log_interacao(nome_usuario, pagina, "quiz_errou")
+
+    
+    st.image("pages/figs/welcome.png")
+
+    st.success(f"""🔐 Dados anônimos. Usamos isso para tornar a experiência melhor — nada pessoal, tudo pedagógico.
+                Assim começa sua missão! Toda sua jornada contribui para melhorar esse site. 
+                Vamos usar um código de identificação para você `{nome_usuario[:8]}`. Caso queira saber mais sobre isso, contate o idealizador.""")
+    
     # === ESCOLHA DO CAMINHO (interatividade com propósito) ===
     st.markdown("---")
     st.markdown("### 🧭 Por onde você quer começar?")
@@ -115,7 +163,7 @@ if not st.session_state.redirecionado:
             "🚀 Rápido e prático – quero resolver problemas reais",
             "🧠 Profundo e estratégico – quero entender o sistema todo",
             "📊 Analítico e técnico – quero dominar os cálculos"
-        ]
+        ], index=None
     )
 
     if st.button("➡️ Iniciar minha jornada", key="btn_inicio"):

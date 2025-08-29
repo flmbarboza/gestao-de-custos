@@ -36,7 +36,7 @@ def main():
                 
         # --- formulário simples ---
         with st.form("quiz_form"):
-            choices = ["-- Selecione --"] + q["options"]
+            choices = ["-- Selecione --"] + q[0]["options"]
             escolha = st.radio(
                 "Escolha uma opção:",
                 choices,
@@ -50,17 +50,17 @@ def main():
                 st.warning("⚠️ Por favor, selecione uma opção antes de verificar!")
                 safe_log_interacao(nome_usuario, pagina, "quiz_sem_resposta")
             else:
-                idx = q["options"].index(escolha)
+                idx = q[0]["options"].index(escolha)
                 st.session_state.quiz_choice = idx
                 st.session_state.quiz_done = True
         
                 if idx == q["answer"]:
-                    st.success("🔥 Acertou! " + q.get("explanation", ""))
+                    st.success("🔥 Acertou! " + q[0].get("explanation", ""))
                     st.balloons()
                     safe_log_interacao(nome_usuario, pagina, "quiz_acertou")
                 else:
-                    st.warning(f"💡 Quase! Resposta correta: {q['options'][q['answer']]}.")
-                    st.info(q.get("explanation", ""))
+                    st.warning(f"💡 Quase! Resposta correta: {q[0]['options'][q[0]['answer']]}.")
+                    st.info(q[0].get("explanation", ""))
                     safe_log_interacao(nome_usuario, pagina, "quiz_errou")
         
         

@@ -81,7 +81,7 @@ def main():
             st.warning(f"💡 Resposta correta: {q['options'][q['answer']]}.")
             st.info(q.get("explanation", ""))
 
-  st.title("📝 Simulador de Prova - Custeio por Absorção")
+    st.title("📝 Simulador de Prova - Custeio por Absorção")
       st.markdown("""
       Teste seus conhecimentos sobre custeio por absorção básico e avançado.
       *Responda todas as questões e verifique seu resultado no final.*

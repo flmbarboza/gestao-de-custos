@@ -3,12 +3,6 @@ import pandas as pd
 from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google
 
 def main():
-    st.title("📝 Simulador de Prova - Custeio por Absorção")
-    st.markdown("""
-    Teste seus conhecimentos sobre custeio por absorção básico e avançado.
-    *Responda todas as questões e verifique seu resultado no final.*
-    """)
-
     nome_usuario = st.session_state.get("user_id") or get_anon_user_id()
 
     # === QUIZ RÁPIDO (para engajar desde o início) ===
@@ -47,17 +41,15 @@ def main():
             except Exception:
                 # falha silenciosa no log para não interromper o app
                 pass
-        
-        st.markdown(f"**{q['question']}**")
-        
+                
         # --- formulário simples ---
         with st.form("quiz_form"):
             choices = ["-- Selecione --"] + q["options"]
             escolha = st.radio(
                 "Escolha uma opção:",
                 choices,
-                index=0,
-                key="quiz_radio_0"
+                index=None,
+                key="quiz_0"
             )
             enviar = st.form_submit_button("✅ Verificar resposta")
         
@@ -66,7 +58,7 @@ def main():
                 st.warning("⚠️ Por favor, selecione uma opção antes de verificar!")
                 safe_log_interacao(nome_usuario, page_name, "quiz_sem_resposta")
             else:
-                idx = q["options"].index(escolha)  # mapeia para índice dentro de q['options']
+                idx = q["options"].index(escolha)
                 st.session_state.quiz_choice = idx
                 st.session_state.quiz_done = True
         
@@ -80,13 +72,13 @@ def main():
                     safe_log_interacao(nome_usuario, page_name, "quiz_errou")
         
         # --- se já respondeu em sessão anterior, reapresenta feedback ---
-        elif st.session_state.quiz_done:
-            idx = st.session_state.quiz_choice
-            if idx == q["answer"]:
-                st.success("🔥 Acertou! " + q.get("explanation", ""))
-            else:
-                st.warning(f"💡 Resposta correta: {q['options'][q['answer']]}.")
-                st.info(q.get("explanation", ""))
+        #elif st.session_state.quiz_done:
+         #   idx = st.session_state.quiz_choice
+          #  if idx == q["answer"]:
+           #     st.success("🔥 Acertou! " + q.get("explanation", ""))
+            #else:
+             #   st.warning(f"💡 Resposta correta: {q['options'][q['answer']]}.")
+              #  st.info(q.get("explanation", ""))
          
 if __name__ == "__main__":
     main()

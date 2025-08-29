@@ -10,7 +10,7 @@ def main():
     
     # === QUIZ RÁPIDO (para engajar desde o início) ===
     st.info("🎯 Teste rápido: Você entende de custos?")
-
+    
     # --- questão (estrutura solicitada) ---
     question = [
         {
@@ -26,17 +26,17 @@ def main():
             "explanation": "O núcleo da Gestão de Custos está em entender e alocar corretamente os custos."
         }
     ]
-
+    
     # pega a primeira (única) questão para o quiz rápido
     q = question[0]
-
+    
     # --- estado minimalista e seguro ---
     if "quiz_done" not in st.session_state:
         st.session_state.quiz_done = False
         st.session_state.quiz_choice = None
-
+    
     page_name = st.session_state.get("pagina", "Página de Abertura")
-
+    
     # wrapper seguro para logging (garante que falha no logger não quebre a UI)
     def safe_log_interacao(nome, pagina, acao):
         try:
@@ -44,15 +44,15 @@ def main():
         except Exception:
             # falha silenciosa no log para não interromper o app
             pass
-
+    
     st.markdown(f"**{q['question']}**")
-
+    
     # --- formulário simples ---
     with st.form("quiz_form"):
         choices = ["-- Selecione --"] + q["options"]
         escolha = st.selectbox("Escolha uma opção:", choices, index=0, key="quiz_select_0")
         enviar = st.form_submit_button("✅ Verificar resposta")
-
+    
     # --- processamento do submit ---
     if enviar:
         if escolha == "-- Selecione --":
@@ -62,7 +62,7 @@ def main():
             idx = q["options"].index(escolha)  # mapeia para índice dentro de q['options']
             st.session_state.quiz_choice = idx
             st.session_state.quiz_done = True
-
+    
             if idx == q["answer"]:
                 st.success("🔥 Acertou! " + q.get("explanation", ""))
                 st.balloons()
@@ -71,7 +71,7 @@ def main():
                 st.warning(f"💡 Quase! Resposta correta: {q['options'][q['answer']]}.")
                 st.info(q.get("explanation", ""))
                 safe_log_interacao(nome_usuario, page_name, "quiz_errou")
-
+    
     # --- se já respondeu em sessão anterior, reapresenta feedback ---
     elif st.session_state.quiz_done:
         idx = st.session_state.quiz_choice
@@ -80,14 +80,13 @@ def main():
         else:
             st.warning(f"💡 Resposta correta: {q['options'][q['answer']]}.")
             st.info(q.get("explanation", ""))
-
+    
     st.title("📝 Simulador de Prova - Custeio por Absorção")
-      st.markdown("""
+    st.markdown("""
       Teste seus conhecimentos sobre custeio por absorção básico e avançado.
       *Responda todas as questões e verifique seu resultado no final.*
       """)
-      
-      # Sistema de pontuação
+    # Sistema de pontuação
       if 'score' not in st.session_state:
           st.session_state.score = 0
           st.session_state.answers = {}
@@ -198,7 +197,7 @@ def main():
               st.warning("📚 Bom esforço! Reveja os conceitos e tente novamente!")
           else:
               st.error("✏️ Estude mais os fundamentos antes de tentar novamente.")
-          
+
          
 if __name__ == "__main__":
     main()

@@ -13,6 +13,19 @@ st.set_page_config(
 nome_usuario = get_anon_user_id()
 pagina = "Página de Abertura"
 
+# wrapper seguro para logging (garante que falha no logger não quebre a UI)
+def safe_log_interacao(nome, pagina, acao):
+    try:
+        log_interacao_google(nome=nome, pagina=pagina, acao=acao)
+    except Exception:
+        # falha silenciosa no log para não interromper o app
+        pass
+
+if "quiz_choice" not in st.session_state:
+    st.session_state.quiz_choice = None
+if "quiz_done" not in st.session_state:
+    st.session_state.quiz_done = False
+
 if 'home_acessada' not in st.session_state:
     log_acesso_google(nome_usuario, pagina, acao="acessou_home")
     st.session_state.home_acessada = True
@@ -45,7 +58,7 @@ if not st.session_state.redirecionado:
         → [McKinsey: The Productivity Imperative](https://www.mckinsey.com/featured-insights/productivity/driving-productivity-imperative)
         """)
         if st.button("✅ Entendi: produtividade é estratégia", key="produtividade"):
-            log_interacao_google(nome_usuario, pagina, "expandiu_produtividade")
+            safe_log_interacao(nome_usuario, pagina, "expandiu_produtividade")
 
     with st.expander("🤖 IA e Automação: o novo 'corte de custos'", expanded=False):
         st.markdown("""
@@ -54,7 +67,7 @@ if not st.session_state.redirecionado:
         → [McKinsey: State of AI 2023](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-in-2023)
         """)
         if st.button("✅ Entendi: IA é aliada, não substituta", key="ia"):
-            log_interacao_google(nome_usuario, pagina, "expandiu_ia")
+            safe_log_interacao(nome_usuario, pagina, "expandiu_ia")
 
     with st.expander("🛒 Cost-to-Serve: o segredo dos lucros ocultos", expanded=False):
         st.markdown("""
@@ -64,7 +77,7 @@ if not st.session_state.redirecionado:
         → [Gartner: Cost Optimization](https://www.gartner.com/en/insights/cost-optimization)
         """)
         if st.button("✅ Entendi: nem todo cliente é lucrativo", key="cost_to_serve"):
-            log_interacao_google(nome_usuario, pagina, "expandiu_cost_to_serve")
+            safe_log_interacao(nome_usuario, pagina, "expandiu_cost_to_serve")
 
     with st.expander("🌍 Benchmarks: o que as top financeiras fazem", expanded=False):
         st.markdown("""
@@ -73,7 +86,7 @@ if not st.session_state.redirecionado:
         → [The Hackett Group](https://www.thehackettgroup.com/)
         """)
         if st.button("✅ Entendi: eficiência gera espaço para inovação", key="benchmark"):
-            log_interacao_google(nome_usuario, pagina, "expandiu_benchmark")
+            safe_log_interacao(nome_usuario, pagina, "expandiu_benchmark")
 
     # === CHAMADA PARA USAR IA (interação real e moderna) ===
     with st.expander(" 💬 Quer conversar com quem entende de custos? (sem cobrar hora)", expanded=False):
@@ -87,7 +100,7 @@ if not st.session_state.redirecionado:
             
             ✅ Use a IA como **tutora**, mas **você é o estrategista**.
             """)
-            log_interacao_google(nome_usuario, pagina, "dica_ia_usada")
+            safe_log_interacao(nome_usuario, pagina, "dica_ia_usada")
 
     # === VÍDEOS RECOMENDADOS (com mini-descrições) ===
     st.markdown("### 🎥 Aprenda rápido com vídeos práticos")
@@ -98,7 +111,7 @@ if not st.session_state.redirecionado:
     for nome, link in videos.items():
         if st.button(f"▶️ Assistir: {nome}", key=f"btn_{nome}"):
             st.video(link)
-            log_interacao_google(nome_usuario, pagina, f"assistiu_video_{nome}")
+            safe_log_interacao(nome_usuario, pagina, f"assistiu_video_{nome}")
 
      # === QUIZ RÁPIDO (para engajar desde o início) ===
     with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=False):
@@ -110,19 +123,7 @@ if not st.session_state.redirecionado:
                 "answer": 2,  # índice correto
                 "explanation": "O núcleo da Gestão de Custos está em entender e alocar corretamente os custos."
                 }]
-    
-        if "quiz_done" not in st.session_state:
-            st.session_state.quiz_done = False
-            st.session_state.quiz_choice = None
-        
-        # wrapper seguro para logging (garante que falha no logger não quebre a UI)
-        def safe_log_interacao(nome, pagina, acao):
-            try:
-                log_interacao_google(nome=nome, pagina=pagina, acao=acao)
-            except Exception:
-                # falha silenciosa no log para não interromper o app
-                pass
-                
+                        
         # --- formulário simples ---
         with st.form("quiz_form"):
             choices = ["-- Selecione --"] + q[0]["options"]
@@ -163,7 +164,7 @@ if not st.session_state.redirecionado:
             "🚀 Rápido e prático – quero resolver problemas reais",
             "🧠 Profundo e estratégico – quero entender o sistema todo",
             "📊 Analítico e técnico – quero dominar os cálculos"
-        ], index=None
+        ], index=0
     )
 
     if st.button("➡️ Iniciar minha jornada", key="btn_inicio"):

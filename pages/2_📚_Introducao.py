@@ -432,6 +432,10 @@ def main():
         
         st.markdown("Vá para o topo dessa página e clique em **📊 Classificação** para continuar!")
         
+        # Registra navegação
+        if st.button("✅ Clique aqui se essa informação foi útil", key="tipos_gastos"):
+            safe_log_interacao(nome_usuario, pagina_atual, "viu_tipos_gastos_introducao")
+
     with tab2:  # Classificação
         st.header("Classificação de Custos")
         
@@ -597,6 +601,12 @@ def main():
                 st.plotly_chart(fig, use_container_width=True)
                 st.caption("🔎 Clique no gráfico para explorar a composição detalhada")
 
+                
+                # Registra navegação
+                if st.button("✅ Clique aqui se essa informação foi útil", key="classif_intro"):
+                    safe_log_interacao(nome_usuario, pagina_atual, "viu_classificacao_introducao")
+
+
                 st.markdown("Vá no menu horizontal logo acima e clique em **📊 Comportamento (Fixo/Variável)** para continuar!")
                 
         with tb2:
@@ -642,6 +652,10 @@ def main():
             - 🚚 **Custo Variável Típico:** Matéria-prima, frete por unidade vendida
             - 💡 **Custo Misto:** Energia (parte fixa + parte variável pelo uso)
             """)
+            
+            # Registra navegação
+            if st.button("✅ Clique aqui se essa informação foi útil", key="cfcv_intro"):
+                safe_log_interacao(nome_usuario, pagina_atual, "viu_cfcv_introducao")
 
             st.markdown("Vá para o topo dessa página e clique em **📈 Comportamento** para continuar!")
     
@@ -1084,6 +1098,10 @@ def main():
         st.markdown("""E aí?! **Já domina os termos básicos da gestão de custos**???<br> 
         Se está ok, vamos então verificar se isso é verdade? Clique em **🧠 Quiz** no topo dessa página e bora mostrar que você é TOP!""", unsafe_allow_html=True)
         
+        # Registra navegação
+        if st.button("✅ Clique aqui se essa informação foi útil", key="desafios_intro"):
+            safe_log_interacao(nome_usuario, pagina_atual, "viu_desafios_introducao")
+
         # 🔜 Botão para próxima página
         st.markdown(" ")
         if st.button("👉 Avançar para o próximo tópico: Conhecer o Método de Custeio por Absorção"):
@@ -1200,6 +1218,11 @@ def main():
         
             st.session_state.pontuacao = total_acertos
             st.info(f"🎯 Você acertou **{total_acertos} de {len(todas_perguntas)}**.")
+    
+            # Registra navegação
+            if st.button("✅ Clique aqui se você fez o Quiz", key="quiz_intro"):
+                safe_log_interacao(nome_usuario, pagina_atual, "fez_quiz_introducao")
+
         
         # --- FEEDBACK MOTIVACIONAL ---
         if st.session_state.pontuacao > 0:

@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google, safe_log_interacao
 
 def main():
     st.title("📈 Custeio por Absorção - Avançado")
@@ -9,6 +10,14 @@ def main():
     **Departamentalização e critérios de rateio**  
     *Distribuição científica dos custos indiretos por centros de custo e produtos*
     """)
+    # Recupera o nome do usuário
+    nome_usuario = get_anon_user_id()
+    pagina_atual = "Custeio Abs II"
+    
+    # Registra o acesso
+    if 'page31_acessada' not in st.session_state:
+        log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
+        st.session_state.page31_acessada = True
     
     # Divisão em abas para diferentes métodos
     tab1, tab2, tab3 = st.tabs(["🏭 Rateio por Departamentos", "📊 Rateio por Produtos", "🧮 Cálculo Taxa CIF"])

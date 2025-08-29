@@ -35,21 +35,23 @@ if not st.session_state.redirecionado:
     </div>
     """, unsafe_allow_html=True)
 
-    st.image("pages/figs/welcome.png", use_column_width=True)
+    st.image("pages/figs/welcome.png")
 
     # === IDENTIFICAÇÃO ANÔNIMA (com toque de gamificação) ===
     user_id = get_anon_user_id()
-    st.success(f"🔐 Sua missão começou! ID: `{user_id[:8]}`")
-    st.info("🔐 Dados anônimos. Usamos isso para tornar a experiência melhor — nada pessoal, tudo pedagógico.")
-
+    
+    st.success(f"""🔐 Dados anônimos. Usamos isso para tornar a experiência melhor — nada pessoal, tudo pedagógico.
+                Assim começa sua missão! Toda sua jornada contribui para melhorar esse site. 
+                Vamos usar um código de identificação para você `{user_id[:8]}`. Caso queira saber mais sobre isso, contate o idealizador.""")
+    
     # === QUIZ RÁPIDO (para engajar desde o início) ===
-    with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=True):
+    with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=False):
         resposta = st.radio(
             "Se uma empresa vende mais, mas lucra menos, o problema provavelmente é:",
             ["A) Falta de marketing",
              "B) Preço baixo demais",
              "C) Custo mal calculado ou mal alocado",
-             "D) Crise econômica"]
+             "D) Crise econômica"], index=None
         )
         if st.button("✅ Verificar resposta"):
             if resposta == "C) Custo mal calculado ou mal alocado":
@@ -64,7 +66,7 @@ if not st.session_state.redirecionado:
     # === INSIGHTS PROVOCATIVOS (com expanders interativos) ===
     st.markdown("### 🔥 O que os melhores gestores sabem (e os outros não percebem)")
 
-    with st.expander("📉 Produtividade > Corte de gastos"):
+    with st.expander("📉 Produtividade > Corte de gastos", expanded=False):
         st.markdown("""
         Cortar custos é fácil. **Receber mais com menos é arte.**  
         Empresas de alta performance focam em **produtividade real**, não em demissões.  
@@ -73,7 +75,7 @@ if not st.session_state.redirecionado:
         if st.button("✅ Entendi: produtividade é estratégia", key="produtividade"):
             log_interacao_google(nome_usuario, pagina, "expandiu_produtividade")
 
-    with st.expander("🤖 IA e Automação: o novo 'corte de custos'"):
+    with st.expander("🤖 IA e Automação: o novo 'corte de custos'", expanded=False):
         st.markdown("""
         Automatizar processos de custos com IA pode reduzir tempo em 70%.  
         Mas o grande ganho? **Libera tempo para análise estratégica.**  
@@ -82,7 +84,7 @@ if not st.session_state.redirecionado:
         if st.button("✅ Entendi: IA é aliada, não substituta", key="ia"):
             log_interacao_google(nome_usuario, pagina, "expandiu_ia")
 
-    with st.expander("🛒 Cost-to-Serve: o segredo dos lucros ocultos"):
+    with st.expander("🛒 Cost-to-Serve: o segredo dos lucros ocultos", expanded=False):
         st.markdown("""
         Muitas empresas crescem... e perdem dinheiro.  
         Por quê? **Clientes 'grandes' podem ser os mais caros.**  
@@ -92,7 +94,7 @@ if not st.session_state.redirecionado:
         if st.button("✅ Entendi: nem todo cliente é lucrativo", key="cost_to_serve"):
             log_interacao_google(nome_usuario, pagina, "expandiu_cost_to_serve")
 
-    with st.expander("🌍 Benchmarks: o que as top financeiras fazem"):
+    with st.expander("🌍 Benchmarks: o que as top financeiras fazem", expanded=False):
         st.markdown("""
         Funções financeiras de elite gastam apenas **0,66% da receita** com operações.  
         O resto vai para inovação, análise e estratégia.  
@@ -102,18 +104,18 @@ if not st.session_state.redirecionado:
             log_interacao_google(nome_usuario, pagina, "expandiu_benchmark")
 
     # === CHAMADA PARA USAR IA (interação real e moderna) ===
-    st.markdown("### 💬 Quer conversar com quem entende de custos? (sem cobrar hora)")
-    if st.button("🤖 Pergunte à IA sobre Gestão de Custos"):
-        st.info("""
-        🔍 Abra seu chat favorito (Copilot, Gemini, ChatGPT) e pergunte:
-        
-        > _"Como calcular o custo real de um produto que tem produção terceirizada e logística variável?"_
-        
-        > _"Quais são os 3 erros mais comuns na precificação com base em custos?"_
-        
-        ✅ Use a IA como **tutora**, mas **você é o estrategista**.
-        """)
-        log_interacao_google(nome_usuario, pagina, "dica_ia_usada")
+    with st.expander(" 💬 Quer conversar com quem entende de custos? (sem cobrar hora)", expanded=False):
+        if st.button("🤖 Pergunte à IA sobre Gestão de Custos"):
+            st.info("""
+            🔍 Abra seu chat favorito (Copilot, Gemini, ChatGPT) e pergunte:
+            
+            > _"Como calcular o custo real de um produto que tem produção terceirizada e logística variável?"_
+            
+            > _"Quais são os 3 erros mais comuns na precificação com base em custos?"_
+            
+            ✅ Use a IA como **tutora**, mas **você é o estrategista**.
+            """)
+            log_interacao_google(nome_usuario, pagina, "dica_ia_usada")
 
     # === VÍDEOS RECOMENDADOS (com mini-descrições) ===
     st.markdown("### 🎥 Aprenda rápido com vídeos práticos")

@@ -37,88 +37,72 @@ if not st.session_state.redirecionado:
 
     st.image("pages/figs/welcome.png")
 
-    # === IDENTIFICAÇÃO ANÔNIMA (com toque de gamificação) ===
-    user_id = get_anon_user_id()
-    
     st.success(f"""🔐 Dados anônimos. Usamos isso para tornar a experiência melhor — nada pessoal, tudo pedagógico.
                 Assim começa sua missão! Toda sua jornada contribui para melhorar esse site. 
-                Vamos usar um código de identificação para você `{user_id[:8]}`. Caso queira saber mais sobre isso, contate o idealizador.""")
+                Vamos usar um código de identificação para você `{nome_usuario[:8]}`. Caso queira saber mais sobre isso, contate o idealizador.""")
     
-    # === QUIZ RÁPIDO (para engajar desde o início) ===# === QUIZ RÁPIDO (para engajar desde o início) ===
+    # === QUIZ RÁPIDO (para engajar desde o início) ===# # === QUIZ RÁPIDO (para engajar desde o início) ===
     with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=True):
-        st.markdown("Se uma empresa vende mais, mas lucra menos, o problema provavelmente é:")
     
-        # Inicializa estado do quiz (apenas uma vez)
-        if 'quiz_feito' not in st.session_state:
-            st.session_state.quiz_feito = False
-            st.session_state.quiz_acertou = False
-            st.session_state.resposta_selecionada = None
-    
-        # --- helper seguro para logging (não quebra a UI se log falhar) ---
-        def safe_log_interacao(nome=None, pagina=None, acao=None):
-            try:
-                # tenta chamar sua função de log (assume assinatura nome, pagina, acao)
-                log_interacao_google(nome=nome, pagina=pagina, acao=acao)
-            except Exception:
-                # se algo der errado no log, ignora silenciosamente para não quebrar a UI
-                pass
-    
-        # Garante que exista um user_id e nome da página
-        user_id = st.session_state.get('user_id') or get_anon_user_id()
-        page_name = st.session_state.get('pagina') or "Página de Abertura"
-    
-        # Opções com placeholder (evita index=None)
-        options = [
-            "-- Selecione --",
-            "A) Falta de marketing",
-            "B) Preço baixo demais",
-            "C) Custo mal calculado ou mal alocado",
-            "D) Crise econômica"
+        # Questão exemplo (pode trocar ou carregar dinamicamente)
+        questions = [
+            {
+                "type": "multiple_choice",
+                "question": "Se uma empresa vende mais, mas lucra menos, o problema provavelmente é:",
+                "options": [
+                    "A) Falta de marketing",
+                    "B) Preço baixo demais",
+                    "C) Custo mal calculado ou mal alocado",
+                    "D) Crise econômica"
+                ],
+                "answer": 2,  # índice correto
+                "explanation": "O núcleo da Gestão de Custos está em entender e alocar corretamente os custos."
+            }
         ]
     
-        # Formulário do quiz
-        with st.form(key="quiz_form"):
+        # --- Estado inicial ---
+        if "quiz_resposta" not in st.session_state:
+            st.session_state.quiz_resposta = None
+            st.session_state.quiz_finalizado = False
+    
+        q = questions[0]  # só um quiz rápido
+        st.markdown(f"**{q['question']}**")
+    
+        # --- Formulário ---
+        with st.form("quiz_form"):
             resposta = st.selectbox(
-                label="Escolha uma opção:",
-                options=options,
-                index=0,
-                key="quiz_select"
+                "Escolha uma opção:",
+                ["-- Selecione --"] + q["options"],
+                index=0
             )
-            submit_button = st.form_submit_button("✅ Verificar resposta")
+            submit = st.form_submit_button("✅ Verificar resposta")
     
-        # Processamento após submit (fora do with)
-        if submit_button:
-            st.session_state.quiz_feito = True
-            st.session_state.resposta_selecionada = resposta
-    
+        # --- Processamento ---
+        if submit:
             if resposta == "-- Selecione --":
-                st.warning("⚠️ Por favor, selecione uma opção antes de verificar!")
-                st.session_state.quiz_acertou = False
-                safe_log_interacao(nome=user_id, pagina=page_name, acao="quiz_sem_resposta")
-            elif resposta == "C) Custo mal calculado ou mal alocado":
-                st.success("🔥 Acertou! Esse é o *núcleo* da Gestão de Custos.")
-                st.balloons()
-                st.session_state.quiz_acertou = True
-                safe_log_interacao(nome=user_id, pagina=page_name, acao="quiz_acertou")
+                st.warning("⚠️ Selecione uma opção antes de verificar!")
+                log_interacao_google(nome_usuario, pagina, "quiz_sem_resposta")
             else:
-                st.warning("💡 Quase! O erro mais comum é achar que é marketing ou preço. Mas sem custos bem mapeados, qualquer decisão é no escuro.")
-                st.session_state.quiz_acertou = False
-                safe_log_interacao(nome=user_id, pagina=page_name, acao="quiz_errou")
+                idx = q["options"].index(resposta)
+                st.session_state.quiz_resposta = idx
+                st.session_state.quiz_finalizado = True
     
-            st.info("📌 Aprender a enxergar isso é o que separa um técnico de um estrategista.")
+                if idx == q["answer"]:
+                    st.success(f"🔥 Acertou! {q['explanation']}")
+                    st.balloons()
+                    log_interacao_google(nome_usuario, pagina, "quiz_acertou")
+                else:
+                    st.warning(f"💡 Quase! Resposta correta: {q['options'][q['answer']]}. {q['explanation']}")
+                    log_interacao_google(nome_usuario, pagina, "quiz_errou")
     
-        # Reexibe feedback caso já tenha respondido (evita perda após rerun)
-        elif st.session_state.quiz_feito:
-            resp = st.session_state.resposta_selecionada
-            if resp is None or resp == "-- Selecione --":
-                st.warning("⚠️ Você deixou o quiz sem responder.")
-            elif st.session_state.quiz_acertou:
-                st.success("🔥 Acertou! Esse é o *núcleo* da Gestão de Custos.")
-                st.info("📌 Aprender a enxergar isso é o que separa um técnico de um estrategista.")
+        # --- Reexibir feedback se já respondeu ---
+        elif st.session_state.quiz_finalizado:
+            idx = st.session_state.quiz_resposta
+            if idx == q["answer"]:
+                st.success(f"🔥 Acertou! {q['explanation']}")
             else:
-                st.warning("💡 Quase! O erro mais comum é achar que é marketing ou preço. Mas sem custos bem mapeados, qualquer decisão é no escuro.")
-                st.info("📌 Aprender a enxergar isso é o que separa um técnico de um estrategista.")
-                
+                st.warning(f"💡 Resposta correta: {q['options'][q['answer']]}. {q['explanation']}")
+
     # === INSIGHTS PROVOCATIVOS (com expanders interativos) ===
     st.markdown("### 🔥 O que os melhores gestores sabem (e os outros não percebem)")
 

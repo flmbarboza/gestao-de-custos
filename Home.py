@@ -177,13 +177,22 @@ caminho = st.radio(
 )
 
 if st.button("➡️ Iniciar minha jornada", key="btn_inicio"):
-    safe_log_interacao(nome_usuario, pagina, f"escolheu_caminho_{caminho.split('–')[0].strip()}")
-    caminho_escolhido = caminho
-    st.switch_page("pages/1_🏠_Inicio.py")
-
-if 'user_id' not in st.session_state:
-    st.session_state.user_id = nome_usuario
-    
+    if caminho is not None:
+        safe_log_interacao(
+            nome_usuario, 
+            pagina, 
+            f"escolheu_caminho_{caminho.split('–')[0].strip()}"
+        )
+        st.session_state['caminho_escolhido'] = caminho
+        st.switch_page("pages/1_🏠_Inicio.py")
+    else:
+        safe_log_interacao(
+            nome_usuario, 
+            pagina, 
+            f"Nenhum caminho foi selecionado."
+        ))
+        st.switch_page("pages/1_🏠_Inicio.py")
+        
 # === FOOTER ELEGANTE E PROFISIONAL ===
 st.sidebar.markdown("---")
 st.sidebar.markdown("""

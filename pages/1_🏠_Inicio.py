@@ -56,7 +56,7 @@ def main():
         > **Gestão de Custos é isso**: integrar teoria e prática para resolver problemas reais.
         """)
 
-        if st.button("✅ Entendi: Gestão de Custos é central na minha formação", key="btn_conexao"):
+        if st.button("✅ Clique aqui se essa informação foi útil", key="btn_conexao"):
             safe_log_interacao(nome_usuario, pagina_atual, "expandiu_conexao")
             st.toast("Boa! Você está vendo o todo! 🌐", icon="🧠")
 
@@ -75,7 +75,7 @@ def main():
         > 💡 *Este não é um curso de “fazer conta”. É um curso de **pensar como gestor**.*
         """)
 
-        if st.button("✅ Marcar: Visualizei os objetivos", key="btn_objetivos"):
+        if st.button("✅ Clique aqui se essa informação foi útil", key="btn_objetivos"):
             log_interacao_google(nome_usuario, pagina_atual, "expandiu_objetivos")
             st.toast("Você está no caminho certo! 🎯", icon="💡")
 
@@ -116,7 +116,7 @@ def main():
         > 👨‍💼 *Egressos do curso relatam que conhecimentos em custos foram decisivos em processos seletivos, consultorias e até na criação de startups.*
         """)
 
-        if st.button("✅ Marcar: Vejo o valor prático da disciplina", key="btn_pratica"):
+        if st.button("✅ Clique aqui se essa informação foi útil", key="btn_pratica"):
             log_interacao_google(nome_usuario, pagina_atual, "expandiu_pratica")
             st.toast("Você está pensando como um(a) profissional! 💼", icon="🚀")
 

@@ -15,8 +15,11 @@ def main():
     pagina_atual = "Introdução a Custos"
     
     # Registra o acesso
-    log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}") 
-
+    #log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}") 
+    if 'intro_acessada' not in st.session_state:
+    log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
+    st.session_state.intro_acessada = True
+    
     with st.expander("🎯 Objetivos da Unidade", expanded=False):
             st.markdown("""
             - Compreender terminologia básica de custos

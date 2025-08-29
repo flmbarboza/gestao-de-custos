@@ -15,20 +15,19 @@ def main():
     pagina_atual = "Introdução a Custos"
     
     # Registra o acesso
-    #log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}") 
     if 'intro_acessada' not in st.session_state:
         log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
         st.session_state.intro_acessada = True
     
     with st.expander("🎯 Objetivos da Unidade", expanded=False):
-            st.markdown("""
-            - Compreender terminologia básica de custos
-            - Classificar custos por natureza e comportamento
-            - Analisar o comportamento de custos
-            """)    
-            #Registra navegação
-            if st.button("✅ Clique aqui se essa informação foi útil", key="obj_intro"):
-                 safe_log_interacao(nome_usuario, pagina_atual, "viu_ojetivos_introducao")
+        st.markdown("""
+        - Compreender terminologia básica de custos
+        - Classificar custos por natureza e comportamento
+        - Analisar o comportamento de custos
+        """)    
+        #Registra navegação
+        if st.button("✅ Clique aqui se essa informação foi útil", key="obj_intro"):
+             safe_log_interacao(nome_usuario, pagina_atual, "viu_ojetivos_introducao")
 
     # Criando abas para o submenu
     tab0, tab1, tab2, tab3, tab4 = st.tabs([

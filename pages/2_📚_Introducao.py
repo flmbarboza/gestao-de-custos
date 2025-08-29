@@ -241,9 +241,9 @@ def main():
             Ah! Só pra constar... Alves et al. (2018) é um livro e sua referência completa é: ALVES, Aline et al. **Análise de custo**. Porto Alegre: SAGAH, 2018.
         
             """)
-            #Registra navegação
-            if st.button("✅ Clique aqui se essa informação foi útil", key="intro_termos"):
-                 safe_log_interacao(nome_usuario, pagina_atual, "viu_intro_terminologia")
+        #Registra navegação
+        if st.button("✅ Clique aqui se essa informação foi útil", key="intro_termos"):
+             safe_log_interacao(nome_usuario, pagina_atual, "viu_intro_terminologia")
 
         # ✅ Integração do vídeo
         st.video("https://youtu.be/9GUog7H4Bgk")

@@ -11,7 +11,7 @@ def main():
     nome_usuario = st.session_state.get("user_id") or get_anon_user_id()
 
     # === QUIZ RÁPIDO (para engajar desde o início) ===
-    st.expander("🎯 Teste rápido: Você entende de custos?", expanded=True)
+    with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=True):
         
         # --- questão (estrutura solicitada) ---
         question = [

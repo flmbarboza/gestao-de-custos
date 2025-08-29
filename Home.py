@@ -177,7 +177,7 @@ caminho = st.radio(
 )
 
 if st.button("➡️ Iniciar minha jornada", key="btn_inicio"):
-    log_interacao_google(nome_usuario, pagina, f"escolheu_caminho_{caminho.split('–')[0].strip()}")
+    safe_log_interacao(nome_usuario, pagina, f"escolheu_caminho_{caminho.split('–')[0].strip()}")
     caminho_escolhido = caminho
     st.switch_page("pages/1_🏠_Inicio.py")
 

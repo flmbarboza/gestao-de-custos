@@ -41,11 +41,11 @@ if not st.session_state.redirecionado:
                 Assim começa sua missão! Toda sua jornada contribui para melhorar esse site. 
                 Vamos usar um código de identificação para você `{nome_usuario[:8]}`. Caso queira saber mais sobre isso, contate o idealizador.""")
     
-    # === QUIZ RÁPIDO (para engajar desde o início) ===# # === QUIZ RÁPIDO (para engajar desde o início) ===
+    # === QUIZ RÁPIDO (para engajar desde o início) ===
     with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=True):
     
-        # Questão exemplo (pode trocar ou carregar dinamicamente)
-        questions = [
+        # --- questão (estrutura solicitada) ---
+        question = [
             {
                 "type": "multiple_choice",
                 "question": "Se uma empresa vende mais, mas lucra menos, o problema provavelmente é:",
@@ -60,48 +60,59 @@ if not st.session_state.redirecionado:
             }
         ]
     
-        # --- Estado inicial ---
-        if "quiz_resposta" not in st.session_state:
-            st.session_state.quiz_resposta = None
-            st.session_state.quiz_finalizado = False
+        # pega a primeira (única) questão para o quiz rápido
+        q = question[0]
     
-        q = questions[0]  # só um quiz rápido
+        # --- estado minimalista e seguro ---
+        if "quiz_done" not in st.session_state:
+            st.session_state.quiz_done = False
+            st.session_state.quiz_choice = None
+    
+        page_name = st.session_state.get("pagina", "Página de Abertura")
+    
+        # wrapper seguro para logging (garante que falha no logger não quebre a UI)
+        def safe_log_interacao(nome, pagina, acao):
+            try:
+                log_interacao_google(nome=nome, pagina=pagina, acao=acao)
+            except Exception:
+                # falha silenciosa no log para não interromper o app
+                pass
+    
         st.markdown(f"**{q['question']}**")
     
-        # --- Formulário ---
+        # --- formulário simples ---
         with st.form("quiz_form"):
-            resposta = st.selectbox(
-                "Escolha uma opção:",
-                ["-- Selecione --"] + q["options"],
-                index=0
-            )
-            submit = st.form_submit_button("✅ Verificar resposta")
+            choices = ["-- Selecione --"] + q["options"]
+            escolha = st.selectbox("Escolha uma opção:", choices, index=0, key="quiz_select_0")
+            enviar = st.form_submit_button("✅ Verificar resposta")
     
-        # --- Processamento ---
-        if submit:
-            if resposta == "-- Selecione --":
-                st.warning("⚠️ Selecione uma opção antes de verificar!")
-                log_interacao_google(nome_usuario, pagina, "quiz_sem_resposta")
+        # --- processamento do submit ---
+        if enviar:
+            if escolha == "-- Selecione --":
+                st.warning("⚠️ Por favor, selecione uma opção antes de verificar!")
+                safe_log_interacao(nome_usuario, page_name, "quiz_sem_resposta")
             else:
-                idx = q["options"].index(resposta)
-                st.session_state.quiz_resposta = idx
-                st.session_state.quiz_finalizado = True
+                idx = q["options"].index(escolha)  # mapeia para índice dentro de q['options']
+                st.session_state.quiz_choice = idx
+                st.session_state.quiz_done = True
     
                 if idx == q["answer"]:
-                    st.success(f"🔥 Acertou! {q['explanation']}")
+                    st.success("🔥 Acertou! " + q.get("explanation", ""))
                     st.balloons()
-                    log_interacao_google(nome_usuario, pagina, "quiz_acertou")
+                    safe_log_interacao(nome_usuario, page_name, "quiz_acertou")
                 else:
-                    st.warning(f"💡 Quase! Resposta correta: {q['options'][q['answer']]}. {q['explanation']}")
-                    log_interacao_google(nome_usuario, pagina, "quiz_errou")
+                    st.warning(f"💡 Quase! Resposta correta: {q['options'][q['answer']]}.")
+                    st.info(q.get("explanation", ""))
+                    safe_log_interacao(nome_usuario, page_name, "quiz_errou")
     
-        # --- Reexibir feedback se já respondeu ---
-        elif st.session_state.quiz_finalizado:
-            idx = st.session_state.quiz_resposta
+        # --- se já respondeu em sessão anterior, reapresenta feedback ---
+        elif st.session_state.quiz_done:
+            idx = st.session_state.quiz_choice
             if idx == q["answer"]:
-                st.success(f"🔥 Acertou! {q['explanation']}")
+                st.success("🔥 Acertou! " + q.get("explanation", ""))
             else:
-                st.warning(f"💡 Resposta correta: {q['options'][q['answer']]}. {q['explanation']}")
+                st.warning(f"💡 Resposta correta: {q['options'][q['answer']]}.")
+                st.info(q.get("explanation", ""))
 
     # === INSIGHTS PROVOCATIVOS (com expanders interativos) ===
     st.markdown("### 🔥 O que os melhores gestores sabem (e os outros não percebem)")

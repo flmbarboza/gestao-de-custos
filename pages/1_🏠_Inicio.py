@@ -1,5 +1,5 @@
 import streamlit as st
-from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google
+from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google, safe_log_interacao
 
 def main():
     # Configuração da página
@@ -57,7 +57,7 @@ def main():
         """)
 
         if st.button("✅ Entendi: Gestão de Custos é central na minha formação", key="btn_conexao"):
-            log_interacao_google(nome_usuario, pagina_atual, "expandiu_conexao")
+            safe_log_interacao(nome_usuario, pagina_atual, "expandiu_conexao")
             st.toast("Boa! Você está vendo o todo! 🌐", icon="🧠")
 
     # === OBJETIVOS DA DISCIPLINA ===

@@ -43,7 +43,7 @@ if not st.session_state.redirecionado:
     
     # === QUIZ RÁPIDO (para engajar desde o início) ===
     with st.form("test_form"):
-        st.info("🎯 Teste rápido: Você entende de custos?"):
+        st.info("🎯 Teste rápido: Você entende de custos?")
     
         # --- questão (estrutura solicitada) ---
         question = [

@@ -3,7 +3,7 @@ from datetime import datetime
 from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_interacao_google, safe_log_interacao
 
 # Registra o acesso
-log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}") 
+#log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}") 
 
 # Configuração da página
 st.set_page_config(

@@ -53,10 +53,14 @@ def main():
         # --- formulário simples ---
         with st.form("quiz_form"):
             choices = ["-- Selecione --"] + q["options"]
-            escolha = st.selectbox("Escolha uma opção:", choices, index=0, key="quiz_select_0")
+            escolha = st.radio(
+                "Escolha uma opção:",
+                choices,
+                index=0,
+                key="quiz_radio_0"
+            )
             enviar = st.form_submit_button("✅ Verificar resposta")
         
-        # --- processamento do submit ---
         if enviar:
             if escolha == "-- Selecione --":
                 st.warning("⚠️ Por favor, selecione uma opção antes de verificar!")

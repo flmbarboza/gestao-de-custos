@@ -42,7 +42,8 @@ if not st.session_state.redirecionado:
                 Vamos usar um código de identificação para você `{nome_usuario[:8]}`. Caso queira saber mais sobre isso, contate o idealizador.""")
     
     # === QUIZ RÁPIDO (para engajar desde o início) ===
-    with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=True):
+    with st.form("test_form"):
+        st.info("🎯 Teste rápido: Você entende de custos?"):
     
         # --- questão (estrutura solicitada) ---
         question = [

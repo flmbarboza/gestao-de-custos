@@ -45,24 +45,39 @@ if not st.session_state.redirecionado:
                 Vamos usar um código de identificação para você `{user_id[:8]}`. Caso queira saber mais sobre isso, contate o idealizador.""")
     
     # === QUIZ RÁPIDO (para engajar desde o início) ===
-    with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=False):
+    with st.expander("🎯 Teste rápido: Você entende de custos?", expanded=True):
+        # Inicializa o estado da resposta, se ainda não existir
+        if 'resposta_quiz' not in st.session_state:
+            st.session_state.resposta_quiz = None
+    
+        # Radio com valor vindo do session_state
         resposta = st.radio(
             "Se uma empresa vende mais, mas lucra menos, o problema provavelmente é:",
-            ["A) Falta de marketing",
-             "B) Preço baixo demais",
-             "C) Custo mal calculado ou mal alocado",
-             "D) Crise econômica"], index=None
+            [
+                "A) Falta de marketing",
+                "B) Preço baixo demais",
+                "C) Custo mal calculado ou mal alocado",
+                "D) Crise econômica"
+            ],
+            index=None,
+            key="radio_quiz",
+            on_change=lambda: st.session_state.update({"resposta_quiz": st.session_state.radio_quiz})
         )
-        if st.button("✅ Verificar resposta"):
-            if resposta == "C) Custo mal calculado ou mal alocado":
+    
+        if st.button("✅ Verificar resposta", key="btn_verificar"):
+            if st.session_state.resposta_quiz is None:
+                st.warning("⚠️ Por favor, selecione uma opção antes de verificar!")
+            elif st.session_state.resposta_quiz == "C) Custo mal calculado ou mal alocado":
                 st.success("🔥 Acertou! Esse é o *núcleo* da Gestão de Custos.")
                 st.balloons()
                 log_interacao_google(nome_usuario, pagina, "quiz_acertou")
             else:
                 st.warning("💡 Quase! O erro mais comum é achar que é marketing ou preço. Mas sem custos bem mapeados, qualquer decisão é no escuro.")
                 log_interacao_google(nome_usuario, pagina, "quiz_errou")
+            
+            # Mensagem final (aparece independente do acerto/erro)
             st.info("📌 Aprender a enxergar isso é o que separa um técnico de um estrategista.")
-
+        
     # === INSIGHTS PROVOCATIVOS (com expanders interativos) ===
     st.markdown("### 🔥 O que os melhores gestores sabem (e os outros não percebem)")
 

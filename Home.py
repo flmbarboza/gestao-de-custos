@@ -144,8 +144,8 @@ with st.expander("🎯 Teste rápido", expanded=False):
             safe_log_interacao(nome_usuario, pagina, "quiz_sem_resposta")
         else:
             idx = q[0]["options"].index(escolha)
-            st.session_state.quiz_choice = idx
-            st.session_state.quiz_done = True
+            quiz_choice = idx
+            quiz_done = True
     
             if idx == q[0]["answer"]:
                 st.success("🔥 Acertou! " + q[0].get("explanation", ""))
@@ -178,9 +178,12 @@ caminho = st.radio(
 
 if st.button("➡️ Iniciar minha jornada", key="btn_inicio"):
     log_interacao_google(nome_usuario, pagina, f"escolheu_caminho_{caminho.split('–')[0].strip()}")
-    st.session_state.caminho_escolhido = caminho
+    caminho_escolhido = caminho
     st.switch_page("pages/1_🏠_Inicio.py")
 
+if 'user_id' not in st.session_state:
+    st.session_state.user_id = nome_usuario
+    
 # === FOOTER ELEGANTE E PROFISIONAL ===
 st.sidebar.markdown("---")
 st.sidebar.markdown("""

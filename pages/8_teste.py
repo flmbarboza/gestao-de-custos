@@ -54,7 +54,7 @@ def main():
                 st.session_state.quiz_choice = idx
                 st.session_state.quiz_done = True
         
-                if idx == q["answer"]:
+                if idx == q[0]["answer"]:
                     st.success("🔥 Acertou! " + q[0].get("explanation", ""))
                     st.balloons()
                     safe_log_interacao(nome_usuario, pagina, "quiz_acertou")

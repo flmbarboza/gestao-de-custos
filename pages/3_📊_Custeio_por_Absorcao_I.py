@@ -9,12 +9,12 @@ def main():
     # Recupera o nome do usuário
     nome_usuario = get_anon_user_id()
     pagina_atual = "Custeio por Absorção"
-
-    # Registra o acesso
-    if 'page30_acessada' not in st.session_state:
+    chave_log = f"acessou_{pagina_atual}_registrado"
+    
+    if not st.session_state.get(chave_log, False):
         log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
-        st.session_state.page30_acessada = True
-
+        st.session_state[chave_log] = True
+  
     # Lista de cards
     cards = [
         {"title": "Matéria-Prima (MP, ou MD - Material Direto)", "formula": "MP = EIMP + Compra MP - EFMP"},

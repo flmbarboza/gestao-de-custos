@@ -13,12 +13,12 @@ def main():
     # Recupera o nome do usuário
     nome_usuario = get_anon_user_id()
     pagina_atual = "Custeio Abs II"
+    chave_log = f"acessou_{pagina_atual}_registrado"
     
-    # Registra o acesso
-    if 'page31_acessada' not in st.session_state:
+    if not st.session_state.get(chave_log, False):
         log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
-        st.session_state.page31_acessada = True
-    
+        st.session_state[chave_log] = True
+      
     # Divisão em abas para diferentes métodos
     tab1, tab2, tab3 = st.tabs(["🏭 Rateio por Departamentos", "📊 Rateio por Produtos", "🧮 Cálculo Taxa CIF"])
     

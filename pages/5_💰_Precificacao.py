@@ -6,12 +6,12 @@ def main():
     # Recupera o nome do usuário
     nome_usuario = get_anon_user_id()
     pagina_atual = "Markup"
+    chave_log = f"acessou_{pagina_atual}_registrado"
     
-    # Registra o acesso
-    if 'page5_acessada' not in st.session_state:
+    if not st.session_state.get(chave_log, False):
         log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
-        st.session_state.page5_acessada = True
-
+        st.session_state[chave_log] = True
+  
     # Abordagem por abas
     tab1, tab2 = st.tabs(["Método Mark-up", "Impacto Tributário"])
     

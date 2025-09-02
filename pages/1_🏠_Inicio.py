@@ -107,7 +107,7 @@ def main():
             st.session_state['ultima_unidade_acessada'] = i + 1
             
             # Navega para a página da unidade
-            st.switch_page(pagina_py)
+            st.switch_page(f"pages/{pagina_py}")
 
     # === CONEXÃO COM A REALIDADE PROFISSIONAL ===
     st.markdown("<br>", unsafe_allow_html=True)

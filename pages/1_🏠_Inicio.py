@@ -98,7 +98,7 @@ def main():
         col = cols[i % 3]
         botao_key = f"botao_unidade_{i}"
     
-        if col.button(unidade, help=desc, use_container_width=True, key=botao_key):
+        if col.button(unidade, help=desc, width=True, key=botao_key):
             # Registra a interação
             safe_log_interacao(nome_usuario, pagina_atual, f"clicou_unidade_{i+1}")
             st.toast(f"🚀 Ótimo! {unidade} é essencial para sua carreira!", icon="✅")

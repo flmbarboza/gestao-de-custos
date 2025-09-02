@@ -216,7 +216,7 @@ def main():
     # Expander 7: Deficiências do Custeio por Absorção
     # ===========================
     with st.expander("⚠️ 7. Deficiências do Custeio por Absorção", expanded=False):
-        st.markdown("""
+        st.markdown(r"""
         ### ❌ Por que o custeio por absorção pode atrapalhar decisões?
         - **Efeito do estoque:** lucro sobe com produção (mesmo sem venda)
         - **Máscara de rentabilidade:** produtos com alto custo fixo podem parecer menos lucrativos
@@ -311,7 +311,7 @@ def main():
                 "explanation": "Ponto de equilíbrio (unidades) = CF / (PV - CVU) = CF / MC unitária."
             },
             {
-                "question": "Se o preço de venda é R\$ 80, o custo variável é R\$ 50 e os custos fixos são R\$ 30.000, qual é o ponto de equilíbrio?",
+                "question": "Se o preço de venda é R\\$ 80, o custo variável é R\\$ 50 e os custos fixos são R\\$ 30.000, qual é o ponto de equilíbrio?",
                 "options": [
                     "600 unidades",
                     "750 unidades",
@@ -320,7 +320,7 @@ def main():
                     "1.500 unidades"
                 ],
                 "correct": 2,  # 30000 / (80-50) = 1000
-                "explanation": "MC unitária = R\$ 30. PE = 30.000 / 30 = **1.000 unidades**."
+                "explanation": "MC unitária = R\\$ 30. PE = 30.000 / 30 = **1.000 unidades**."
             },
             {
                 "question": "Qual é a fórmula da margem de segurança?",
@@ -335,7 +335,7 @@ def main():
                 "explanation": "Margem de segurança = (Vendas atuais - Vendas no PE) / Vendas atuais. Mostra quanto as vendas podem cair sem prejuízo."
             },
             {
-                "question": "Um produto tem MC de R\$ 40.000 e lucro de R\$ 10.000. Qual é a alavancagem operacional?",
+                "question": "Um produto tem MC de R\\$ 40.000 e lucro de R\\$ 10.000. Qual é a alavancagem operacional?",
                 "options": [
                     "2x",
                     "3x",
@@ -402,16 +402,16 @@ def main():
     
         questions = [
             {
-                "question": "Uma empresa tem MC de R\$ 100.000 e custos fixos de R\$ 70.000. Qual é o lucro operacional?",
+                "question": "Uma empresa tem MC de R\$ 100.000 e custos fixos de R\\$ 70.000. Qual é o lucro operacional?",
                 "options": [
-                    "R\$ 170.000",
-                    "R\$ 100.000",
-                    "R\$ 70.000",
-                    "R\$ 30.000",
-                    "R\$ 0"
+                    "R\\$ 170.000",
+                    "R\\$ 100.000",
+                    "R\\$ 70.000",
+                    "R\\$ 30.000",
+                    "R\\$ 0"
                 ],
                 "correct": 3,  # 100k - 70k = 30k
-                "explanation": "Lucro = MC - CF = 100.000 - 70.000 = R\$ 30.000."
+                "explanation": "Lucro = MC - CF = 100.000 - 70.000 = R\\$ 30.000."
             },
             {
                 "question": "Se a margem de segurança é 25% e as vendas atuais são 8.000 unidades, qual é o ponto de equilíbrio?",
@@ -450,7 +450,7 @@ def main():
                 "explanation": "O custeio variável é ideal para **decisões internas**, como análise de mix, preço mínimo, aceitação de pedidos especiais, etc."
             },
             {
-                "question": "Um pedido especial oferece vender 1.000 unidades a R\$ 25. O custo variável é R\$ 20. Custos fixos não aumentam. Você aceita?",
+                "question": "Um pedido especial oferece vender 1.000 unidades a R\\$ 25. O custo variável é R\\$ 20. Custos fixos não aumentam. Você aceita?",
                 "options": [
                     "Não, porque é abaixo do preço normal",
                     "Não, porque reduz a margem",
@@ -459,7 +459,7 @@ def main():
                     "Depende do custo fixo"
                 ],
                 "correct": 2,
-                "explanation": "Se há capacidade ociosa, qualquer preço acima do CVU (R\$ 20) gera **MC adicional**. R\$ 25 > R\$ 20 → **aceitar**."
+                "explanation": "Se há capacidade ociosa, qualquer preço acima do CVU (R\\$ 20) gera **MC adicional**. R\\$ 25 > R\$ 20 → **aceitar**."
             },
             {
                 "question": "Qual é a principal desvantagem do custeio por absorção na análise de lucratividade por produto?",
@@ -474,7 +474,7 @@ def main():
                 "explanation": "A alocação de custos fixos pode fazer produtos com baixa demanda parecerem menos lucrativos do que realmente são."
             },
             {
-                "question": "A MC unitária é R\$ 15. O CF total é R\$ 60.000. Qual é o PE em unidades?",
+                "question": "A MC unitária é R\\$ 15. O CF total é R\\$ 60.000. Qual é o PE em unidades?",
                 "options": [
                     "3.000",
                     "4.000",

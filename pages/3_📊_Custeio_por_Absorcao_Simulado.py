@@ -11,12 +11,12 @@ def main():
     # Recupera o nome do usuário
     nome_usuario = get_anon_user_id()
     pagina_atual = "Custeio Abs Simulado"
+    chave_log = f"acessou_{pagina_atual}_registrado"
     
-    # Registra o acesso
-    if 'page33_acessada' not in st.session_state:
+    if not st.session_state.get(chave_log, False):
         log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
-        st.session_state.page33_acessada = True
-
+        st.session_state[chave_log] = True
+  
     # Sistema de pontuação
     if 'score' not in st.session_state:
         st.session_state.score = 0

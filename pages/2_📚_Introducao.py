@@ -1036,7 +1036,7 @@ def main():
                          annotation_text=f"Quantidade Atual: {q}", 
                          annotation_position="top left")
             fig.update_layout(hovermode="x unified")
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
         
         with t2:
             df = pd.DataFrame({
@@ -1047,7 +1047,7 @@ def main():
             st.dataframe(df.style.format({
                 'Custo Total': 'R$ {:,.2f}',
                 'Custo Médio': 'R$ {:,.2f}'
-            }), use_container_width=True)
+            }), width='stretch')
         
         # Análise de cenários
         st.divider()
@@ -1076,14 +1076,14 @@ def main():
                      title="Comparação de Cenários",
                      text=[f"R$ {x:,.2f}" for x in df_scenarios['Custo Total']])
         fig2.update_layout(showlegend=False)
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2, width='stretch')
 
         st.markdown("**Impacto de Variações no Custo Variável**")
         st.dataframe(df_scenarios.style.format({
             "Custo Variável Unitário": "R$ {:.2f}",
             "Custo Total": "R$ {:,.2f}",
             "Diferença": "R$ {:,.2f}"
-        }), hide_index=True, use_container_width=True)
+        }), hide_index=True, width='stretch')
 
         # Explicação dos conceitos
         with st.expander("📚 Explicação dos Conceitos"):

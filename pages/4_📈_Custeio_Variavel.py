@@ -185,7 +185,7 @@ def main():
     # Expander 6: Tomada de Decisão
     # ===========================
     with st.expander("✅ 6. Tomada de Decisão com Custeio Gerencial", expanded=False):
-        st.markdown("""
+        st.markdown(r"""
         ### 🧩 Exemplo: Aceitar um pedido especial?
         Um cliente oferece comprar 200 unidades a R\$ 45,00 cada.  
         Custo variável unitário: R\$ 30,00. Custo fixo não aumenta.  

@@ -401,7 +401,7 @@ def main():
     
         questions = [
             {
-                "question": "Uma empresa tem MC de R\$ 100.000 e custos fixos de R\\$ 70.000. Qual é o lucro operacional?",
+                "question": "Uma empresa tem MC de R\\$ 100.000 e custos fixos de R\\$ 70.000. Qual é o lucro operacional?",
                 "options": [
                     "R\\$ 170.000",
                     "R\\$ 100.000",

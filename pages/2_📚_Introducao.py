@@ -644,7 +644,7 @@ def main():
                 title="Comportamento dos Custos em Relação ao Volume de Produção"
             )
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
             
             # Exemplos práticos
             st.markdown("""

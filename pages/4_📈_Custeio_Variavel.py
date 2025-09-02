@@ -365,15 +365,14 @@ def main():
     
         user_score = 0
         for i, q in enumerate(questions):
-            st.markdown(f"**{i+1}. {q['question']}**")
             user_answer = st.radio(
-                #q["question"],
+                f"**{i+1}. {q['question']}**",  # Mostra número e pergunta em negrito
                 options=q["options"],
                 key=f"quiz1_q{i}",
                 index=st.session_state.quiz_answers_part1[i] if st.session_state.quiz_answers_part1[i] is not None else None
             )
             st.session_state.quiz_answers_part1[i] = q["options"].index(user_answer) if user_answer else None
-    
+            
             if user_answer:
                 if q["options"].index(user_answer) == q["correct"]:
                     st.success("✅ Correto!")

@@ -8,12 +8,12 @@ def main():
     # Recupera o nome do usuário
     nome_usuario = get_anon_user_id()
     pagina_atual = "Início"
-
-    # Registra o acesso
-    if 'page1_acessada' not in st.session_state:
+    chave_log = f"acessou_{pagina_atual}_registrado"
+    
+    if not st.session_state.get(chave_log, False):
         log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
-        st.session_state.page1_acessada = True
-
+        st.session_state[chave_log] = True
+        
     # Título principal com ícone
     st.title("🏦 Gestão de Custos – FAGEN/UFU")
     st.markdown("<h3 style='color: #2C3E50;'>Onde números viram decisões estratégicas</h3>", unsafe_allow_html=True)

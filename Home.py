@@ -180,7 +180,7 @@ if st.button("➡️ Iniciar minha jornada", key="btn_inicio"):
         st.switch_page("pages/1_🏠_Inicio.py")
     else:
         safe_log_interacao(nome_usuario, pagina_atual, 
-                           f"Nenhum caminho foi selecionado.")
+                           f"(Re)iniciou jornada.")
         st.switch_page("pages/1_🏠_Inicio.py")
         
 # === FOOTER ELEGANTE E PROFISIONAL ===

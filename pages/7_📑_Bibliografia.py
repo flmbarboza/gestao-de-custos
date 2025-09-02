@@ -4,11 +4,11 @@ from utils import leitor_de_texto, get_anon_user_id, log_acesso_google, log_inte
 # Recupera o nome do usuário
 nome_usuario = get_anon_user_id()
 pagina_atual = "Bib"
+chave_log = f"acessou_{pagina_atual}_registrado"
 
-# Registra o acesso
-if 'pagebib_acessada' not in st.session_state:
+if not st.session_state.get(chave_log, False):
     log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
-    st.session_state.pagebib_acessada = True
+    st.session_state[chave_log] = True
 
 def main():
     st.title("📚 Bibliografia Recomendada")

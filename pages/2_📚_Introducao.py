@@ -954,15 +954,10 @@ def main():
         
         st.header("📊 Análise [Simples] de Impacto de Custos")
         st.markdown("""
-            ```math
-            Custo Total = Custo Fixo + (Custo Variável Unitário × Quantidade)
-            ```
-
-            
-            ```math
-            Ponto de Equilíbrio = (Custo Total + Despesas) / (PV - CVU)
-            ```
-        """)
+                    Custo Total = Custo Fixo + (Custo Variável Unitário × Quantidade)
+                   
+                    Ponto de Equilíbrio = (Custo Total + Despesas) / (PV - CVU)
+                    """)
 
         # Comportamento dos Custos
         c1, c2 = st.columns([1, 3])

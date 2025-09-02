@@ -87,18 +87,27 @@ def main():
 
     cols = st.columns(3)
     unidades = [
-        ("1️⃣ Fundamentos de Custos", "Comportamento de custos, classificação e impacto nas decisões"),
-        ("2️⃣ Custeio por Absorção", "CPP, CPA, CPV, rateio de CIF e DRE gerencial"),
-        ("3️⃣ Custeio Variável", "Margem de contribuição, análise de lucratividade"),
-        ("4️⃣ Precificação Estratégica", "Mark-up, tributos e decisão de preço"),
-        ("5️⃣ Decisão com Restrições", "O que produzir? Como alocar recursos escassos?")
+        ("1️⃣ Fundamentos de Custos", "Comportamento de custos, classificação e impacto nas decisões", "2_📚_Introducao.py"),
+        ("2️⃣ Custeio por Absorção", "CPP, CPA, CPV, rateio de CIF e DRE", "3_📊_Custeio_por_Absorcao_I.py"),
+        ("3️⃣ Custeio Variável", "Margem de Contribuição, DRE Gerencial, Análise Custo-Volume-Lucro e +", "4_📈_Custeio_Variavel.py"),
+        ("4️⃣ Precificação Estratégica", "Mark-up, tributos e decisão de preço", "5_💰_Precificacao.py"),
+        ("5️⃣ Decisão com Restrições", "O que produzir? Como alocar recursos escassos?", "6_⚖️_Margem_Contribuicao.py")
     ]
-
-    for i, (unidade, desc) in enumerate(unidades):
+    
+    for i, (unidade, desc, pagina_py) in enumerate(unidades):
+        col = cols[i % 3]
         botao_key = f"botao_unidade_{i}"
-        if cols[i % 3].button(unidade, help=desc, use_container_width=True, key=botao_key):
-            log_interacao_google(nome_usuario, pagina_atual, f"clicou_unidade_{i+1}")
+    
+        if col.button(unidade, help=desc, use_container_width=True, key=botao_key):
+            # Registra a interação
+            safe_log_interacao(nome_usuario, pagina_atual, f"clicou_unidade_{i+1}")
             st.toast(f"🚀 Ótimo! {unidade} é essencial para sua carreira!", icon="✅")
+            
+            # Salva a unidade atual no estado da sessão (opcional, para usar depois)
+            st.session_state['ultima_unidade_acessada'] = i + 1
+            
+            # Navega para a página da unidade
+            st.switch_page(pagina_py)
 
     # === CONEXÃO COM A REALIDADE PROFISSIONAL ===
     st.markdown("<br>", unsafe_allow_html=True)

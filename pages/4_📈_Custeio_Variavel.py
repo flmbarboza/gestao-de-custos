@@ -9,12 +9,12 @@ def main():
     # Recupera o nome do usuário
     nome_usuario = get_anon_user_id()
     pagina_atual = "Custeio Variavel"
+    chave_log = f"acessou_{pagina_atual}_registrado"
     
-    # Registra o acesso
-    if 'page4_acessada' not in st.session_state:
+    if not st.session_state.get(chave_log, False):
         log_acesso_google(nome_usuario, pagina_atual, f"acessou_{pagina_atual}")
-        st.session_state.page4_acessada = True
-
+        st.session_state[chave_log] = True
+  
     st.markdown("""
     Bem-vindo à análise interativa do **Custeio Variável**!  
     Aqui você vai entender como esse método auxilia na **tomada de decisões gerenciais**, com simulações, exercícios e comparações práticas.

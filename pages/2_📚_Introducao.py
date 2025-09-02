@@ -600,7 +600,7 @@ def main():
                 fig.update_traces(textinfo="label+percent parent", 
                                   hovertemplate='<b>Custo %{parent}</b><br><b>%{label}</b><br>Valor: R$ %{value:.2f}<extra></extra>')
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width='stretch')
                 st.caption("🔎 Clique no gráfico para explorar a composição detalhada")
 
                 

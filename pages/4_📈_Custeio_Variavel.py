@@ -367,7 +367,7 @@ def main():
         for i, q in enumerate(questions):
             st.markdown(f"**{i+1}. {q['question']}**")
             user_answer = st.radio(
-                q["question"],
+                #q["question"],
                 options=q["options"],
                 key=f"quiz1_q{i}",
                 index=st.session_state.quiz_answers_part1[i] if st.session_state.quiz_answers_part1[i] is not None else None
